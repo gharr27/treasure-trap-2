@@ -1,0 +1,39 @@
+Agenda:
+	Milestone Chart
+		Set Dates and expectations
+		
+	Beginning Development
+		Start working in your teams on your sections for UI and Game Core
+		
+	GitHub Ediquette
+		Post changes to a branch not to the main branch, I'll deal with merging to main
+			be very mindful of this, make sure you know what branch you are on when pushing
+			don't merge to a branch you didn't make unless otherwise stated	
+		Make a new branch for different changes you make.
+			Ex. changes to the Main Menu GUI should be on a separate branch to changes to the actual game GUI etc.
+		When coding push changes often
+			Don't do 3 different things in one push.
+			Do three separate push for each item instead.
+		Log issues when you find them.
+			Check the Git Repo constantly to look for issues you can solve etc.
+		
+	Code Quality:
+		Our code needs to look nice and uniform
+		Make good descriptive variable, function, etc names
+			The code should explain itself
+		Leave comments on everything, even if you think it is self explainatory
+		
+	Code schema:
+		Use camel casing for variables
+			ex. someVariable
+		Const variables should be all caps
+			ex. const int NUMBER
+		Brackets should be in this format
+			ex. if() {
+				}
+		Captialize function names
+			ex. void Function()
+		Capitalize Class/struct names
+			ex. Class MyClass; struct MyStruct
+		Name bools with is schema
+			ex. bool isActive
