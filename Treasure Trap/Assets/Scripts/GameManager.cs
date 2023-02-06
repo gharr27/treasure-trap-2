@@ -20,6 +20,7 @@ public class GameManager : MonoBehaviour
 
     private int tilesPlaced = 0;
     private GameObject[] gamePieces;
+    private Stack<GameObject> selectionGrids;
 
     Ray ray;
     RaycastHit hit;
@@ -34,6 +35,7 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        selectionGrids = new Stack<GameObject>();
         gamePieces = new GameObject[PIECE_COUNT];
     }
 
@@ -96,6 +98,12 @@ public class GameManager : MonoBehaviour
 
         gamePieces[tilesPlaced] = Instantiate(tile, pos, Quaternion.identity) as GameObject;
         tilesPlaced++;
+
+        while(selectionGrids.Count != 0) {
+            GameObject temp = selectionGrids.Pop();
+            Destroy(temp);
+        }
+
     }
 
     Vector3[,] GetMovePositions() {
@@ -136,6 +144,7 @@ public class GameManager : MonoBehaviour
                 for (int j = 0; j < 6; j++) {
                     GameObject temp;
                     temp = Instantiate(SelectionTile, positions[i, j], Quaternion.identity) as GameObject;
+                    selectionGrids.Push(temp);
                     //Debug.Log(temp.transform.position);
                 }
             }
