@@ -20,6 +20,7 @@ public class GameManager : MonoBehaviour
 
     private int tilesPlaced = 0;
     private GameObject[] gamePieces;
+
     private GameObject selectedPiece;
     private Stack<GameObject> selectionGrids;
 
@@ -37,6 +38,7 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        selectionGrids = new Stack<GameObject>();
         gamePieces = new GameObject[PIECE_COUNT];
     }
 
@@ -121,6 +123,12 @@ public class GameManager : MonoBehaviour
 
         gamePieces[tilesPlaced] = Instantiate(tile, pos, Quaternion.identity) as GameObject;
         tilesPlaced++;
+
+        while(selectionGrids.Count != 0) {
+            GameObject temp = selectionGrids.Pop();
+            Destroy(temp);
+        }
+
     }
 
     void MovePiece(GameObject piece, Vector3 pos) {
@@ -170,6 +178,7 @@ public class GameManager : MonoBehaviour
                 for (int j = 0; j < 6; j++) {
                     GameObject temp;
                     temp = Instantiate(SelectionTile, positions[i, j], Quaternion.identity) as GameObject;
+                    selectionGrids.Push(temp);
                     //Debug.Log(temp.transform.position);
                 }
             }
