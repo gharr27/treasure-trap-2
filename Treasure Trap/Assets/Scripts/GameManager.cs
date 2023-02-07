@@ -21,12 +21,16 @@ public class GameManager : MonoBehaviour
     private int tilesPlaced = 0;
     private GameObject[] gamePieces;
 
+    private GameObject selectedPiece;
+    private Stack<GameObject> selectionGrids;
+
     Ray ray;
     RaycastHit hit;
 
     int pieceSelection;
 
     bool isPieceSelected = false;
+    bool isMovePiece = false;
     bool isGridSet = false;
 
     Vector3 pos = new Vector3(0, 0, 0);
@@ -34,12 +38,14 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        selectionGrids = new Stack<GameObject>();
         gamePieces = new GameObject[PIECE_COUNT];
     }
 
     // Update is called once per frame
     void Update()
     {
+        //Placing A Piece
         IsPieceSelected();
 
         if (isPieceSelected) {
@@ -61,11 +67,32 @@ public class GameManager : MonoBehaviour
                 }
             }
         }
+
+        //Moving A Piece
+        if (isMovePiece) {
+            isPieceSelected = false;
+
+            if (!isGridSet) {
+                SetMoveGrid();
+            }
+
+            if (isSelectionMade) {
+                MovePiece(selectedPiece, pos);
+                isMovePiece = false;
+                isGridSet = false;
+                isSelectionMade = false;
+            }
+        }
     }
 
     public void SetPosition(Vector3 position) {
         pos = position;
         isSelectionMade = true;
+    }
+
+    public void SetSelectedPiece(GameObject piece) {
+        selectedPiece = piece;
+        isMovePiece = true;
     }
 
     void IsPieceSelected() {
@@ -97,6 +124,21 @@ public class GameManager : MonoBehaviour
         gamePieces[tilesPlaced] = Instantiate(tile, pos, Quaternion.identity) as GameObject;
         tilesPlaced++;
         //Test
+
+        while(selectionGrids.Count != 0) {
+            GameObject temp = selectionGrids.Pop();
+            Destroy(temp);
+        }
+
+    }
+
+    void MovePiece(GameObject piece, Vector3 pos) {
+        piece.transform.position = pos;
+
+        while(selectionGrids.Count != 0) {
+            GameObject temp = selectionGrids.Pop();
+            Destroy(temp);
+        }
     }
 
     Vector3[,] GetMovePositions() {
@@ -137,6 +179,7 @@ public class GameManager : MonoBehaviour
                 for (int j = 0; j < 6; j++) {
                     GameObject temp;
                     temp = Instantiate(SelectionTile, positions[i, j], Quaternion.identity) as GameObject;
+                    selectionGrids.Push(temp);
                     //Debug.Log(temp.transform.position);
                 }
             }
