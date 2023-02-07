@@ -20,11 +20,8 @@ public class GameManager : MonoBehaviour
 
     private int tilesPlaced = 0;
     private GameObject[] gamePieces;
-<<<<<<< Updated upstream
-=======
     private GameObject selectedPiece;
     private Stack<GameObject> selectionGrids;
->>>>>>> Stashed changes
 
     Ray ray;
     RaycastHit hit;
