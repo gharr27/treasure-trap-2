@@ -96,6 +96,7 @@ public class GameManager : MonoBehaviour
 
         gamePieces[tilesPlaced] = Instantiate(tile, pos, Quaternion.identity) as GameObject;
         tilesPlaced++;
+        //Test
     }
 
     Vector3[,] GetMovePositions() {
