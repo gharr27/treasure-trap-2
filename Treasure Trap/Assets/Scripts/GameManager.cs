@@ -123,6 +123,7 @@ public class GameManager : MonoBehaviour
 
         gamePieces[tilesPlaced] = Instantiate(tile, pos, Quaternion.identity) as GameObject;
         tilesPlaced++;
+        //Test
 
         while(selectionGrids.Count != 0) {
             GameObject temp = selectionGrids.Pop();
