@@ -134,7 +134,7 @@ public class GameManager : MonoBehaviour
 
     void MovePiece(GameObject piece, Vector3 pos) {
         piece.transform.position = pos;
-
+        //test
         while(selectionGrids.Count != 0) {
             GameObject temp = selectionGrids.Pop();
             Destroy(temp);
