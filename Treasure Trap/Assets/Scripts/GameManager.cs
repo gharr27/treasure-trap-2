@@ -60,7 +60,7 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (isWin)
+        if (!isWin)
         {
 
             //Placing A Piece==================================
