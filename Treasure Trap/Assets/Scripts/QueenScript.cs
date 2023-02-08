@@ -22,7 +22,6 @@ public class QueenScript : MonoBehaviour
 
         id = id + idNum;
         idNum++;
-        //Debug.Log(id);
     }
 
     void Update() {
