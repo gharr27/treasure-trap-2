@@ -15,18 +15,21 @@ public class GameManager : MonoBehaviour
     //GameObject Selected for Moving a tile
     public GameObject SelectionTile;
     
+    //Boolean that determines if a piece has been selected to move
     public bool isSelectionMade = false;
 
+    //Constant of how many total pieces are in the game
     const int PIECE_COUNT = 22;
 
+    //Keeps track of how many tiles are currently on the board
     private int tilesPlaced = 0;
+    //Stores each GameObject on the board
     private GameObject[] gamePieces;
 
+    //Stores the selected piece to place
     private GameObject selectedPiece;
+    //Holds the selection grid objects
     private Stack<GameObject> selectionGrids;
-
-    Ray ray;
-    RaycastHit hit;
 
     int pieceSelection;
 
@@ -50,18 +53,23 @@ public class GameManager : MonoBehaviour
         //Checks if a piece has been selecte to place
         IsPieceSelected();
 
+        //Waits until the player has selected a piece to place on the board
         if (isPieceSelected) {
 
-            
+            //Checks if it is the first tile placed on board
+            //If it is, the piece is placed at position 0,0
             if (tilesPlaced == 0) {
                 PlacePiece(pieceSelection, pos);
                 isPieceSelected = false;
             }
+            //If it is not first turn, wait until player selects where they want to place the piece
             else {
+                //Creates the grid showing valid placement positions
                 if (!isGridSet){
                     SetMoveGrid();
                 }
 
+                //Places piece at selected position, resets selection values to false to wait for next turn
                 if (isSelectionMade) {
                     PlacePiece(pieceSelection, pos);
                     isPieceSelected = false;
@@ -73,13 +81,16 @@ public class GameManager : MonoBehaviour
         //================================================
 
         //Moving A Piece==================================
+        //Waits until the player has selected a piece to move
         if (isMovePiece) {
             isPieceSelected = false;
 
+            //Creates the grid showing valid movement positions
             if (!isGridSet) {
                 SetMoveGrid();
             }
 
+            //Moves pieces to selected position, resets selection values to false to wait for next turn
             if (isSelectionMade) {
                 MovePiece(selectedPiece, pos);
                 isMovePiece = false;
@@ -90,16 +101,19 @@ public class GameManager : MonoBehaviour
         //===============================================
     }
 
+    //Sets the selected position for a piece to be placed
     public void SetPosition(Vector3 position) {
         pos = position;
         isSelectionMade = true;
     }
 
+    //Selects the game object of the tile the player wants to move
     public void SetSelectedPiece(GameObject piece) {
         selectedPiece = piece;
         isMovePiece = true;
     }
 
+    //Determines what kind of tile the player wishes to place
     void IsPieceSelected() {
         if (Input.GetKeyDown(KeyCode.Alpha1)) {
             pieceSelection = 0;
@@ -123,28 +137,32 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    //Places the given piece at the given position
     void PlacePiece(int piece, Vector3 pos) {
         GameObject tile = TilePieces[piece];
 
         gamePieces[tilesPlaced] = Instantiate(tile, pos, Quaternion.identity) as GameObject;
         tilesPlaced++;
-        //Test
-
+        
+        //Deletes the selection grid after piece has been placed
         while(selectionGrids.Count != 0) {
             GameObject temp = selectionGrids.Pop();
             Destroy(temp);
         }
     }
 
+    //Moves the given piece to the given position
     void MovePiece(GameObject piece, Vector3 pos) {
         piece.transform.position = pos;
-        //test
+        
+        //Deletes the selection grid after piece has been moved
         while(selectionGrids.Count != 0) {
             GameObject temp = selectionGrids.Pop();
             Destroy(temp);
         }
     }
 
+    //Returns a vector of all the valid movement/placement positions
     Vector3[,] GetMovePositions() {
         Vector3[,] positions = new Vector3[tilesPlaced, 6];
 
@@ -175,6 +193,7 @@ public class GameManager : MonoBehaviour
         return positions;
     }
 
+    //Creates the selection grid at valid move positions
     void SetMoveGrid() {
         if (tilesPlaced > 0) {
             Vector3[,] positions = GetMovePositions();
@@ -192,16 +211,3 @@ public class GameManager : MonoBehaviour
         isGridSet = true;
     }
 }
-
-
-
-/*
-    //NE side of GH (x + .5, z + 1)
-            Vector3 newPosition = gamePieces[tilesPlaced - 1].transform.pos;
-            newPosition = new Vector3(newPosition.x + .5f, 0, newPosition.z - 1);
-
-            Instantiate(tile, newPosition, Quaternion.identity);
-            gamePieces[tilesPlaced] = tile;
-            tilesPlaced++;
-            //Debug.Log(tileScript.GetId());
-*/
