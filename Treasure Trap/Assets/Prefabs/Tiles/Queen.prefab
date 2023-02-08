@@ -167,6 +167,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   id: Queen
+  color: 
 --- !u!65 &2846248620414197707
 BoxCollider:
   m_ObjectHideFlags: 0
