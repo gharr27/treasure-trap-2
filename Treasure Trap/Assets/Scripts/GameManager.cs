@@ -12,6 +12,7 @@ public class GameManager : MonoBehaviour
     //      3. Beetle
     //      4. Spider
     public GameObject[] TilePieces;
+    //GameObject Selected for Moving a tile
     public GameObject SelectionTile;
     
     public bool isSelectionMade = false;
@@ -45,11 +46,13 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //Placing A Piece
+        //Placing A Piece==================================
+        //Checks if a piece has been selecte to place
         IsPieceSelected();
 
         if (isPieceSelected) {
 
+            
             if (tilesPlaced == 0) {
                 PlacePiece(pieceSelection, pos);
                 isPieceSelected = false;
@@ -67,8 +70,9 @@ public class GameManager : MonoBehaviour
                 }
             }
         }
+        //================================================
 
-        //Moving A Piece
+        //Moving A Piece==================================
         if (isMovePiece) {
             isPieceSelected = false;
 
@@ -83,6 +87,7 @@ public class GameManager : MonoBehaviour
                 isSelectionMade = false;
             }
         }
+        //===============================================
     }
 
     public void SetPosition(Vector3 position) {
@@ -123,17 +128,17 @@ public class GameManager : MonoBehaviour
 
         gamePieces[tilesPlaced] = Instantiate(tile, pos, Quaternion.identity) as GameObject;
         tilesPlaced++;
+        //Test
 
         while(selectionGrids.Count != 0) {
             GameObject temp = selectionGrids.Pop();
             Destroy(temp);
         }
-
     }
 
     void MovePiece(GameObject piece, Vector3 pos) {
         piece.transform.position = pos;
-
+        //test
         while(selectionGrids.Count != 0) {
             GameObject temp = selectionGrids.Pop();
             Destroy(temp);
