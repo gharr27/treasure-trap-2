@@ -10,12 +10,18 @@ public class SelectionGridScript : MonoBehaviour
     GameManager gameManager;
     GameObject gameController;
 
+    Player player;
+    GameObject playerObject;
+
     // Start is called before the first frame update
     void Start()
     {
         boxCollider = this.GetComponent(typeof(BoxCollider)) as BoxCollider;
         gameController = GameObject.FindWithTag("GameController");
         gameManager = gameController.GetComponent(typeof(GameManager)) as GameManager;
+
+        playerObject = GameObject.FindWithTag("Player");
+        plater = playerObject.GetComponent(typeof(Player)) as Player;
     }
 
     // Update is called once per frame
@@ -23,6 +29,7 @@ public class SelectionGridScript : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0) && isMouseOver) {
             gameManager.SetPosition(this.transform.position);
+            player.SetPos(this.transform.position);
         }
     }
 

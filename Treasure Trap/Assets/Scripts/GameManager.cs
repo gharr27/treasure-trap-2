@@ -46,20 +46,39 @@ public class GameManager : MonoBehaviour
     //Keeps track of if there is a game over state
     private bool isWin = false;
 
+    bool isP1Playing = false;
+    bool isP2Playing = false;
 
     //Vector storing the position the player wishing to move/place a piece at
     Vector3 pos = new Vector3(0, 0, 0);
+
+    Player player;
+    GameObject playerObject;
 
     // Start is called before the first frame update
     void Start()
     {
         selectionGrids = new Stack<GameObject>();
         gamePieces = new GameObject[PIECE_COUNT];
+
+        playerObject = GameObject.FindWithTag("Player");
+        plater = playerObject.GetComponent(typeof(Player)) as Player;
     }
 
     // Update is called once per frame
     void Update()
-    {
+    {   
+        if(!isP1Playing) {
+            player.Move(0);
+            isP1Playing = true;
+        }
+        else if(!isP2Playing) {
+            player.Move(1);
+            isP2Playing
+        }
+        
+
+        /*
         if (isWin)
         {
 
@@ -123,7 +142,28 @@ public class GameManager : MonoBehaviour
                 }
             }
             //===============================================
+            */
         }
+    }
+
+    void MakeMove(GameObject tile, Vector3 pos, bool isMove) {
+        if(isMove) {
+            tile.transform.position = pos;
+        }
+        else {
+            gamePieces[tilesPlaced] = Instantiate(tile, pos, Quaternion.identity) as GameObject;
+            tilesPlaced++;
+        }
+
+        ClearMoveGrid();
+
+        if (!isP1Playing) {
+            isP1Playing = true;
+        }
+        else if(!isP2Playing) {
+            isP2Playing = true;
+        }
+
     }
 
     bool CheckForWin()
@@ -176,31 +216,6 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    //Places the given piece at the given position
-    void PlacePiece(int piece, Vector3 pos) {
-        GameObject tile = TilePieces[piece];
-
-        gamePieces[tilesPlaced] = Instantiate(tile, pos, Quaternion.identity) as GameObject;
-        tilesPlaced++;
-        
-        //Deletes the selection grid after piece has been placed
-        while(selectionGrids.Count != 0) {
-            GameObject temp = selectionGrids.Pop();
-            Destroy(temp);
-        }
-    }
-
-    //Moves the given piece to the given position
-    void MovePiece(GameObject piece, Vector3 pos) {
-        piece.transform.position = pos;
-        
-        //Deletes the selection grid after piece has been moved
-        while(selectionGrids.Count != 0) {
-            GameObject temp = selectionGrids.Pop();
-            Destroy(temp);
-        }
-    }
-
     //Returns a vector of all the valid movement/placement positions
     Vector3[,] GetMovePositions() {
         Vector3[,] positions = new Vector3[tilesPlaced, 6];
@@ -242,6 +257,8 @@ public class GameManager : MonoBehaviour
 
     //Creates the selection grid at valid move positions
     void SetMoveGrid() {
+        ClearMoveGrid();
+
         if (tilesPlaced > 0) {
             Vector3[,] positions = GetMovePositions();
 
@@ -250,11 +267,18 @@ public class GameManager : MonoBehaviour
                     GameObject temp;
                     temp = Instantiate(GridTile, positions[i, j], Quaternion.identity) as GameObject;
                     selectionGrids.Push(temp);
-                    //Debug.Log(temp.transform.position);
                 }
             }
         }
 
         isGridSet = true;
+    }
+
+    //Deletes the selection grid after piece has been placed
+    void ClearMoveGrid() {
+        while(selectionGrids.Count != 0) {
+            GameObject temp = selectionGrids.Pop();
+            Destroy(temp);
+        }
     }
 }

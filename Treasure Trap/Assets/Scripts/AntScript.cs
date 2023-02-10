@@ -9,6 +9,9 @@ public class AntScript : MonoBehaviour
 
     GameManager gameManager;
     GameObject gameController;
+    
+    Player player;
+    GameObject playerObject;
 
     static int idNum = 1;
     public string id;
@@ -20,6 +23,9 @@ public class AntScript : MonoBehaviour
         gameController = GameObject.FindWithTag("GameController");
         gameManager = gameController.GetComponent(typeof(GameManager)) as GameManager;
 
+        playerObject = GameObject.FindWithTag("Player");
+        plater = playerObject.GetComponent(typeof(Player)) as Player;
+
         id = id + idNum;
         idNum++;
         //Debug.Log(id);
@@ -28,6 +34,7 @@ public class AntScript : MonoBehaviour
     void Update() {
         if (Input.GetMouseButtonDown(0) && isMouseOver) {
             gameManager.SetSelectedPiece(this.gameObject);
+            player.SetTile(this.gameObject);
         }
     }
 
