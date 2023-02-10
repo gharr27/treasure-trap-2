@@ -250,7 +250,6 @@ public class GameManager : MonoBehaviour
                     GameObject temp;
                     temp = Instantiate(SelectionTile, positions[i, j], Quaternion.identity) as GameObject;
                     selectionGrids.Push(temp);
-                    //Debug.Log(temp.transform.position);
                 }
             }
         }
