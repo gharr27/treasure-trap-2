@@ -12,8 +12,8 @@ public class GameManager : MonoBehaviour
     //      3. Beetle
     //      4. Spider
     public GameObject[] TilePieces;
-    //GameObject Selected for Moving a tile
-    public GameObject SelectionTile;
+    //GameObject For Creating the Move Grid
+    public GameObject GridTile;
     
     //Boolean that determines if a piece has been selected to move
     public bool isSelectionMade = false;
@@ -248,7 +248,7 @@ public class GameManager : MonoBehaviour
             for (int i = 0; gamePieces[i] != null; i++) {
                 for (int j = 0; j < 6; j++) {
                     GameObject temp;
-                    temp = Instantiate(SelectionTile, positions[i, j], Quaternion.identity) as GameObject;
+                    temp = Instantiate(GridTile, positions[i, j], Quaternion.identity) as GameObject;
                     selectionGrids.Push(temp);
                     //Debug.Log(temp.transform.position);
                 }
