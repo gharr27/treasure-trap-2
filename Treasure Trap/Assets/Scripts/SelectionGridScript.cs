@@ -21,14 +21,13 @@ public class SelectionGridScript : MonoBehaviour
         gameManager = gameController.GetComponent(typeof(GameManager)) as GameManager;
 
         playerObject = GameObject.FindWithTag("Player");
-        plater = playerObject.GetComponent(typeof(Player)) as Player;
+        player = playerObject.GetComponent(typeof(Player)) as Player;
     }
 
     // Update is called once per frame
     void Update()
     {
         if (Input.GetMouseButtonDown(0) && isMouseOver) {
-            gameManager.SetPosition(this.transform.position);
             player.SetPos(this.transform.position);
         }
     }

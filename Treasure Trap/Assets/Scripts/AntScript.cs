@@ -24,7 +24,7 @@ public class AntScript : MonoBehaviour
         gameManager = gameController.GetComponent(typeof(GameManager)) as GameManager;
 
         playerObject = GameObject.FindWithTag("Player");
-        plater = playerObject.GetComponent(typeof(Player)) as Player;
+        player = playerObject.GetComponent(typeof(Player)) as Player;
 
         id = id + idNum;
         idNum++;
@@ -33,7 +33,6 @@ public class AntScript : MonoBehaviour
 
     void Update() {
         if (Input.GetMouseButtonDown(0) && isMouseOver) {
-            gameManager.SetSelectedPiece(this.gameObject);
             player.SetTile(this.gameObject);
         }
     }
