@@ -43,8 +43,8 @@ GameObject:
   - component: {fileID: 1667887224385510344}
   - component: {fileID: 1657577392643022740}
   - component: {fileID: 1708992314161668530}
-  - component: {fileID: 3373865271227318024}
   - component: {fileID: 6027251037380518725}
+  - component: {fileID: 768878153183161473}
   m_Layer: 0
   m_Name: Ant
   m_TagString: Tile
@@ -138,19 +138,6 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 4300000, guid: e78e9e9e77f1fd34b932bf555a8735a7, type: 3}
---- !u!114 &3373865271227318024
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1680997667197133304}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5f591d93a3ae4274ab3cd68aa4c44e32, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  id: Ant
 --- !u!65 &6027251037380518725
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -164,6 +151,20 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1.0044606, y: 0.20037258, z: 0.58545995}
   m_Center: {x: 0, y: 0.100168675, z: -0.00006377697}
+--- !u!114 &768878153183161473
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1680997667197133304}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d56d5b8ecc9ac64cbe85e1041c34d58, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tileName: Ant
+  id: 
 --- !u!1 &5440892732218863449
 GameObject:
   m_ObjectHideFlags: 0

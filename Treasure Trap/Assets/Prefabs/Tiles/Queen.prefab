@@ -73,8 +73,8 @@ GameObject:
   - component: {fileID: 4070623521026848477}
   - component: {fileID: 4070623521025554173}
   - component: {fileID: 4070623521024422973}
-  - component: {fileID: -3060315815629554326}
   - component: {fileID: 2846248620414197707}
+  - component: {fileID: 4973891568350788361}
   m_Layer: 0
   m_Name: Queen
   m_TagString: Tile
@@ -154,20 +154,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &-3060315815629554326
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4070623521026353917}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a3b07dde0476aa5459cd957cc62b15f5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  id: Queen
-  color: 
 --- !u!65 &2846248620414197707
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -181,6 +167,19 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1.0044606, y: 0.20037258, z: 0.5848979}
   m_Center: {x: 0, y: 0.100168675, z: 0.0009319186}
+--- !u!114 &4973891568350788361
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4070623521026353917}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d56d5b8ecc9ac64cbe85e1041c34d58, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tileName: Queen
 --- !u!1 &5791069908920800598
 GameObject:
   m_ObjectHideFlags: 0
