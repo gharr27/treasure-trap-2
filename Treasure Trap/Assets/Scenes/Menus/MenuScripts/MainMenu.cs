@@ -10,6 +10,11 @@ public class MainMenu : MonoBehaviour
         SceneManager.LoadScene("Tutorial");
     }
 
+    public void GoToStoryStrip1()
+    {
+        SceneManager.LoadScene("Story1");
+    }
+
     public void ExitGame()
     {
         Debug.Log("Your Application is Closed");
