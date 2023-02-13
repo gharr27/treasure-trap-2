@@ -14,4 +14,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Menus/StoryStrip2.unity
     guid: bd24a377f99d6064f81aa9defbc9e5ef
+  - enabled: 1
+    path: Assets/Scenes/Menus/GameTitleIntro.unity
+    guid: 5d73052c5f5c9d04c82cb56390829fb2
+  - enabled: 1
+    path: Assets/Scenes/Menus/MainMenu.unity
+    guid: eae8954977432a04a8c5a31994b71e56
   m_configObjects: {}
