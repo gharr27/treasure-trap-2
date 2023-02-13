@@ -17,6 +17,6 @@ public class Story2Menu : MonoBehaviour
 
     public void GoToStoryStrip1()
     {
-        SceneManager.LoadScene("Story1");
+        SceneManager.LoadScene("StoryStrip1");
     }
 }

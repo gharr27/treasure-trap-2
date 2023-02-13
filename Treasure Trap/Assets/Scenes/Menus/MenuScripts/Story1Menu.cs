@@ -7,7 +7,7 @@ public class Story1Menu : MonoBehaviour
 {
     public void GoToStoryStrip2()
     {
-        SceneManager.LoadScene("Story2");
+        SceneManager.LoadScene("StoryStrip2");
     }
 
     public void GoToMainMenu()
