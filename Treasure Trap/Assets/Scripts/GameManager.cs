@@ -72,9 +72,14 @@ public class GameManager : MonoBehaviour
         if (isMovePiece) {
             isPieceSelected = false;
 
+<<<<<<< Updated upstream
             if (!isGridSet) {
                 SetMoveGrid();
             }
+=======
+        isPlaying = false;
+        Debug.Log(isPlaying);
+>>>>>>> Stashed changes
 
             if (isSelectionMade) {
                 MovePiece(selectedPiece, pos);
@@ -90,6 +95,7 @@ public class GameManager : MonoBehaviour
         isSelectionMade = true;
     }
 
+<<<<<<< Updated upstream
     public void SetSelectedPiece(GameObject piece) {
         selectedPiece = piece;
         isMovePiece = true;
@@ -115,6 +121,12 @@ public class GameManager : MonoBehaviour
         else if (Input.GetKeyDown(KeyCode.Alpha5)) {
             pieceSelection = 4;
             isPieceSelected = true;
+=======
+        Debug.Log(tileScript.GetId());
+        //Check if Queen is surrounded
+        if(tileScript.GetId() == "Queen1") {
+            isWin = isSurrounded(test);
+>>>>>>> Stashed changes
         }
     }
 
