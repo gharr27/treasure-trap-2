@@ -65,6 +65,9 @@ public class GameManager : MonoBehaviour
                 }
             }
         }
+        else {
+            Debug.Log("Game Over");
+        }
 
         if(Input.GetKeyDown(KeyCode.Space)) {
             Debug.Log(gameGrid.Count);
@@ -73,12 +76,24 @@ public class GameManager : MonoBehaviour
 
     public void MakeMove(GameObject tile, Vector3 pos, bool isMove) {
         if (isMove) {
+            gameGrid.Remove(tile.transform.position);
             tile.transform.position = pos;
+
+            GameGridCell gridCell = new GameGridCell(true, tile);
+
+            if (!gameGrid.ContainsKey(pos)) {
+                gameGrid.Add(pos, gridCell);
+            }
+            else {
+                gameGrid[pos] = gridCell;
+            }
+
             UpdateGameGrid(pos);
         }
         else {
-            gamePieces[tilesPlaced] = Instantiate(tile, pos, Quaternion.identity) as GameObject;
-            GameGridCell gridCell = new GameGridCell(true, tile);
+            GameObject tilePiece = Instantiate(tile, pos, Quaternion.identity) as GameObject;
+            gamePieces[tilesPlaced] = tilePiece;
+            GameGridCell gridCell = new GameGridCell(true, tilePiece);
             
             if(gameGrid.ContainsKey(pos)) {
                 gameGrid[pos] = gridCell;
@@ -92,7 +107,7 @@ public class GameManager : MonoBehaviour
         }
 
         ClearMoveGrid();
-        CheckForWin();
+        isWin = CheckForWin();
 
         isPlaying = false;
 
@@ -215,37 +230,44 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    void CheckForWin()
-    {
-        Debug.Log(1);
-        Vector3 test = new Vector3(0, 0, 0);
-        TileScript tileScript =  gameGrid[test].tile.GetComponent(typeof(TileScript)) as TileScript;
+    bool CheckForWin() {
 
-        Debug.Log(tileScript.GetId());
-        //Check if Queen is surrounded
-        if(tileScript.GetId() == "Queen1") {
-            Debug.Log(2);
-            isWin = isSurrounded(test);
+        foreach (GameGridCell tile in gameGrid.Values) {
+            if (tile.isFilled) {
+                Vector3 pos = tile.tile.transform.position;
+
+                TileScript tileScript = tile.tile.GetComponent(typeof(TileScript)) as TileScript;
+
+                //Check if Queen is surrounded
+                if (tileScript.GetId() == "Queen1" || tileScript.GetId() == "Queen2") {
+                    Debug.Log(tileScript.GetId());
+                    Debug.Log(pos);
+                    if(IsSurrounded(pos)) {
+                        return true;
+                    }
+                    
+                }
+            }
         }
+        return false;
     }
 
-    bool isSurrounded(Vector3 pos) {
+    bool IsSurrounded(Vector3 pos) {
         float x = pos.x;
         float y = pos.y;
         float z = pos.z;
 
         //Above
         Vector3 newPos = new Vector3(x + 1, y, z);
-        if (!gameGrid.ContainsKey(newPos)) {
+        if (gameGrid.ContainsKey(newPos)) {
             if (!gameGrid[newPos].isFilled) {
-                Debug.Log("test");
                 return false;
             }
         }
 
         //Below
         newPos = new Vector3(x - 1, y, z);
-        if (!gameGrid.ContainsKey(newPos)) {
+        if (gameGrid.ContainsKey(newPos)) {
             if (!gameGrid[newPos].isFilled) {
                 return false;
             }
@@ -253,7 +275,7 @@ public class GameManager : MonoBehaviour
 
         //Top Left
         newPos = new Vector3(x + .5f, y, z + 1);
-        if (!gameGrid.ContainsKey(newPos)) {
+        if (gameGrid.ContainsKey(newPos)) {
             if (!gameGrid[newPos].isFilled) {
                 return false;
             }
@@ -261,7 +283,7 @@ public class GameManager : MonoBehaviour
 
         //Top Right
         newPos = new Vector3(x + .5f, y, z - 1);
-        if (!gameGrid.ContainsKey(newPos)) {
+        if (gameGrid.ContainsKey(newPos)) {
             if (!gameGrid[newPos].isFilled) {
                 return false;
             }
@@ -269,7 +291,7 @@ public class GameManager : MonoBehaviour
 
         //Bottom Left
         newPos = new Vector3(x - .5f, y, z + 1);
-        if (!gameGrid.ContainsKey(newPos)) {
+        if (gameGrid.ContainsKey(newPos)) {
             if (!gameGrid[newPos].isFilled) {
                 return false;
             }
@@ -277,7 +299,7 @@ public class GameManager : MonoBehaviour
 
         //Bottom Right
         newPos = new Vector3(x - .5f, y, z - 1);
-        if (!gameGrid.ContainsKey(newPos)) {
+        if (gameGrid.ContainsKey(newPos)) {
             if (!gameGrid[newPos].isFilled) {
                 return false;
             }

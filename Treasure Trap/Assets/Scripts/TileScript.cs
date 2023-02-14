@@ -32,40 +32,38 @@ public class TileScript : MonoBehaviour
         playerObject = GameObject.FindWithTag("Player");
         player = playerObject.GetComponent(typeof(Player)) as Player;
 
-        Debug.Log(tileName);
-        Debug.Log(queenId);
-
-        //if(tileName == "Queen") {
-        //    id = tileName += queenId;
-        //    queenId++;
-        //}
-        //else if(tileName == "Ant") {
-        //    id = tileName += antId;
-        //    antId++;
-        //}
-        //else if (tileName == "Grasshopper") {
-        //    id = tileName += grasshopperId;
-        //    grasshopperId++;
-        //}
-        //else if (tileName == "Beetle") {
-        //    id = tileName += beetleId;
-        //    beetleId++;
-        //}
-        //else if (tileName == "Spider") {
-        //    id = tileName += spiderId;
-        //    spiderId++;
-        //}
+        if (tileName == "Queen") {
+            id = tileName + queenId;
+            queenId++;
+        }
+        else if (tileName == "Ant") {
+            id = tileName + antId;
+            antId++;
+        }
+        else if (tileName == "Grasshopper") {
+            id = tileName + grasshopperId;
+            grasshopperId++;
+        }
+        else if (tileName == "Beetle") {
+            id = tileName + beetleId;
+            beetleId++;
+        }
+        else if (tileName == "Spider") {
+            id = tileName + spiderId;
+            spiderId++;
+        }
     }
 
     void Update() {
         if (Input.GetMouseButtonDown(0) && isMouseOver)
         {
             player.SetTile(this.gameObject);
+            Debug.Log(id);
         }
     }
 
     public string GetId() {
-        return tileName + queenId;
+        return id;
     }
 
     void OnMouseOver() {
