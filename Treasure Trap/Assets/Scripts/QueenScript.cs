@@ -10,6 +10,9 @@ public class QueenScript : MonoBehaviour
     GameManager gameManager;
     GameObject gameController;
 
+    Player player;
+    GameObject playerObject;
+
     static int idNum = 1;
     public string id;
 
@@ -20,14 +23,16 @@ public class QueenScript : MonoBehaviour
         gameController = GameObject.FindWithTag("GameController");
         gameManager = gameController.GetComponent(typeof(GameManager)) as GameManager;
 
+        playerObject = GameObject.FindWithTag("Player");
+        player = playerObject.GetComponent(typeof(Player)) as Player;
+
         id = id + idNum;
         idNum++;
-        //Debug.Log(id);
     }
 
     void Update() {
         if (Input.GetMouseButtonDown(0) && isMouseOver) {
-            gameManager.SetSelectedPiece(this.gameObject);
+            player.SetTile(this.gameObject);
         }
     }
 
