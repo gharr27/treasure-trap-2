@@ -33,7 +33,12 @@ public class GameManager : MonoBehaviour
     bool isMovePiece = false;
     bool isGridSet = false;
 
+<<<<<<< Updated upstream
     Vector3 pos = new Vector3(0, 0, 0);
+=======
+    Dictionary<Vector3, GameGridCell> gameGrid = new Dictionary<Vector3, GameGridCell>();
+    List<keyValuePair<float, bool>> keyValues = new List<keyValuePair<float, bool>>();
+>>>>>>> Stashed changes
 
     // Start is called before the first frame update
     void Start()
@@ -90,10 +95,130 @@ public class GameManager : MonoBehaviour
         }
     }
 
+<<<<<<< Updated upstream
     public void SetPosition(Vector3 position) {
         pos = position;
         isSelectionMade = true;
     }
+=======
+   
+    // Checks the surrounding of the selected tile and if the position is filled then it adds a true to a list at that postion. 
+    void CheckSurrounding()
+    {
+        float x = pos.x;
+        float y = pos.y;
+        float z = pos.z;
+
+        //Above
+        Vector3 newPos = new Vector3(x + 1, y, z);
+        if (!gameGrid.ContainsKey(newPos))
+        {
+            if (!gameGrid[newPos].isFilled)
+            {
+                keyValues.Add(newPos, true);
+            }
+        }
+        else
+        {
+            keyValues.Add(newPos, false);
+        }
+        //Below
+        newPos = new Vector3(x - 1, y, z);
+        if (!gameGrid.ContainsKey(newPos))
+        {
+            if (!gameGrid[newPos].isFilled)
+            {
+                keyValues.Add(newPos, true);
+            }
+        }
+        else
+        {
+            keyValues.Add(newPos, false);
+        }
+
+        //Top Left
+        newPos = new Vector3(x + .5f, y, z + 1);
+        if (!gameGrid.ContainsKey(newPos))
+        {
+            if (!gameGrid[newPos].isFilled)
+            {
+                keyValues.Add(newPos, true);
+            }
+        }
+        else
+        {
+            keyValues.Add(newPos, false);
+        }
+
+        //Top Right
+        newPos = new Vector3(x + .5f, y, z - 1);
+        if (!gameGrid.ContainsKey(newPos))
+        {
+            if (!gameGrid[newPos].isFilled)
+            {
+                keyValues.Add(newPos, true);
+            }
+        }
+        else
+        {
+            keyValues.Add(newPos, false);
+        }
+
+        //Bottom Left
+        newPos = new Vector3(x - .5f, y, z + 1);
+        if (!gameGrid.ContainsKey(newPos))
+        {
+            if (!gameGrid[newPos].isFilled)
+            {
+                keyValues.Add(newPos, true);
+            }
+        }
+        else
+        {
+            keyValues.Add(newPos, false);
+        }
+
+        //Bottom Right
+        newPos = new Vector3(x - .5f, y, z - 1);
+        if (!gameGrid.ContainsKey(newPos))
+        {
+            if (!gameGrid[newPos].isFilled)
+            {
+                keyValues.Add(newPos, true);
+            }
+        }
+        else
+        {
+            keyValues.Add(newPos, false);
+        }
+    }
+    /* Shows available moves for the queen*/
+    void QueenPossibleMoves()
+    {
+        foreach ()
+        {
+            if (/*one or more positons is true in a row and the rest are false*/)
+            {
+                /*create selection grid tiles on the first instance of false before and after*/
+            }
+            else if (/*a true followed by two falses and then a true and there are a total of three trues*/)
+            {
+                /*fill the positons where the two falses in a row are*/
+            }
+            else if(/*a true followed by one false and then true and there are a total of three trues*/){
+                /*fill the positons where the two falses in a row are*/
+            }
+        }
+
+    }
+
+
+    void CheckForWin()
+    {
+        Debug.Log(1);
+        Vector3 test = new Vector3(0, 0, 0);
+        TileScript tileScript =  gameGrid[test].tile.GetComponent(typeof(TileScript)) as TileScript;
+>>>>>>> Stashed changes
 
 <<<<<<< Updated upstream
     public void SetSelectedPiece(GameObject piece) {
