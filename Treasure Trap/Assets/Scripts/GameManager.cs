@@ -79,6 +79,7 @@ public class GameManager : MonoBehaviour
             Debug.Log("Game Over");
         }
 
+
         if(Input.GetKeyDown(KeyCode.Space)) {
             Debug.Log(gameGrid.Count);
         }
@@ -86,6 +87,32 @@ public class GameManager : MonoBehaviour
 
     public void MakeMove(GameObject tile, Vector3 pos, bool isMove) {
         if (isMove) {
+            tile.transform.position = pos;
+            UpdateGameGrid(pos);
+        }
+        else {
+            gamePieces[tilesPlaced] = Instantiate(tile, pos, Quaternion.identity) as GameObject;
+            GameGridCell gridCell = new GameGridCell(true, tile);
+            
+            if(gameGrid.ContainsKey(pos)) {
+                gameGrid[pos] = gridCell;
+            }
+            else {
+                gameGrid.Add(pos, gridCell);
+            }
+            tilesPlaced++;
+
+            UpdateGameGrid(pos);
+        }
+
+        ClearMoveGrid();
+        CheckForWin();
+
+        isPlaying = false;
+
+    }
+
+    void UpdateGameGrid(Vector3 pos) {
             gameGrid.Remove(tile.transform.position);
             tile.transform.position = pos;
             
@@ -124,114 +151,6 @@ public class GameManager : MonoBehaviour
     // Checks the surrounding of the selected tile and if the position is filled then it adds a true to a list at that postion. 
     void CheckSurrounding()
     {
-        float x = pos.x;
-        float y = pos.y;
-        float z = pos.z;
-
-        //Above
-        Vector3 newPos = new Vector3(x + 1, y, z);
-        if (!gameGrid.ContainsKey(newPos))
-        {
-            if (!gameGrid[newPos].isFilled)
-            {
-                keyValues.Add(newPos, true);
-            }
-        }
-        else
-        {
-            keyValues.Add(newPos, false);
-        }
-        //Below
-        newPos = new Vector3(x - 1, y, z);
-        if (!gameGrid.ContainsKey(newPos))
-        {
-            if (!gameGrid[newPos].isFilled)
-            {
-                keyValues.Add(newPos, true);
-            }
-        }
-        else
-        {
-            keyValues.Add(newPos, false);
-        }
-
-        //Top Left
-        newPos = new Vector3(x + .5f, y, z + 1);
-        if (!gameGrid.ContainsKey(newPos))
-        {
-            if (!gameGrid[newPos].isFilled)
-            {
-                keyValues.Add(newPos, true);
-            }
-        }
-        else
-        {
-            keyValues.Add(newPos, false);
-        }
-
-        //Top Right
-        newPos = new Vector3(x + .5f, y, z - 1);
-        if (!gameGrid.ContainsKey(newPos))
-        {
-            if (!gameGrid[newPos].isFilled)
-            {
-                keyValues.Add(newPos, true);
-            }
-        }
-        else
-        {
-            keyValues.Add(newPos, false);
-        }
-
-        //Bottom Left
-        newPos = new Vector3(x - .5f, y, z + 1);
-        if (!gameGrid.ContainsKey(newPos))
-        {
-            if (!gameGrid[newPos].isFilled)
-            {
-                keyValues.Add(newPos, true);
-            }
-        }
-        else
-        {
-            keyValues.Add(newPos, false);
-        }
-
-        //Bottom Right
-        newPos = new Vector3(x - .5f, y, z - 1);
-        if (!gameGrid.ContainsKey(newPos))
-        {
-            if (!gameGrid[newPos].isFilled)
-            {
-                keyValues.Add(newPos, true);
-            }
-        }
-        else
-        {
-            keyValues.Add(newPos, false);
-        }
-    }
-    /* Shows available moves for the queen*/
-    void QueenPossibleMoves()
-    {
-        foreach ()
-        {
-            if (/*one or more positons is true in a row and the rest are false*/)
-            {
-                /*create selection grid tiles on the first instance of false before and after*/
-            }
-            else if (/*a true followed by two falses and then a true and there are a total of three trues*/)
-            {
-                /*fill the positons where the two falses in a row are*/
-            }
-            else if(/*a true followed by one false and then true and there are a total of three trues*/){
-                /*fill the positons where the two falses in a row are*/
-            }
-        }
-
-    }
-    
-    void UpdateGameGrid(Vector3 pos) {
         float x = pos.x;
         float y = pos.y;
         float z = pos.z;
@@ -348,6 +267,328 @@ public class GameManager : MonoBehaviour
         }
     }
 
+
+    // Checks the surrounding of the selected tile and if the position is filled then it adds a true to a list at that postion. 
+    Vector3[] ValidateMoves(GameObject tile)
+    {
+        Vector3 pos = tile.transform.position;
+
+        float x = pos.x;
+        float y = pos.y;
+        float z = pos.z;
+
+
+        Vector3[,] movePositions = GetMovePositions();
+        Vector3<MovePosition>[6] sides;
+        Vector3 storedPositions;
+
+        for (int i = 1; i < movePositions.Length(); i++)
+        {
+            storedPositions = movePositions[i];
+
+            //Above
+            Vector3 newPos = new Vector3(x + 1, y, z);
+            if (gameGrid[newPos].isFilled)
+            {
+                sides.push(MovePosition(true, newPos));
+            }
+            else
+            {
+                sides.push(MovePosition(false, newPos));
+            }
+
+
+            //Below
+            newPos = new Vector3(x - 1, y, z);
+            if (gameGrid[newPos].isFilled)
+            {
+                sides.push(MovePosition(true, newPos));
+            }
+            else
+            {
+                sides.push(MovePosition(false, newPos));
+            }
+
+
+            //Top Left
+            newPos = new Vector3(x + .5f, y, z + 1);
+            if (gameGrid[newPos].isFilled)
+            {
+                sides.push(MovePosition(true, newPos));
+            }
+            else
+            {
+                sides.push(MovePosition(false, newPos));
+            }
+
+
+            //Bottom Left
+            newPos = new Vector3(x - .5f, y, z + 1);
+            if (gameGrid[newPos].isFilled)
+            {
+                sides.push(MovePosition(true, newPos));
+            }
+            else
+            {
+                sides.push(MovePosition(false, newPos));
+            }
+
+
+            //Top Right
+            newPos = new Vector3(x + .5f, y, z - 1);
+            if (gameGrid[newPos].isFilled)
+            {
+                sides.push(MovePosition(true, newPos));
+            }
+            else
+            {
+                sides.push(MovePosition(false, newPos));
+            }
+
+
+            //Bottom Right
+            newPos = new Vector3(x - .5f, y, z - 1);
+            if (gameGrid[newPos].isFilled)
+            {
+                sides.push(MovePosition(true, newPos));
+            }
+            else
+            {
+                sides.push(MovePosition(false, newPos));
+            }
+
+
+
+
+            //if (sides[i].isFilled)
+            //{
+            //    returnVector.push(sides[i].pos)
+            //}
+
+        }
+    }
+
+    /* Shows available moves for the queen*/
+    Vector3[] QueenPossibleMoves(Vector3<MovePosition>[6] sides)
+    {
+        Vector3[] validMovePositions;
+        int i = 0;
+        trueCount = 0;
+        falseCount = 0;
+        for(int i =0; i< sides.Length; i++){
+            if(i=0){
+                validMovePositions.push(sides.Length-1);
+                validMovePositions.push(sides[i]+1);
+            }
+            else if(i= sides.Length - 1) {
+                validMovePositions.push(sides[0]);
+                validMovePositions.push(i - 1);
+            } 
+
+      
+        }
+
+
+        if (trueCount =1 && trueCount<5 && falseCount ==0) /*one or more positons is true in a row and the rest are false*/
+        {
+            /*create selection grid tiles on the first instance of false before and after*/
+        }
+        else if (/*a true followed by two falses and then a true and there are a total of three trues*/)
+        {
+            /*fill the positons where the two falses in a row are*/
+        }
+        else if (/*a true followed by one false and then true and there are a total of three trues*/)
+        {
+            /*fill the positons where the two falses in a row are*/
+        }
+
+    }
+    
+    void UpdateGameGrid(Vector3 pos) {
+        float x = pos.x;
+        float y = pos.y;
+        float z = pos.z;
+
+        GameGridCell gridCell = new GameGridCell();
+
+    void CheckForWin()
+    {
+        Debug.Log(1);
+        Vector3 test = new Vector3(0, 0, 0);
+        TileScript tileScript =  gameGrid[test].tile.GetComponent(typeof(TileScript)) as TileScript;
+
+        Debug.Log(tileScript.GetId());
+        //Check if Queen is surrounded
+        if(tileScript.GetId() == "Queen1") {
+            Debug.Log(2);
+            isWin = isSurrounded(test);
+        }
+    }
+
+    bool isSurrounded(Vector3 pos) {
+        float x = pos.x;
+        float y = pos.y;
+        float z = pos.z;
+
+        //Above
+        Vector3 newPos = new Vector3(x + 1, y, z);
+        if (!gameGrid.ContainsKey(newPos)) {
+            if (!gameGrid[newPos].isFilled) {
+                Debug.Log("test");
+                return false;
+            }
+        }
+
+        //Below
+        newPos = new Vector3(x - 1, y, z);
+        if (!gameGrid.ContainsKey(newPos)) {
+            if (!gameGrid[newPos].isFilled) {
+                return false;
+
+        //Above
+        Vector3 newPos = new Vector3(x + 1, y, z);
+        if (!gameGrid.ContainsKey(newPos)) {
+            gameGrid.Add(newPos, gridCell);
+        }
+
+        //Below
+        newPos = new Vector3(x - 1, y, z);
+        if (!gameGrid.ContainsKey(newPos)) {
+            gameGrid.Add(newPos, gridCell);
+        }
+
+        //Top Left
+        newPos = new Vector3(x + .5f, y, z + 1);
+        if (!gameGrid.ContainsKey(newPos)) {
+            gameGrid.Add(newPos, gridCell);
+        }
+
+        //Top Right
+        newPos = new Vector3(x + .5f, y, z - 1);
+        if (!gameGrid.ContainsKey(newPos)) {
+            gameGrid.Add(newPos, gridCell);
+        }
+
+        //Bottom Left
+        newPos = new Vector3(x - .5f, y, z + 1);
+        if (!gameGrid.ContainsKey(newPos)) {
+            gameGrid.Add(newPos, gridCell);
+        }
+
+        //Bottom Right
+        newPos = new Vector3(x - .5f, y, z - 1);
+        if (!gameGrid.ContainsKey(newPos)) {
+            gameGrid.Add(newPos, gridCell);
+        }
+
+        //RemoveUnnecessaryGridSpaces();
+
+    }
+
+    //Currently Unused, if we can get it working this function will deleted spaces that are not directly connected to the game tiles on the grid
+    void RemoveUnnecessaryGridSpaces() {
+        Debug.Log(gameGrid.Count);
+
+        foreach (Vector3 key in gameGrid.Keys) {
+            float x = key.x;
+            float y = key.y;
+            float z = key.z;
+
+            bool isNecessary = false;
+
+            if (!gameGrid[key].isFilled) {
+
+                //Above
+                Vector3 newPos = new Vector3(x + 1, y, z);
+                if (gameGrid.ContainsKey(newPos) && !isNecessary) {
+                    if (gameGrid[newPos].isFilled) {
+                        isNecessary = true;
+                    }
+                }
+
+                //Below
+                newPos = new Vector3(x - 1, y, z);
+                if (gameGrid.ContainsKey(newPos) && !isNecessary) {
+                    if (gameGrid[newPos].isFilled) {
+                        isNecessary = true;
+                    }
+                }
+
+                //Top Left
+                newPos = new Vector3(x + .5f, y, z + 1);
+                if (gameGrid.ContainsKey(newPos) && !isNecessary) {
+                    if (gameGrid[newPos].isFilled) {
+                        isNecessary = true;
+                    }
+                }
+
+                //Top Right
+                newPos = new Vector3(x + .5f, y, z - 1);
+                if (gameGrid.ContainsKey(newPos) && !isNecessary) {
+                    if (gameGrid[newPos].isFilled) {
+                        isNecessary = true;
+                    }
+                }
+
+                //Bottom Left
+                newPos = new Vector3(x - .5f, y, z + 1);
+                if (gameGrid.ContainsKey(newPos) && !isNecessary) {
+                    if (gameGrid[newPos].isFilled) {
+                        isNecessary = true;
+                    }
+                }
+
+                //Bottom Right
+                newPos = new Vector3(x - .5f, y, z - 1);
+                if (gameGrid.ContainsKey(newPos) && !isNecessary) {
+                    if (gameGrid[newPos].isFilled) {
+                        isNecessary = true;
+                    }
+                }
+
+                if (!isNecessary) {
+                    gameGrid.Remove(key);
+                }
+
+                isNecessary = false;
+            }
+        }
+
+        //Top Left
+        newPos = new Vector3(x + .5f, y, z + 1);
+        if (!gameGrid.ContainsKey(newPos)) {
+            if (!gameGrid[newPos].isFilled) {
+                return false;
+            }
+        }
+
+        //Top Right
+        newPos = new Vector3(x + .5f, y, z - 1);
+        if (!gameGrid.ContainsKey(newPos)) {
+            if (!gameGrid[newPos].isFilled) {
+                return false;
+            }
+        }
+
+        //Bottom Left
+        newPos = new Vector3(x - .5f, y, z + 1);
+        if (!gameGrid.ContainsKey(newPos)) {
+            if (!gameGrid[newPos].isFilled) {
+                return false;
+            }
+        }
+
+        //Bottom Right
+        newPos = new Vector3(x - .5f, y, z - 1);
+        if (!gameGrid.ContainsKey(newPos)) {
+            if (!gameGrid[newPos].isFilled) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
     bool CheckForWin() {
 
         foreach (GameGridCell tile in gameGrid.Values) {
@@ -425,7 +666,6 @@ public class GameManager : MonoBehaviour
 
         return true;
     }
-
     //Returns a vector of all the valid movement/placement positions
     Vector3[,] GetMovePositions() {
         Vector3[,] positions = new Vector3[tilesPlaced, 6];
@@ -468,6 +708,9 @@ public class GameManager : MonoBehaviour
     //Creates the selection grid at valid move positions
     public void SetMoveGrid() {
         ClearMoveGrid();
+
+        Vector3[] validPos;
+
 
         if (tilesPlaced > 0) {
             Vector3[,] positions = GetMovePositions();
