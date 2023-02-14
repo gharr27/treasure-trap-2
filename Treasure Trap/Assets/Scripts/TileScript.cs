@@ -55,8 +55,7 @@ public class TileScript : MonoBehaviour
     }
 
     void Update() {
-        if (Input.GetMouseButtonDown(0) && isMouseOver)
-        {
+        if (Input.GetMouseButtonDown(0) && isMouseOver) {
             player.SetTile(this.gameObject);
             Debug.Log(id);
         }
