@@ -4,103 +4,122 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    //Holds all the Game Tile Pieces
-    // Indexes:
-    //      0. Queen
-    //      1. Ant
-    //      2. Grasshopper
-    //      3. Beetle
-    //      4. Spider
-    public GameObject[] TilePieces;
-    public GameObject SelectionTile;
+
+    private class GameGridCell {
+        public bool isFilled;
+        public GameObject tile;
+
+        public GameGridCell() {
+            isFilled = false;
+            tile = null;
+        }
+
+        public GameGridCell(bool isFilled, GameObject tile) {
+            this.isFilled = isFilled;
+            this.tile = tile;
+        }
+    }
     
-    public bool isSelectionMade = false;
+    private class MovePosition {
+        public bool isFilled;
+        public Vector3 pos;
+        
+        MovePosition(bool isFilled, Vector3 pos) {
+            this.isFilled = isFilled;
+            this.pos = pos;
+        }
+    }
+
+    //Contains Grid Prefab for creating MoveGrid
+    public GameObject GridTile;
 
     const int PIECE_COUNT = 22;
 
     private int tilesPlaced = 0;
-    private GameObject[] gamePieces;
 
-    private GameObject selectedPiece;
+    private GameObject[] gamePieces;
     private Stack<GameObject> selectionGrids;
 
-    Ray ray;
-    RaycastHit hit;
+    bool isPlaying = false;
+    bool isWin = false;
 
-    int pieceSelection;
+    int turnCounter = 0;
 
-    bool isPieceSelected = false;
-    bool isMovePiece = false;
-    bool isGridSet = false;
+    Player player;
+    GameObject playerObject;
 
-<<<<<<< Updated upstream
-    Vector3 pos = new Vector3(0, 0, 0);
-=======
     Dictionary<Vector3, GameGridCell> gameGrid = new Dictionary<Vector3, GameGridCell>();
-    List<keyValuePair<float, bool>> keyValues = new List<keyValuePair<float, bool>>();
->>>>>>> Stashed changes
 
     // Start is called before the first frame update
     void Start()
     {
         selectionGrids = new Stack<GameObject>();
         gamePieces = new GameObject[PIECE_COUNT];
+
+        playerObject = GameObject.FindWithTag("Player");
+        player = playerObject.GetComponent(typeof(Player)) as Player;
     }
 
     // Update is called once per frame
     void Update()
     {
-        //Placing A Piece
-        IsPieceSelected();
+        if (!isWin) {
+            if (!isPlaying) {
+                StartCoroutine(player.Move(turnCounter));
+                isPlaying = true;
+                if (turnCounter == 0) {
+                    turnCounter++;
+                }
+                else {
+                    turnCounter--;
+                }
+            }
+        }
+        else {
+            Debug.Log("Game Over");
+        }
 
-        if (isPieceSelected) {
+        if(Input.GetKeyDown(KeyCode.Space)) {
+            Debug.Log(gameGrid.Count);
+        }
+    }
 
-            if (tilesPlaced == 0) {
-                PlacePiece(pieceSelection, pos);
-                isPieceSelected = false;
+    public void MakeMove(GameObject tile, Vector3 pos, bool isMove) {
+        if (isMove) {
+            gameGrid.Remove(tile.transform.position);
+            tile.transform.position = pos;
+            
+            GameGridCell gridCell = new GameGridCell(true, tile);
+          
+            if (!gameGrid.ContainsKey(pos)) {
+                gameGrid.Add(pos, gridCell);
             }
             else {
-                if (!isGridSet){
-                    SetMoveGrid();
-                }
-
-                if (isSelectionMade) {
-                    PlacePiece(pieceSelection, pos);
-                    isPieceSelected = false;
-                    isGridSet = false;
-                    isSelectionMade = false;
-                }
+                gameGrid[pos] = gridCell;
             }
+            
+            UpdateGameGrid(pos);
         }
-
-        //Moving A Piece
-        if (isMovePiece) {
-            isPieceSelected = false;
-
-<<<<<<< Updated upstream
-            if (!isGridSet) {
-                SetMoveGrid();
+        else {
+            GameObject tilePiece = Instantiate(tile, pos, Quaternion.identity) as GameObject;
+            gamePieces[tilesPlaced] = tilePiece;
+            GameGridCell gridCell = new GameGridCell(true, tilePiece);
+            
+            if(gameGrid.ContainsKey(pos)) {
+                gameGrid[pos] = gridCell;
             }
-=======
+            else {
+                gameGrid.Add(pos, gridCell);
+            }
+            tilesPlaced++;
+
+            UpdateGameGrid(pos);
+        }
+        
+        ClearMoveGrid();
+        isWin = CheckForWin();
+        
         isPlaying = false;
-        Debug.Log(isPlaying);
->>>>>>> Stashed changes
-
-            if (isSelectionMade) {
-                MovePiece(selectedPiece, pos);
-                isMovePiece = false;
-                isGridSet = false;
-                isSelectionMade = false;
-            }
-        }
-    }
-
-<<<<<<< Updated upstream
-    public void SetPosition(Vector3 position) {
-        pos = position;
-        isSelectionMade = true;
-    }
-=======
    
     // Checks the surrounding of the selected tile and if the position is filled then it adds a true to a list at that postion. 
     void CheckSurrounding()
@@ -211,129 +230,263 @@ public class GameManager : MonoBehaviour
         }
 
     }
+    
+    void UpdateGameGrid(Vector3 pos) {
+        float x = pos.x;
+        float y = pos.y;
+        float z = pos.z;
 
+        GameGridCell gridCell = new GameGridCell();
 
-    void CheckForWin()
-    {
-        Debug.Log(1);
-        Vector3 test = new Vector3(0, 0, 0);
-        TileScript tileScript =  gameGrid[test].tile.GetComponent(typeof(TileScript)) as TileScript;
->>>>>>> Stashed changes
-
-<<<<<<< Updated upstream
-    public void SetSelectedPiece(GameObject piece) {
-        selectedPiece = piece;
-        isMovePiece = true;
-    }
-
-    void IsPieceSelected() {
-        if (Input.GetKeyDown(KeyCode.Alpha1)) {
-            pieceSelection = 0;
-            isPieceSelected = true;
+        //Above
+        Vector3 newPos = new Vector3(x + 1, y, z);
+        if (!gameGrid.ContainsKey(newPos)) {
+            gameGrid.Add(newPos, gridCell);
         }
-        else if (Input.GetKeyDown(KeyCode.Alpha2)) {
-            pieceSelection = 1;
-            isPieceSelected = true;
-        }
-        else if (Input.GetKeyDown(KeyCode.Alpha3)) {
-            pieceSelection = 2;
-            isPieceSelected = true;
-        }
-        else if (Input.GetKeyDown(KeyCode.Alpha4)) {
-            pieceSelection = 3;
-            isPieceSelected = true;
-        }
-        else if (Input.GetKeyDown(KeyCode.Alpha5)) {
-            pieceSelection = 4;
-            isPieceSelected = true;
-=======
-        Debug.Log(tileScript.GetId());
-        //Check if Queen is surrounded
-        if(tileScript.GetId() == "Queen1") {
-            isWin = isSurrounded(test);
->>>>>>> Stashed changes
-        }
-    }
 
-    void PlacePiece(int piece, Vector3 pos) {
-        GameObject tile = TilePieces[piece];
-
-        gamePieces[tilesPlaced] = Instantiate(tile, pos, Quaternion.identity) as GameObject;
-        tilesPlaced++;
-
-        while(selectionGrids.Count != 0) {
-            GameObject temp = selectionGrids.Pop();
-            Destroy(temp);
+        //Below
+        newPos = new Vector3(x - 1, y, z);
+        if (!gameGrid.ContainsKey(newPos)) {
+            gameGrid.Add(newPos, gridCell);
         }
+
+        //Top Left
+        newPos = new Vector3(x + .5f, y, z + 1);
+        if (!gameGrid.ContainsKey(newPos)) {
+            gameGrid.Add(newPos, gridCell);
+        }
+
+        //Top Right
+        newPos = new Vector3(x + .5f, y, z - 1);
+        if (!gameGrid.ContainsKey(newPos)) {
+            gameGrid.Add(newPos, gridCell);
+        }
+
+        //Bottom Left
+        newPos = new Vector3(x - .5f, y, z + 1);
+        if (!gameGrid.ContainsKey(newPos)) {
+            gameGrid.Add(newPos, gridCell);
+        }
+
+        //Bottom Right
+        newPos = new Vector3(x - .5f, y, z - 1);
+        if (!gameGrid.ContainsKey(newPos)) {
+            gameGrid.Add(newPos, gridCell);
+        }
+
+        //RemoveUnnecessaryGridSpaces();
 
     }
 
-    void MovePiece(GameObject piece, Vector3 pos) {
-        piece.transform.position = pos;
-        //test
-        while(selectionGrids.Count != 0) {
-            GameObject temp = selectionGrids.Pop();
-            Destroy(temp);
+    //Currently Unused, if we can get it working this function will deleted spaces that are not directly connected to the game tiles on the grid
+    void RemoveUnnecessaryGridSpaces() {
+        Debug.Log(gameGrid.Count);
+
+        foreach (Vector3 key in gameGrid.Keys) {
+            float x = key.x;
+            float y = key.y;
+            float z = key.z;
+
+            bool isNecessary = false;
+
+            if (!gameGrid[key].isFilled) {
+
+                //Above
+                Vector3 newPos = new Vector3(x + 1, y, z);
+                if (gameGrid.ContainsKey(newPos) && !isNecessary) {
+                    if (gameGrid[newPos].isFilled) {
+                        isNecessary = true;
+                    }
+                }
+
+                //Below
+                newPos = new Vector3(x - 1, y, z);
+                if (gameGrid.ContainsKey(newPos) && !isNecessary) {
+                    if (gameGrid[newPos].isFilled) {
+                        isNecessary = true;
+                    }
+                }
+
+                //Top Left
+                newPos = new Vector3(x + .5f, y, z + 1);
+                if (gameGrid.ContainsKey(newPos) && !isNecessary) {
+                    if (gameGrid[newPos].isFilled) {
+                        isNecessary = true;
+                    }
+                }
+
+                //Top Right
+                newPos = new Vector3(x + .5f, y, z - 1);
+                if (gameGrid.ContainsKey(newPos) && !isNecessary) {
+                    if (gameGrid[newPos].isFilled) {
+                        isNecessary = true;
+                    }
+                }
+
+                //Bottom Left
+                newPos = new Vector3(x - .5f, y, z + 1);
+                if (gameGrid.ContainsKey(newPos) && !isNecessary) {
+                    if (gameGrid[newPos].isFilled) {
+                        isNecessary = true;
+                    }
+                }
+
+                //Bottom Right
+                newPos = new Vector3(x - .5f, y, z - 1);
+                if (gameGrid.ContainsKey(newPos) && !isNecessary) {
+                    if (gameGrid[newPos].isFilled) {
+                        isNecessary = true;
+                    }
+                }
+
+                if (!isNecessary) {
+                    gameGrid.Remove(key);
+                }
+
+                isNecessary = false;
+            }
         }
     }
 
+    bool CheckForWin() {
+
+        foreach (GameGridCell tile in gameGrid.Values) {
+            if (tile.isFilled) {
+                Vector3 pos = tile.tile.transform.position;
+
+                TileScript tileScript = tile.tile.GetComponent(typeof(TileScript)) as TileScript;
+
+                //Check if Queen is surrounded
+                if (tileScript.GetId() == "Queen1" || tileScript.GetId() == "Queen2") {
+                    Debug.Log(tileScript.GetId());
+                    Debug.Log(pos);
+                    if(IsSurrounded(pos)) {
+                        return true;
+                    }
+                    
+                }
+            }
+        }
+        return false;
+    }
+
+    bool IsSurrounded(Vector3 pos) {
+        float x = pos.x;
+        float y = pos.y;
+        float z = pos.z;
+
+        //Above
+        Vector3 newPos = new Vector3(x + 1, y, z);
+        if (gameGrid.ContainsKey(newPos)) {
+            if (!gameGrid[newPos].isFilled) {
+                return false;
+            }
+        }
+
+        //Below
+        newPos = new Vector3(x - 1, y, z);
+        if (gameGrid.ContainsKey(newPos)) {
+            if (!gameGrid[newPos].isFilled) {
+                return false;
+            }
+        }
+
+        //Top Left
+        newPos = new Vector3(x + .5f, y, z + 1);
+        if (gameGrid.ContainsKey(newPos)) {
+            if (!gameGrid[newPos].isFilled) {
+                return false;
+            }
+        }
+
+        //Top Right
+        newPos = new Vector3(x + .5f, y, z - 1);
+        if (gameGrid.ContainsKey(newPos)) {
+            if (!gameGrid[newPos].isFilled) {
+                return false;
+            }
+        }
+
+        //Bottom Left
+        newPos = new Vector3(x - .5f, y, z + 1);
+        if (gameGrid.ContainsKey(newPos)) {
+            if (!gameGrid[newPos].isFilled) {
+                return false;
+            }
+        }
+
+        //Bottom Right
+        newPos = new Vector3(x - .5f, y, z - 1);
+        if (gameGrid.ContainsKey(newPos)) {
+            if (!gameGrid[newPos].isFilled) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    //Returns a vector of all the valid movement/placement positions
     Vector3[,] GetMovePositions() {
         Vector3[,] positions = new Vector3[tilesPlaced, 6];
 
+        //Checks for the open positions around a tile for creating potential move positions
         for (int i = 0; gamePieces[i] != null; i++) {
             float xCoord = gamePieces[i].transform.position.x;
             float zCoord = gamePieces[i].transform.position.z;
 
             Vector3 pos;
-            pos = new Vector3(xCoord + 1, 0, zCoord);  //North of Tile
+
+            //North of Tile
+            pos = new Vector3(xCoord + 1, 0, zCoord);  
             positions[i, 0] = pos;
 
-            pos = new Vector3(xCoord - 1, 0, zCoord);  //South of Tile
+            //South of Tile
+            pos = new Vector3(xCoord - 1, 0, zCoord);  
             positions[i, 1] = pos;
 
-            pos = new Vector3(xCoord + .5f, 0, zCoord + 1);  //North East of Tile
+            //North East of Tile
+            pos = new Vector3(xCoord + .5f, 0, zCoord + 1);  
             positions[i, 2] = pos;
 
-            pos = new Vector3(xCoord + .5f, 0, zCoord - 1);  //North West of Tile
+            //North West of Tile
+            pos = new Vector3(xCoord + .5f, 0, zCoord - 1);  
             positions[i , 3] = pos;
 
-            pos = new Vector3(xCoord - .5f, 0, zCoord + 1);  //South East of Tile
+            //South East of Tile
+            pos = new Vector3(xCoord - .5f, 0, zCoord + 1);  
             positions[i, 4] = pos;
 
-            pos = new Vector3(xCoord - .5f, 0, zCoord - 1);  //South West of Tile
+            //South West of Tile
+            pos = new Vector3(xCoord - .5f, 0, zCoord - 1);  
             positions[i, 5] = pos;
         }
 
         return positions;
     }
 
-    void SetMoveGrid() {
+    //Creates the selection grid at valid move positions
+    public void SetMoveGrid() {
+        ClearMoveGrid();
+
         if (tilesPlaced > 0) {
             Vector3[,] positions = GetMovePositions();
 
             for (int i = 0; gamePieces[i] != null; i++) {
                 for (int j = 0; j < 6; j++) {
                     GameObject temp;
-                    temp = Instantiate(SelectionTile, positions[i, j], Quaternion.identity) as GameObject;
+                    temp = Instantiate(GridTile, positions[i, j], Quaternion.identity) as GameObject;
                     selectionGrids.Push(temp);
-                    //Debug.Log(temp.transform.position);
                 }
             }
         }
+    }
 
-        isGridSet = true;
+    //Deletes the selection grid after piece has been placed
+    void ClearMoveGrid() {
+        while(selectionGrids.Count != 0) {
+            GameObject temp = selectionGrids.Pop();
+            Destroy(temp);
+        }
     }
 }
-
-
-
-/*
-    //NE side of GH (x + .5, z + 1)
-            Vector3 newPosition = gamePieces[tilesPlaced - 1].transform.pos;
-            newPosition = new Vector3(newPosition.x + .5f, 0, newPosition.z - 1);
-
-            Instantiate(tile, newPosition, Quaternion.identity);
-            gamePieces[tilesPlaced] = tile;
-            tilesPlaced++;
-            //Debug.Log(tileScript.GetId());
-*/

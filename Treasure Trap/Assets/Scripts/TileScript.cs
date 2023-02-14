@@ -52,8 +52,6 @@ public class TileScript : MonoBehaviour
             id = tileName + spiderId;
             spiderId++;
         }
-
-        Debug.Log(id);
     }
 
     void Update() {
@@ -69,7 +67,6 @@ public class TileScript : MonoBehaviour
 
     void OnMouseOver() {
         isMouseOver = true;
-        //Debug.Log("You hovered me");
     }
 
     void OnMouseExit() {
