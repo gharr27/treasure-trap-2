@@ -31,6 +31,7 @@ public class GameManager : MonoBehaviour
     private Stack<GameObject> selectionGrids;
 
     bool isPlaying = false;
+    bool isWin = false;
 
     int turnCounter = 0;
 
@@ -52,15 +53,16 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
-        if(!isPlaying) {
-            StartCoroutine(player.Move(turnCounter));
-            isPlaying = true;
-            if (turnCounter == 0) {
-                turnCounter++;
-            }
-            else {
-                turnCounter--;
+        if (!isWin) {
+            if (!isPlaying) {
+                StartCoroutine(player.Move(turnCounter));
+                isPlaying = true;
+                if (turnCounter == 0) {
+                    turnCounter++;
+                }
+                else {
+                    turnCounter--;
+                }
             }
         }
 
@@ -90,6 +92,7 @@ public class GameManager : MonoBehaviour
         }
 
         ClearMoveGrid();
+        CheckForWin();
 
         isPlaying = false;
 
@@ -212,13 +215,75 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    bool CheckForWin()
+    void CheckForWin()
     {
-        bool ret = false;
+        Debug.Log(1);
+        Vector3 test = new Vector3(0, 0, 0);
+        TileScript tileScript =  gameGrid[test].tile.GetComponent(typeof(TileScript)) as TileScript;
 
+        Debug.Log(tileScript.GetId());
         //Check if Queen is surrounded
+        if(tileScript.GetId() == "Queen1") {
+            Debug.Log(2);
+            isWin = isSurrounded(test);
+        }
+    }
 
-        return ret;
+    bool isSurrounded(Vector3 pos) {
+        float x = pos.x;
+        float y = pos.y;
+        float z = pos.z;
+
+        //Above
+        Vector3 newPos = new Vector3(x + 1, y, z);
+        if (!gameGrid.ContainsKey(newPos)) {
+            if (!gameGrid[newPos].isFilled) {
+                Debug.Log("test");
+                return false;
+            }
+        }
+
+        //Below
+        newPos = new Vector3(x - 1, y, z);
+        if (!gameGrid.ContainsKey(newPos)) {
+            if (!gameGrid[newPos].isFilled) {
+                return false;
+            }
+        }
+
+        //Top Left
+        newPos = new Vector3(x + .5f, y, z + 1);
+        if (!gameGrid.ContainsKey(newPos)) {
+            if (!gameGrid[newPos].isFilled) {
+                return false;
+            }
+        }
+
+        //Top Right
+        newPos = new Vector3(x + .5f, y, z - 1);
+        if (!gameGrid.ContainsKey(newPos)) {
+            if (!gameGrid[newPos].isFilled) {
+                return false;
+            }
+        }
+
+        //Bottom Left
+        newPos = new Vector3(x - .5f, y, z + 1);
+        if (!gameGrid.ContainsKey(newPos)) {
+            if (!gameGrid[newPos].isFilled) {
+                return false;
+            }
+        }
+
+        //Bottom Right
+        newPos = new Vector3(x - .5f, y, z - 1);
+        if (!gameGrid.ContainsKey(newPos)) {
+            if (!gameGrid[newPos].isFilled) {
+                return false;
+            }
+        }
+
+        return true;
     }
 
     //Returns a vector of all the valid movement/placement positions
