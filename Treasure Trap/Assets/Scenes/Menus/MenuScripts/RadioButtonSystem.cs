@@ -5,6 +5,7 @@ using System.Linq;
 public class RadioButtonSystem : MonoBehaviour
 {
     ToggleGroup toggleGroup;
+    public string what;
 
     void Start()
     {
@@ -15,5 +16,6 @@ public class RadioButtonSystem : MonoBehaviour
     {
         Toggle toggle = toggleGroup.ActiveToggles().FirstOrDefault();
         Debug.Log(toggle.name + " _ " + toggle.GetComponentInChildren<Text>().text);
+        PlayerPrefs.SetString(what, toggle.name + " _ " + toggle.GetComponentInChildren<Text>().text);
     }
 }
