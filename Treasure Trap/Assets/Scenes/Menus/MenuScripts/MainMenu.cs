@@ -20,4 +20,14 @@ public class MainMenu : MonoBehaviour
         Debug.Log("Your Application is Closed");
         Application.Quit();
     }
+
+    public void GoToGameBoard()
+    {
+        SceneManager.LoadScene("GameBoard");
+    }
+
+    public void GoToQuickgame()
+    {
+        SceneManager.LoadScene("Quickgame");
+    }
 }

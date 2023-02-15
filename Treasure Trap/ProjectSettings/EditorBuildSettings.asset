@@ -20,4 +20,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Menus/MainMenu.unity
     guid: eae8954977432a04a8c5a31994b71e56
+  - enabled: 1
+    path: Assets/Scenes/Menus/GameBoard.unity
+    guid: 76848d3b04b7025499cca7c6bdb8695f
+  - enabled: 1
+    path: Assets/Scenes/Menus/Quickgame.unity
+    guid: 98c03e37c776c34419bec601f65ef150
   m_configObjects: {}

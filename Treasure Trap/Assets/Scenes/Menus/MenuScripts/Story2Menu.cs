@@ -7,7 +7,7 @@ public class Story2Menu : MonoBehaviour
 {
     public void GoToQuickgame()
     {
-        SceneManager.LoadScene("Quickgame");
+        SceneManager.LoadScene("GameBoard");
     }
 
     public void GoToMainMenu()
