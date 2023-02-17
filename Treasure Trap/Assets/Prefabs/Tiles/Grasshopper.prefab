@@ -198,7 +198,8 @@ GameObject:
   - component: {fileID: 6984489585959869775}
   - component: {fileID: 6974681482232551109}
   - component: {fileID: 6953449829156483489}
-  - component: {fileID: 2457576805581046915}
+  - component: {fileID: 6547682483925955171}
+  - component: {fileID: 1761680241580285972}
   m_Layer: 0
   m_Name: Grasshopper
   m_TagString: Tile
@@ -292,7 +293,20 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 4300000, guid: a415174bfd1c4214c8fa8a3dd313aba6, type: 3}
---- !u!114 &2457576805581046915
+--- !u!65 &6547682483925955171
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6961445430596450891}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.0044606, y: 0.20037258, z: 0.5783402}
+  m_Center: {x: 0, y: 0.100168675, z: 0.0012658089}
+--- !u!114 &1761680241580285972
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -301,10 +315,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 6961445430596450891}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5f89c699cf6fcfb448978c141a26b988, type: 3}
+  m_Script: {fileID: 11500000, guid: 5d56d5b8ecc9ac64cbe85e1041c34d58, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  id: Grasshopper
+  tileName: Grasshopper
+  id: 
 --- !u!1 &7705088688226539063
 GameObject:
   m_ObjectHideFlags: 0

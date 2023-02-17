@@ -229,7 +229,8 @@ GameObject:
   - component: {fileID: 8435347741976963880}
   - component: {fileID: 8445554205687563800}
   - component: {fileID: 8467732019001160050}
-  - component: {fileID: 5210323114924695963}
+  - component: {fileID: -1791042037875357207}
+  - component: {fileID: 8091418099628754151}
   m_Layer: 0
   m_Name: Beetle
   m_TagString: Tile
@@ -323,7 +324,20 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 4300000, guid: f18add7e66c6e53428c87798c50cf2ae, type: 3}
---- !u!114 &5210323114924695963
+--- !u!65 &-1791042037875357207
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8457763462597092684}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.0044606, y: 0.20037258, z: 0.5817232}
+  m_Center: {x: 0, y: 0.100168675, z: -0.0004515648}
+--- !u!114 &8091418099628754151
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -332,7 +346,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 8457763462597092684}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6c77b7538c4b66f419c7be5f91a71282, type: 3}
+  m_Script: {fileID: 11500000, guid: 5d56d5b8ecc9ac64cbe85e1041c34d58, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  id: Beetle
+  tileName: Beetle
+  id: 
