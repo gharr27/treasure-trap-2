@@ -18,6 +18,21 @@ public class GameManager : MonoBehaviour {
             this.tile = tile;
         }
     }
+    
+    private class MovePosition {
+        public bool isFilled;
+        public Vector3 pos;
+        
+        public MovePosition() {
+            isFilled = false;
+            pos = Vector3.zero;
+        }
+
+        public MovePosition(bool isFilled, Vector3 pos) {
+            this.isFilled = isFilled;
+            this.pos = pos;
+        }
+    }
 
     private class MovePosition {
         public bool isFilled;
@@ -65,6 +80,7 @@ public class GameManager : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
+
         if (!isWin) {
             if (!isPlaying) {
                 StartCoroutine(player.Move(turnCounter));
@@ -240,7 +256,6 @@ public class GameManager : MonoBehaviour {
         }
     }
 
-
     // Checks the surrounding of the selected tile and if the position is filled then it adds a true to a list at that postion. 
     Vector3[] ValidateMoves(GameObject tile) {
         Vector3 pos = tile.transform.position;
@@ -413,8 +428,6 @@ public class GameManager : MonoBehaviour {
         return true;
     }
 
-
-
     bool CheckForWin() {
 
         foreach (GameGridCell tile in gameGrid.Values) {
@@ -427,10 +440,10 @@ public class GameManager : MonoBehaviour {
                 if (tileScript.GetId() == "Queen1" || tileScript.GetId() == "Queen2") {
                     Debug.Log(tileScript.GetId());
                     Debug.Log(pos);
+
                     if (IsSurrounded(pos)) {
                         return true;
                     }
-
                 }
             }
         }
@@ -497,13 +510,16 @@ public class GameManager : MonoBehaviour {
         Vector3[] positions = new Vector3[tilesPlaced * 6];
 
         //Checks for the open positions around a tile for creating potential move positions
+
         for (int i = 0; gamePieces[i] != null; i += 6) {
+
             float x = gamePieces[i].transform.position.x;
             float z = gamePieces[i].transform.position.z;
 
             Vector3 pos;
 
             //North of Tile
+
             pos = new Vector3(x + 1, 0, z);
             positions[i] = pos;
 
@@ -525,6 +541,7 @@ public class GameManager : MonoBehaviour {
 
             //South West of Tile
             pos = new Vector3(x - .5f, 0, z - 1);
+
             positions[i + 5] = pos;
         }
 
@@ -542,9 +559,11 @@ public class GameManager : MonoBehaviour {
             Vector3[] positions = GetMovePositions();
 
             for (int i = 0; i < positions.Length; i++) {
+
                 GameObject temp;
                 temp = Instantiate(GridTile, positions[i], Quaternion.identity) as GameObject;
                 selectionGrids.Push(temp);
+
             }
         }
     }

@@ -230,7 +230,9 @@ GameObject:
   - component: {fileID: 8445554205687563800}
   - component: {fileID: 8467732019001160050}
   - component: {fileID: -1791042037875357207}
+
   - component: {fileID: 8377949607355210419}
+
   m_Layer: 0
   m_Name: Beetle
   m_TagString: Tile
@@ -337,7 +339,9 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1.0044606, y: 0.20037258, z: 0.5817232}
   m_Center: {x: 0, y: 0.100168675, z: -0.0004515648}
+
 --- !u!114 &8377949607355210419
+
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -350,3 +354,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tileName: Beetle
+
+  id: 
+
