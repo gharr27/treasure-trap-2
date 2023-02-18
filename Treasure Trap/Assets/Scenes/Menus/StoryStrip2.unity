@@ -208,7 +208,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 657609080}
-        m_TargetAssemblyTypeName: Story2Menu, Assembly-CSharp
+        m_TargetAssemblyTypeName: MenusManager, Assembly-CSharp
         m_MethodName: GoToMainMenu
         m_Mode: 1
         m_Arguments:
@@ -342,8 +342,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 657609080}
-        m_TargetAssemblyTypeName: Story2Menu, Assembly-CSharp
-        m_MethodName: GoToQuickgame
+        m_TargetAssemblyTypeName: MenusManager, Assembly-CSharp
+        m_MethodName: GoToGameBoard
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -824,7 +824,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 657609078}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4753b0c35d947774d866f874e0a989ab, type: 3}
+  m_Script: {fileID: 11500000, guid: cb2a3ceb11e66df42941357419f74786, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &776675346
@@ -1217,7 +1217,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 657609080}
-        m_TargetAssemblyTypeName: Story2Menu, Assembly-CSharp
+        m_TargetAssemblyTypeName: MenusManager, Assembly-CSharp
         m_MethodName: GoToStoryStrip1
         m_Mode: 1
         m_Arguments:
