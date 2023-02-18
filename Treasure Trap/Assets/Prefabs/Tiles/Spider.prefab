@@ -75,7 +75,9 @@ GameObject:
   - component: {fileID: 2962385542055663061}
   - component: {fileID: 3002472829834827233}
   - component: {fileID: 7870712665633756745}
-  - component: {fileID: -4147714679532315320}
+
+  - component: {fileID: 7265806719740837415}
+
   m_Layer: 0
   m_Name: Spider
   m_TagString: Tile
@@ -182,7 +184,9 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.99946344, y: 0.20037258, z: 0.5858463}
   m_Center: {x: 0, y: 0.100168675, z: 0.0041586757}
---- !u!114 &-4147714679532315320
+
+--- !u!114 &7265806719740837415
+
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -195,7 +199,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tileName: Spider
+
   id: 
+
 --- !u!1 &3653463293750479812
 GameObject:
   m_ObjectHideFlags: 0

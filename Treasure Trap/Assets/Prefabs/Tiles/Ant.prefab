@@ -44,7 +44,9 @@ GameObject:
   - component: {fileID: 1657577392643022740}
   - component: {fileID: 1708992314161668530}
   - component: {fileID: 6027251037380518725}
-  - component: {fileID: 768878153183161473}
+
+  - component: {fileID: 1350922563942249785}
+
   m_Layer: 0
   m_Name: Ant
   m_TagString: Tile
@@ -151,7 +153,9 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1.0044606, y: 0.20037258, z: 0.58545995}
   m_Center: {x: 0, y: 0.100168675, z: -0.00006377697}
---- !u!114 &768878153183161473
+
+--- !u!114 &1350922563942249785
+
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -164,7 +168,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tileName: Ant
+
   id: 
+
 --- !u!1 &5440892732218863449
 GameObject:
   m_ObjectHideFlags: 0
