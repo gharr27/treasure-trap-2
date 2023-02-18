@@ -74,8 +74,8 @@ GameObject:
   - component: {fileID: 2970000900848918767}
   - component: {fileID: 2962385542055663061}
   - component: {fileID: 3002472829834827233}
-  - component: {fileID: -933064831693129082}
   - component: {fileID: 7870712665633756745}
+  - component: {fileID: 7265806719740837415}
   m_Layer: 0
   m_Name: Spider
   m_TagString: Tile
@@ -169,19 +169,6 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 4300000, guid: 4a24775f9001dee459bd8d96cd04b4f3, type: 3}
---- !u!114 &-933064831693129082
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2975427370151364361}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9139405b4f552994a91afb41153d91dd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  id: Spider
 --- !u!65 &7870712665633756745
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -195,6 +182,19 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.99946344, y: 0.20037258, z: 0.5858463}
   m_Center: {x: 0, y: 0.100168675, z: 0.0041586757}
+--- !u!114 &7265806719740837415
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2975427370151364361}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d56d5b8ecc9ac64cbe85e1041c34d58, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tileName: Spider
 --- !u!1 &3653463293750479812
 GameObject:
   m_ObjectHideFlags: 0
