@@ -32,9 +32,9 @@ public class PlayerListingsMenu : MonoBehaviourPunCallbacks
                 }
     }
 
-    public override void OnPlayerEnteredRoom(Player newPlayer){
-            AddPlayerListing(newPlayer);
-        
+    public override void OnPlayerEnteredRoom(Player newPlayer) {
+        AddPlayerListing(newPlayer);
+
     }
 
     public override void OnPlayerLeftRoom(Player otherPlayer){

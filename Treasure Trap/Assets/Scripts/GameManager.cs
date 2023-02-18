@@ -18,21 +18,6 @@ public class GameManager : MonoBehaviour {
             this.tile = tile;
         }
     }
-    
-    private class MovePosition {
-        public bool isFilled;
-        public Vector3 pos;
-        
-        public MovePosition() {
-            isFilled = false;
-            pos = Vector3.zero;
-        }
-
-        public MovePosition(bool isFilled, Vector3 pos) {
-            this.isFilled = isFilled;
-            this.pos = pos;
-        }
-    }
 
     private class MovePosition {
         public bool isFilled;
@@ -64,7 +49,7 @@ public class GameManager : MonoBehaviour {
 
     int turnCounter = 0;
 
-    Player player;
+    PlayerScript player;
     GameObject playerObject;
 
     Dictionary<Vector3, GameGridCell> gameGrid = new Dictionary<Vector3, GameGridCell>();
@@ -75,7 +60,7 @@ public class GameManager : MonoBehaviour {
         gamePieces = new GameObject[PIECE_COUNT];
 
         playerObject = GameObject.FindWithTag("Player");
-        player = playerObject.GetComponent(typeof(Player)) as Player;
+        player = playerObject.GetComponent(typeof(PlayerScript)) as PlayerScript;
     }
 
     // Update is called once per frame
