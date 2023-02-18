@@ -5,7 +5,7 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
 
-    private class GameGridCell {
+    public class GameGridCell {
         public bool isFilled;
         public GameObject tile;
 
@@ -31,6 +31,7 @@ public class GameManager : MonoBehaviour
     private Stack<GameObject> selectionGrids;
 
     bool isPlaying = false;
+    bool isWin = false;
 
     int turnCounter = 0;
 
@@ -52,27 +53,40 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (!isWin) {
 
-        if(!isPlaying) {
-            StartCoroutine(player.Move(turnCounter));
-            isPlaying = true;
-            if (turnCounter == 0) {
-                turnCounter++;
+            if (!isPlaying) {
+                StartCoroutine(player.Move(turnCounter));
+                isPlaying = true;
+                if (turnCounter == 0) {
+                    turnCounter++;
+                }
+                else {
+                    turnCounter--;
+                }
             }
-            else {
-                turnCounter--;
+
+            if (Input.GetKeyDown(KeyCode.Space)) {
+                Debug.Log(gameGrid.Count);
             }
         }
-
-        if(Input.GetKeyDown(KeyCode.Space)) {
-            Debug.Log(gameGrid.Count);
+        else {
+            Debug.Log("Game Over");
         }
     }
 
     public void MakeMove(GameObject tile, Vector3 pos, bool isMove) {
         if (isMove) {
             tile.transform.position = pos;
-            UpdateGameGrid(pos);
+
+            GameGridCell gridCell = new GameGridCell(true, tile);
+
+            if (!gameGrid.ContainsKey(pos)) {
+                gameGrid.Add(pos, gridCell);
+            }
+            else {
+                gameGrid[pos] = gridCell;
+            }
         }
         else {
             gamePieces[tilesPlaced] = Instantiate(tile, pos, Quaternion.identity) as GameObject;
@@ -85,14 +99,14 @@ public class GameManager : MonoBehaviour
                 gameGrid.Add(pos, gridCell);
             }
             tilesPlaced++;
-
-            UpdateGameGrid(pos);
         }
 
+        UpdateGameGrid(pos);
+
         ClearMoveGrid();
+        isWin = CheckForWin();
 
         isPlaying = false;
-
     }
 
     void UpdateGameGrid(Vector3 pos) {
@@ -212,13 +226,82 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    bool CheckForWin()
-    {
-        bool ret = false;
+    bool CheckForWin() {
 
-        //Check if Queen is surrounded
+        foreach (GameGridCell tile in gameGrid.Values) {
+            if (tile.isFilled) {
+                Vector3 pos = tile.tile.transform.position;
 
-        return ret;
+                TileScript tileScript = tile.tile.GetComponent(typeof(TileScript)) as TileScript;
+
+                //Check if Queen is surrounded
+                if (tileScript.GetId() == "Queen1" || tileScript.GetId() == "Queen2") {
+                    Debug.Log(tileScript.GetId());
+                    Debug.Log(pos);
+                    if (IsSurrounded(pos)) {
+                        return true;
+                    }
+
+                }
+            }
+        }
+        return false;
+    }
+
+    bool IsSurrounded(Vector3 pos) {
+        float x = pos.x;
+        float y = pos.y;
+        float z = pos.z;
+
+        //Above
+        Vector3 newPos = new Vector3(x + 1, y, z);
+        if (gameGrid.ContainsKey(newPos)) {
+            if (!gameGrid[newPos].isFilled) {
+                return false;
+            }
+        }
+
+        //Below
+        newPos = new Vector3(x - 1, y, z);
+        if (gameGrid.ContainsKey(newPos)) {
+            if (!gameGrid[newPos].isFilled) {
+                return false;
+            }
+        }
+
+        //Top Left
+        newPos = new Vector3(x + .5f, y, z + 1);
+        if (gameGrid.ContainsKey(newPos)) {
+            if (!gameGrid[newPos].isFilled) {
+                return false;
+            }
+        }
+
+        //Top Right
+        newPos = new Vector3(x + .5f, y, z - 1);
+        if (gameGrid.ContainsKey(newPos)) {
+            if (!gameGrid[newPos].isFilled) {
+                return false;
+            }
+        }
+
+        //Bottom Left
+        newPos = new Vector3(x - .5f, y, z + 1);
+        if (gameGrid.ContainsKey(newPos)) {
+            if (!gameGrid[newPos].isFilled) {
+                return false;
+            }
+        }
+
+        //Bottom Right
+        newPos = new Vector3(x - .5f, y, z - 1);
+        if (gameGrid.ContainsKey(newPos)) {
+            if (!gameGrid[newPos].isFilled) {
+                return false;
+            }
+        }
+
+        return true;
     }
 
     //Returns a vector of all the valid movement/placement positions
@@ -226,34 +309,34 @@ public class GameManager : MonoBehaviour
         Vector3[,] positions = new Vector3[tilesPlaced, 6];
 
         //Checks for the open positions around a tile for creating potential move positions
-        for (int i = 0; gamePieces[i] != null; i++) {
-            float xCoord = gamePieces[i].transform.position.x;
-            float zCoord = gamePieces[i].transform.position.z;
+        for (int i = 0; gamePieces[i] != null; i += 6) {
+            float x = gamePieces[i].transform.position.x;
+            float z = gamePieces[i].transform.position.z;
 
             Vector3 pos;
 
             //North of Tile
-            pos = new Vector3(xCoord + 1, 0, zCoord);  
+            pos = new Vector3(x + 1, 0, z);  
             positions[i, 0] = pos;
 
             //South of Tile
-            pos = new Vector3(xCoord - 1, 0, zCoord);  
+            pos = new Vector3(x - 1, 0, z);  
             positions[i, 1] = pos;
 
             //North East of Tile
-            pos = new Vector3(xCoord + .5f, 0, zCoord + 1);  
+            pos = new Vector3(x + .5f, 0, z + 1);  
             positions[i, 2] = pos;
 
             //North West of Tile
-            pos = new Vector3(xCoord + .5f, 0, zCoord - 1);  
+            pos = new Vector3(x + .5f, 0, z - 1);  
             positions[i , 3] = pos;
 
             //South East of Tile
-            pos = new Vector3(xCoord - .5f, 0, zCoord + 1);  
+            pos = new Vector3(x - .5f, 0, z + 1);  
             positions[i, 4] = pos;
 
             //South West of Tile
-            pos = new Vector3(xCoord - .5f, 0, zCoord - 1);  
+            pos = new Vector3(x - .5f, 0, z - 1);  
             positions[i, 5] = pos;
         }
 
