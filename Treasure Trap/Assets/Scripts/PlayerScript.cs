@@ -72,7 +72,7 @@ public class PlayerScript : MonoBehaviour {
         Debug.Log("Tile Selected");
 
         if (!isFirstMove) {
-            gameManager.SetMoveGrid();
+            gameManager.SetMoveGrid(tile, isMove);
         }
 
         if (isFirstMove) {
@@ -95,40 +95,6 @@ public class PlayerScript : MonoBehaviour {
 
     bool IsPosSelected() {
         return !isPosSelected;
-    }
-
-    void SelectTile() {
-        Debug.Log("Test Failed");
-        ////Selected Queen
-        //if (Input.GetKeyDown(KeyCode.Alpha1)) {
-        //    tile = Tiles[0];
-        //    isMove = false;
-        //    isTileSelected = true;
-        //}
-        ////Selected Ant
-        //else if (Input.GetKeyDown(KeyCode.Alpha2)) {
-        //    tile = Tiles[1];
-        //    isMove = false;
-        //    isTileSelected = true;
-        //}
-        ////Selected Grasshopper
-        //else if (Input.GetKeyDown(KeyCode.Alpha3)) {
-        //    tile = Tiles[2];
-        //    isMove = false;
-        //    isTileSelected = true;
-        //}
-        ////Selected Beetle
-        //else if (Input.GetKeyDown(KeyCode.Alpha4)) {
-        //    tile = Tiles[3];
-        //    isMove = false;
-        //    isTileSelected = true;
-        //}
-        ////Selected Spider
-        //else if (Input.GetKeyDown(KeyCode.Alpha5)) {
-        //    tile = Tiles[4];
-        //    isMove = false;
-        //    isTileSelected = true;
-        //}
     }
 
     public void SetTile(GameObject newTile) {
