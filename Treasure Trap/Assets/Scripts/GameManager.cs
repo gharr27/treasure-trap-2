@@ -22,21 +22,6 @@ public class GameManager : MonoBehaviour {
     private class MovePosition {
         public bool isFilled;
         public Vector3 pos;
-        
-        public MovePosition() {
-            isFilled = false;
-            pos = Vector3.zero;
-        }
-
-        public MovePosition(bool isFilled, Vector3 pos) {
-            this.isFilled = isFilled;
-            this.pos = pos;
-        }
-    }
-
-    private class MovePosition {
-        public bool isFilled;
-        public Vector3 pos;
 
         public MovePosition() {
             isFilled = false;
