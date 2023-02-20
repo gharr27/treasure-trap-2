@@ -636,8 +636,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1267897420}
-        m_TargetAssemblyTypeName: MainMenu, Assembly-CSharp
-        m_MethodName: GoToQuickgame
+        m_TargetAssemblyTypeName: MenusManager, Assembly-CSharp
+        m_MethodName: GoToCharSelection
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -929,8 +929,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1267897420}
-        m_TargetAssemblyTypeName: MainMenu, Assembly-CSharp
-        m_MethodName: Tutorial
+        m_TargetAssemblyTypeName: MenusManager, Assembly-CSharp
+        m_MethodName: GoToTutorial
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2120,7 +2120,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1267897420}
-        m_TargetAssemblyTypeName: MainMenu, Assembly-CSharp
+        m_TargetAssemblyTypeName: MenusManager, Assembly-CSharp
         m_MethodName: GoToStoryStrip1
         m_Mode: 1
         m_Arguments:

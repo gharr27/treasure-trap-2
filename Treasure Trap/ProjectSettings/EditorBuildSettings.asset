@@ -24,6 +24,9 @@ EditorBuildSettings:
     path: Assets/Scenes/Menus/GameBoard.unity
     guid: 76848d3b04b7025499cca7c6bdb8695f
   - enabled: 1
-    path: Assets/Scenes/Menus/Quickgame.unity
+    path: Assets/Scenes/Menus/CharSelection.unity
     guid: 98c03e37c776c34419bec601f65ef150
+  - enabled: 1
+    path: Assets/Scenes/Network/Lobby.unity
+    guid: 719dff2f45dfa42ee90b1af3266d06d9
   m_configObjects: {}
