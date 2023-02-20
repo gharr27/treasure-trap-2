@@ -66,6 +66,10 @@ public class TileScript : MonoBehaviour {
         return id;
     }
 
+    public string GetTileName() {
+        return tileName;
+    }
+
     void OnMouseOver() {
         isMouseOver = true;
     }
