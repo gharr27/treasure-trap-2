@@ -11,7 +11,7 @@ public class TileScript : MonoBehaviour {
     GameManager gameManager;
     GameObject gameController;
 
-    Player player;
+    PlayerScript player;
     GameObject playerObject;
 
     static int queenId = 1;
@@ -31,7 +31,7 @@ public class TileScript : MonoBehaviour {
         gameManager = gameController.GetComponent(typeof(GameManager)) as GameManager;
 
         playerObject = GameObject.FindWithTag("Player");
-        player = playerObject.GetComponent(typeof(Player)) as Player;
+        player = playerObject.GetComponent(typeof(PlayerScript)) as PlayerScript;
 
         if (tileName == "Queen") {
             id = tileName + queenId;
@@ -64,6 +64,10 @@ public class TileScript : MonoBehaviour {
 
     public string GetId() {
         return id;
+    }
+
+    public string GetTileName() {
+        return tileName;
     }
 
     void OnMouseOver() {
