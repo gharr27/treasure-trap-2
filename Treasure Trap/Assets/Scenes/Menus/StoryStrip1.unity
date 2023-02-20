@@ -284,7 +284,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1170466046}
-        m_TargetAssemblyTypeName: Story1Menu, Assembly-CSharp
+        m_TargetAssemblyTypeName: MenusManager, Assembly-CSharp
         m_MethodName: GoToStoryStrip2
         m_Mode: 1
         m_Arguments:
@@ -376,7 +376,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1170466044}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c34964014f8c2d3468314545dfb6ef98, type: 3}
+  m_Script: {fileID: 11500000, guid: cb2a3ceb11e66df42941357419f74786, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1287525150
@@ -566,7 +566,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1170466046}
-        m_TargetAssemblyTypeName: Story1Menu, Assembly-CSharp
+        m_TargetAssemblyTypeName: MenusManager, Assembly-CSharp
         m_MethodName: GoToMainMenu
         m_Mode: 1
         m_Arguments:
