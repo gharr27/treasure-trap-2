@@ -11,7 +11,6 @@ public class ConnectServer : MonoBehaviourPunCallbacks
 {
     public static ConnectServer Instance;
 
-	[SerializeField] string playerName;
 	[SerializeField] TMP_InputField roomNameInputField;
 	[SerializeField] TMP_Text errorText;
 	[SerializeField] TMP_Text roomNameText;
@@ -19,7 +18,7 @@ public class ConnectServer : MonoBehaviourPunCallbacks
 	[SerializeField] GameObject roomListItemPrefab;
 	[SerializeField] Transform playerListContent;
 	[SerializeField] GameObject PlayerListItemPrefab;
-	// [SerializeField] GameObject startGameButton;
+	[SerializeField] GameObject startGameButton;
 
 	void Awake()
 	{
@@ -43,9 +42,11 @@ public class ConnectServer : MonoBehaviourPunCallbacks
 	{
 		MenuManager.Instance.OpenMenu("title");
 		Debug.Log("Joined Lobby");
-		playerName = "Player " + Random.Range(0, 1000).ToString("0000");
 		// roomNameText.text = PhotonNetwork.CurrentRoom.Name;
         //PhotonNetwork.Name = "Player " + Random.Range(0, 1000).ToString("0000");
+
+		//random name
+		PhotonNetwork.NickName = "Player " + Random.Range(0, 1000).ToString("0000");
 	}
 
 	public void CreateRoom()
@@ -61,45 +62,32 @@ public class ConnectServer : MonoBehaviourPunCallbacks
 
 	public override void OnJoinedRoom()
 	{
-		// MenuManager.Instance.OpenMenu("room");
-		// roomNameText.text = PhotonNetwork.CurrentRoom.Name;
+		MenuManager.Instance.OpenMenu("room");
+		roomNameText.text = PhotonNetwork.CurrentRoom.Name;
 
-		// Player[] players = PhotonNetwork.PlayerList;
+		Photon.Realtime.Player[] photonPlayers = PhotonNetwork.PlayerList;
 
-		// foreach(Transform child in playerListContent)
-		// {
-		// 	Destroy(child.gameObject);
-		// }
-
-		// for(int i = 0; i < players.Count(); i++)
-		// {
-		// 	Instantiate(PlayerListItemPrefab, playerListContent).GetComponent<PlayerListItem>().SetUp(players[i]);
-		// }
-
-
-        MenuManager.Instance.OpenMenu("room");
-        roomNameText.text = PhotonNetwork.CurrentRoom.Name;
-
-        Photon.Realtime.Player[] photonPlayers = PhotonNetwork.PlayerList;
-        Player[] players = new Player[photonPlayers.Length];
-
-		foreach(Transform child in playerListContent)
+		foreach (Transform child in playerListContent)
 		{
 			Destroy(child.gameObject);
 		}
 
-        for (int i = 0; i < photonPlayers.Length; i++)
-        {
-			Instantiate(PlayerListItemPrefab, playerListContent).GetComponent<PlayerListItem>().SetUp(players[i]);
-        }
+		for (int i = 0; i < photonPlayers.Length; i++)
+		{
+			Debug.Log("Instantiating");
+			Debug.Log(photonPlayers[i]);
+			Instantiate(PlayerListItemPrefab, playerListContent)
+				.GetComponent<PlayerListItem>()
+				.SetUp(photonPlayers[i]);
+		}
 
-		// startGameButton.SetActive(PhotonNetwork.IsMasterClient);
+		startGameButton.SetActive(PhotonNetwork.IsMasterClient);
 	}
 
-	// public override void OnMasterClientSwitched(Player newMasterClient)
-	// {
-	// 	startGameButton.SetActive(PhotonNetwork.IsMasterClient);
-	// }
+	public override void OnMasterClientSwitched(Photon.Realtime.Player newMasterClient)
+	{
+		startGameButton.SetActive(PhotonNetwork.IsMasterClient);
+	}
 
 	public override void OnCreateRoomFailed(short returnCode, string message)
 	{
@@ -108,10 +96,10 @@ public class ConnectServer : MonoBehaviourPunCallbacks
 		MenuManager.Instance.OpenMenu("error");
 	}
 
-	// public void StartGame()
-	// {
-	// 	PhotonNetwork.LoadLevel(1);
-	// }
+	public void StartGame()
+	{
+		PhotonNetwork.LoadLevel(1);
+	}
 
 	public void LeaveRoom()
 	{
@@ -132,6 +120,7 @@ public class ConnectServer : MonoBehaviourPunCallbacks
 
 	public override void OnRoomListUpdate(List<RoomInfo> roomList)
 	{
+		//clear list every time we update
 		foreach(Transform trans in roomListContent)
 		{
 			Destroy(trans.gameObject);
@@ -139,14 +128,16 @@ public class ConnectServer : MonoBehaviourPunCallbacks
 
 		for(int i = 0; i < roomList.Count; i++)
 		{
+			Debug.Log("Room updated");
 			if(roomList[i].RemovedFromList)
 				continue;
 			Instantiate(roomListItemPrefab, roomListContent).GetComponent<RoomListItem>().SetUp(roomList[i]);
 		}
 	}
 
-	public void OnPlayerEnteredRoom(Player newPlayer)
+	public override void OnPlayerEnteredRoom(Photon.Realtime.Player newPlayer)
 	{
+		Debug.Log("Player entered roomm");
 		Instantiate(PlayerListItemPrefab, playerListContent).GetComponent<PlayerListItem>().SetUp(newPlayer);
 	}
 }

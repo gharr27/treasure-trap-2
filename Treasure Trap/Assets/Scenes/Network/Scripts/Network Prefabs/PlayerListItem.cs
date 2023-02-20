@@ -2,23 +2,33 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
-using Photon.Realtime;
 using TMPro;
+using Photon.Realtime;
 
 public class PlayerListItem : MonoBehaviourPunCallbacks
 {
+	//reference to text 
 	[SerializeField] TMP_Text text;
-	[SerializeField] string playerName;
-	Player player;
-    
+	// [SerializeField] string playerName = "Player ";
+	Photon.Realtime.Player player;
+	
+	// public void SetUp(Player _player)
+	// {
+	// 	player = _player;
+	// 	text.text = PhotonNetwork.NickName;
+		
+	// }
 
-	public void SetUp(Player _player)
+	public void SetUp(Photon.Realtime.Player _player)
 	{
 		player = _player;
-		text.text = playerName;
+		text.text = _player.NickName;
 	}
 
-	public void OnPlayerLeftRoom(Player otherPlayer)
+
+
+	//player that left the room
+	public override void OnPlayerLeftRoom(Photon.Realtime.Player otherPlayer)
 	{
 		if(player == otherPlayer)
 		{
