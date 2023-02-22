@@ -20,6 +20,14 @@ public class PlayerScript : MonoBehaviour {
     bool isTileSelected = false;
     bool isFirstMove = true;
 
+    int whiteOrBlack;
+
+    int queenCount = 1;
+    int antCount = 3;
+    int grasshopperCount = 3;
+    int beetleCount = 2;
+    int spiderCount = 2;
+
     // Start is called before the first frame update
     void Start() {
         gameController = GameObject.FindWithTag("GameController");
@@ -28,38 +36,44 @@ public class PlayerScript : MonoBehaviour {
 
     void Update() {
         //Selected Queen
-        if (Input.GetKeyDown(KeyCode.Alpha1)) {
+        if (Input.GetKeyDown(KeyCode.Alpha1) && queenCount > 0) {
             tile = Tiles[0];
             isMove = false;
             isTileSelected = true;
+            queenCount--;
         }
         //Selected Ant
-        else if (Input.GetKeyDown(KeyCode.Alpha2)) {
+        else if (Input.GetKeyDown(KeyCode.Alpha2) && antCount > 0) {
             tile = Tiles[1];
             isMove = false;
             isTileSelected = true;
+            antCount--;
         }
         //Selected Grasshopper
-        else if (Input.GetKeyDown(KeyCode.Alpha3)) {
+        else if (Input.GetKeyDown(KeyCode.Alpha3) && grasshopperCount > 0) {
             tile = Tiles[2];
             isMove = false;
             isTileSelected = true;
+            grasshopperCount--;
         }
         //Selected Beetle
-        else if (Input.GetKeyDown(KeyCode.Alpha4)) {
+        else if (Input.GetKeyDown(KeyCode.Alpha4) && beetleCount > 0) {
             tile = Tiles[3];
             isMove = false;
             isTileSelected = true;
+            beetleCount--;
         }
         //Selected Spider
-        else if (Input.GetKeyDown(KeyCode.Alpha5)) {
+        else if (Input.GetKeyDown(KeyCode.Alpha5) && spiderCount > 0) {
             tile = Tiles[4];
             isMove = false;
             isTileSelected = true;
+            spiderCount--;
         }
     }
 
     public IEnumerator Move(int wOrB) {
+        whiteOrBlack = wOrB;
         if(wOrB == 0) {
             Debug.Log("White Turn");
         }
@@ -74,8 +88,7 @@ public class PlayerScript : MonoBehaviour {
         if (!isFirstMove) {
             gameManager.SetMoveGrid(tile, isMove);
         }
-
-        if (isFirstMove) {
+        else {
             isPosSelected = true;
             isFirstMove = false;
         }
@@ -101,6 +114,8 @@ public class PlayerScript : MonoBehaviour {
         isMove = true;
         tile = newTile;
         isTileSelected = true;
+
+        StartCoroutine(Move(whiteOrBlack));
     }
 
     public void SetPos(Vector3 newPos) {
