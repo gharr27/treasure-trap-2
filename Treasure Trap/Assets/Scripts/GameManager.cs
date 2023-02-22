@@ -40,27 +40,39 @@ public class GameManager : MonoBehaviour {
     const int PIECE_COUNT = 22;
 
     private int tilesPlaced = 0;
+    private int turn = 0;
+    private int round = 1;
 
     private GameObject[] gamePieces;
     private Stack<GameObject> selectionGrids;
 
     bool isPlaying = false;
     bool isWin = false;
+    bool isWhiteWin;
+    bool isQueen1OnBoard = false;
+    bool isQueen2OnBoard = false;
 
-    int turnCounter = 0;
-
-    PlayerScript player;
-    GameObject playerObject;
+    PlayerScript playerWhite;
+    PlayerScript playerBlack;
+    GameObject[] playerObject = new GameObject[2];
 
     Dictionary<Vector3, GameGridCell> gameGrid = new Dictionary<Vector3, GameGridCell>();
+
+    public int GetRound() {
+        return round;
+    }
+    public int GetTurn() {
+        return turn;
+    }
 
     // Start is called before the first frame update
     void Start() {
         selectionGrids = new Stack<GameObject>();
         gamePieces = new GameObject[PIECE_COUNT];
 
-        playerObject = GameObject.FindWithTag("Player");
-        player = playerObject.GetComponent(typeof(PlayerScript)) as PlayerScript;
+        playerObject = GameObject.FindGameObjectsWithTag("Player");
+        playerBlack = playerObject[0].GetComponent(typeof(PlayerScript)) as PlayerScript;
+        playerWhite = playerObject[1].GetComponent(typeof(PlayerScript)) as PlayerScript;
     }
 
     // Update is called once per frame
@@ -68,18 +80,27 @@ public class GameManager : MonoBehaviour {
 
         if (!isWin) {
             if (!isPlaying) {
-                StartCoroutine(player.Move(turnCounter));
                 isPlaying = true;
-                if (turnCounter == 0) {
-                    turnCounter++;
+                if (turn == 0) {
+                    //White Move
+                    Debug.Log("White Move");
+                    Debug.Log(round);
+                    StartCoroutine(playerWhite.Move(true));
                 }
                 else {
-                    turnCounter--;
+                    //Black Move
+                    Debug.Log("Black Move");
+                    StartCoroutine(playerBlack.Move(true));
                 }
             }
         }
         else {
-            Debug.Log("Game Over");
+            if (isWhiteWin) {
+                Debug.Log("White Wins!");
+            }
+            else {
+                Debug.Log("Black Wins!");
+            }
         }
 
 
@@ -89,6 +110,14 @@ public class GameManager : MonoBehaviour {
     }
 
     public void MakeMove(GameObject tile, Vector3 pos, bool isMove) {
+        if (turn == 0) {
+            turn = 1;
+        }
+        else {
+            turn = 0;
+            round++;
+        }
+
         if (isMove) {
             gameGrid[tile.transform.position] = new GameGridCell();
             tile.transform.position = pos;
@@ -119,7 +148,7 @@ public class GameManager : MonoBehaviour {
         UpdateGameGrid(pos);
 
         ClearMoveGrid();
-        isWin = CheckForWin();
+        CheckForWin();
 
         isPlaying = false;
     }
@@ -173,7 +202,6 @@ public class GameManager : MonoBehaviour {
 
     //Currently Unused, if we can get it working this function will deleted spaces that are not directly connected to the game tiles on the grid
     void RemoveUnnecessaryGridSpaces() {
-        Debug.Log(gameGrid.Count);
 
         foreach (Vector3 key in gameGrid.Keys) {
             float x = key.x;
@@ -247,11 +275,12 @@ public class GameManager : MonoBehaviour {
         Stack<Vector3> validMoves = new Stack<Vector3>();
         Vector3 pos = tile.transform.position;
 
-        if (!IsBreaksHive(pos)) {
+        //if (!IsBreaksHive(pos)) {
 
             Stack<Vector3> emptySpaces = new Stack<Vector3>();
 
             emptySpaces = GetEmptySpaces(pos);
+            Debug.Log(emptySpaces.Peek());
 
             if (tileScript.GetTileName() == "Queen") {
                 validMoves = QueenPossibleMoves(tile, emptySpaces);
@@ -266,10 +295,11 @@ public class GameManager : MonoBehaviour {
                 validMoves = BeetlePossibleMoves(tile, emptySpaces);
             }
             else if (tileScript.GetTileName() == "Spider") {
-                validMoves = SpiderPossibleMoves(tile, emptySpaces);
+                validMoves = AntPossibleMoves(tile);
+                //validMoves = SpiderPossibleMoves(tile, emptySpaces);
             }
 
-        }
+        //}
 
         return validMoves;
     }
@@ -455,7 +485,6 @@ public class GameManager : MonoBehaviour {
 
             if (CheckIfValid(tilePos, pos)) {
                 validMovePositions.Push(pos);
-                Debug.Log(pos);
             }
         }
 
@@ -470,7 +499,6 @@ public class GameManager : MonoBehaviour {
         //Check Sides
         foreach (KeyValuePair<Vector3, GameGridCell> gridCell in gameGrid) {
             if (!gridCell.Value.isFilled && CheckIfValid(tilePos, gridCell.Key)) {
-                Debug.Log(gridCell.Key);
                 validMovePositions.Push(gridCell.Key);
             }
         }
@@ -542,7 +570,6 @@ public class GameManager : MonoBehaviour {
 
             if (CheckIfValid(tilePos, pos)) {
                 validMovePositions.Push(pos);
-                Debug.Log(pos);
             }
         }
 
@@ -561,7 +588,6 @@ public class GameManager : MonoBehaviour {
     void SimulateMoves(Vector3 curPos, Vector3 prevPos, Stack<Vector3> emptySpaces, ref Stack<Vector3> validMovePos, int counter) {
         //Check Sides
         while (emptySpaces.Count > 0) {
-            Debug.Log(emptySpaces.Peek());
             Vector3 newPos = emptySpaces.Pop();
 
             if (CheckIfValid(curPos, newPos) && counter < 3) {
@@ -600,7 +626,7 @@ public class GameManager : MonoBehaviour {
         return validPos;
     }
 
-    bool CheckForWin() {
+    void CheckForWin() {
 
         foreach (GameGridCell tile in gameGrid.Values) {
             if (tile.isFilled) {
@@ -610,16 +636,21 @@ public class GameManager : MonoBehaviour {
 
                 //Check if Queen is surrounded
                 if (tileScript.GetId() == "Queen1" || tileScript.GetId() == "Queen2") {
-                    Debug.Log(tileScript.GetId());
-                    Debug.Log(pos);
 
                     if (IsSurrounded(pos)) {
-                        return true;
+                        isWin = true;
+
+                        if (tileScript.GetTileColor()) {
+                            isWhiteWin = false;
+                        }
+                        else {
+                            isWhiteWin = true;
+                        }
+                        
                     }
                 }
             }
         }
-        return false;
     }
 
     bool IsSurrounded(Vector3 pos) {
@@ -679,12 +710,12 @@ public class GameManager : MonoBehaviour {
     }
 
     //Returns a vector of all the valid movement/placement positions
-    Vector3[] GetMovePositions() {
-        Vector3[] positions = new Vector3[tilesPlaced * 6];
+    Stack<Vector3> GetMovePositions() {
+        Stack<Vector3> positions = new Stack<Vector3>();
 
         //Checks for the open positions around a tile for creating potential move positions
 
-        for (int i = 0; gamePieces[i] != null; i += 6) {
+        for (int i = 0; gamePieces[i] != null; i++) {
 
             float x = gamePieces[i].transform.position.x;
             float z = gamePieces[i].transform.position.z;
@@ -694,36 +725,35 @@ public class GameManager : MonoBehaviour {
             //North of Tile
 
             pos = new Vector3(x + 1, 0, z);
-            positions[i] = pos;
+            positions.Push(pos);
 
             //South of Tile
             pos = new Vector3(x - 1, 0, z);
-            positions[i + 1] = pos;
+            positions.Push(pos);
 
             //North East of Tile
             pos = new Vector3(x + .5f, 0, z + 1);
-            positions[i + 2] = pos;
+            positions.Push(pos);
 
             //North West of Tile
             pos = new Vector3(x + .5f, 0, z - 1);
-            positions[i + 3] = pos;
+            positions.Push(pos);
 
             //South East of Tile
             pos = new Vector3(x - .5f, 0, z + 1);
-            positions[i + 4] = pos;
+            positions.Push(pos);
 
             //South West of Tile
             pos = new Vector3(x - .5f, 0, z - 1);
-
-            positions[i + 5] = pos;
+            positions.Push(pos);
         }
+
 
         return positions;
     }
 
     //Creates the selection grid at valid move positions
     public void SetMoveGrid(GameObject tile, bool isMove) {
-
         if (tilesPlaced > 0) {
             ClearMoveGrid();
 
@@ -738,11 +768,11 @@ public class GameManager : MonoBehaviour {
             }
             else {
                 //Place Validation
-                Vector3[] positions = GetMovePositions();
+                Stack<Vector3> positions = GetMovePositions();
 
-                for (int i = 0; i < positions.Length; i++) {
+                while (positions.Count > 0) {
                     GameObject temp;
-                    temp = Instantiate(GridTile, positions[i], Quaternion.identity) as GameObject;
+                    temp = Instantiate(GridTile, positions.Pop(), Quaternion.identity) as GameObject;
                     selectionGrids.Push(temp);
                 }
             }
@@ -754,6 +784,30 @@ public class GameManager : MonoBehaviour {
         while (selectionGrids.Count != 0) {
             GameObject temp = selectionGrids.Pop();
             Destroy(temp);
+        }
+    }
+
+    public bool AreQueensOnBoard() {
+        foreach (GameGridCell tile in gameGrid.Values) {
+            if (tile != null) {
+                if (tile.tile != null) {
+                    TileScript tileScript = tile.tile.GetComponent(typeof(TileScript)) as TileScript;
+
+                    if (tileScript.GetId() == "Queen1" && !isQueen1OnBoard) {
+                        isQueen1OnBoard = true;
+                    }
+                    if (tileScript.GetId() == "Queen2" && !isQueen2OnBoard) {
+                        isQueen2OnBoard = true;
+                    }
+                }
+            }
+        }
+
+        if (isQueen1OnBoard && isQueen2OnBoard) {
+            return true;
+        }
+        else {
+            return false;
         }
     }
 }

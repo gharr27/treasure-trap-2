@@ -134,7 +134,7 @@ GameObject:
   - component: {fileID: 304344171}
   - component: {fileID: 304344172}
   m_Layer: 0
-  m_Name: Player
+  m_Name: Player-White
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -167,13 +167,64 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb10084b45b5d6f40a31eb18315623be, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isPlayingAI: 0
   Tiles:
-  - {fileID: 4070623521026353917, guid: f531bee7ccd43284ab848fb478ef2f62, type: 3}
+  - {fileID: 144613323671528279, guid: 786c09aaf89e00f4c92b934ee9fe89bd, type: 3}
+  - {fileID: 2266287429149696184, guid: 1122ae0e43e1cc24289f2379b41656be, type: 3}
+  - {fileID: 7362697454282387358, guid: cfeaf3f49a3b2434599fae92f0f60861, type: 3}
+  - {fileID: 8388596035331099963, guid: 1c94f7e799a357544b8bf0c6ab861c95, type: 3}
+  - {fileID: 2859850552348427938, guid: 8231a310f57375641ab1f270409793f1, type: 3}
+  isWhite: 1
+--- !u!1 &667272276
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 667272277}
+  - component: {fileID: 667272278}
+  m_Layer: 0
+  m_Name: Player-Black
+  m_TagString: Player
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &667272277
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 667272276}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.5906993, y: 0.44671664, z: -0.5132367}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &667272278
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 667272276}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fb10084b45b5d6f40a31eb18315623be, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Tiles:
+  - {fileID: 8449723533655742188, guid: 8e883303e126ff9478881e02e30c1c6f, type: 3}
   - {fileID: 1680997667197133304, guid: 5bbaa438554fd204abefb8ec35bfdda3, type: 3}
-  - {fileID: 6961445430596450891, guid: 44c5be67964fabe439780a333b5f8f2b, type: 3}
-  - {fileID: 8457763462597092684, guid: b8bbe8009dd819d46803442f9a930ca1, type: 3}
-  - {fileID: 2975427370151364361, guid: aaa2adb82a4eac14ba4ff4979153880b, type: 3}
+  - {fileID: 2175466403812836874, guid: 396eb58f20568314db7984ad80939749, type: 3}
+  - {fileID: 5750900686715244409, guid: 0e3acac27e105774dae66de2dedafd1a, type: 3}
+  - {fileID: 4782476565982883196, guid: a6ddd26765ed9434d988a4dc1896e344, type: 3}
+  isWhite: 0
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
