@@ -247,11 +247,12 @@ public class GameManager : MonoBehaviour {
         Stack<Vector3> validMoves = new Stack<Vector3>();
         Vector3 pos = tile.transform.position;
 
-        if (!IsBreaksHive(pos)) {
+        //if (!IsBreaksHive(pos)) {
 
             Stack<Vector3> emptySpaces = new Stack<Vector3>();
 
             emptySpaces = GetEmptySpaces(pos);
+            Debug.Log(emptySpaces.Peek());
 
             if (tileScript.GetTileName() == "Queen") {
                 validMoves = QueenPossibleMoves(tile, emptySpaces);
@@ -266,10 +267,11 @@ public class GameManager : MonoBehaviour {
                 validMoves = BeetlePossibleMoves(tile, emptySpaces);
             }
             else if (tileScript.GetTileName() == "Spider") {
-                validMoves = SpiderPossibleMoves(tile, emptySpaces);
+                validMoves = AntPossibleMoves(tile);
+                //validMoves = SpiderPossibleMoves(tile, emptySpaces);
             }
 
-        }
+        //}
 
         return validMoves;
     }
@@ -679,12 +681,13 @@ public class GameManager : MonoBehaviour {
     }
 
     //Returns a vector of all the valid movement/placement positions
-    Vector3[] GetMovePositions() {
-        Vector3[] positions = new Vector3[tilesPlaced * 6];
+    Stack<Vector3> GetMovePositions() {
+        Stack<Vector3> positions = new Stack<Vector3>();
 
         //Checks for the open positions around a tile for creating potential move positions
 
-        for (int i = 0; gamePieces[i] != null; i += 6) {
+        for (int i = 0; gamePieces[i] != null; i++) {
+            Debug.Log(gamePieces[i].name);
 
             float x = gamePieces[i].transform.position.x;
             float z = gamePieces[i].transform.position.z;
@@ -694,36 +697,35 @@ public class GameManager : MonoBehaviour {
             //North of Tile
 
             pos = new Vector3(x + 1, 0, z);
-            positions[i] = pos;
+            positions.Push(pos);
 
             //South of Tile
             pos = new Vector3(x - 1, 0, z);
-            positions[i + 1] = pos;
+            positions.Push(pos);
 
             //North East of Tile
             pos = new Vector3(x + .5f, 0, z + 1);
-            positions[i + 2] = pos;
+            positions.Push(pos);
 
             //North West of Tile
             pos = new Vector3(x + .5f, 0, z - 1);
-            positions[i + 3] = pos;
+            positions.Push(pos);
 
             //South East of Tile
             pos = new Vector3(x - .5f, 0, z + 1);
-            positions[i + 4] = pos;
+            positions.Push(pos);
 
             //South West of Tile
             pos = new Vector3(x - .5f, 0, z - 1);
-
-            positions[i + 5] = pos;
+            positions.Push(pos);
         }
+
 
         return positions;
     }
 
     //Creates the selection grid at valid move positions
     public void SetMoveGrid(GameObject tile, bool isMove) {
-
         if (tilesPlaced > 0) {
             ClearMoveGrid();
 
@@ -738,11 +740,11 @@ public class GameManager : MonoBehaviour {
             }
             else {
                 //Place Validation
-                Vector3[] positions = GetMovePositions();
+                Stack<Vector3> positions = GetMovePositions();
 
-                for (int i = 0; i < positions.Length; i++) {
+                while (positions.Count > 0) {
                     GameObject temp;
-                    temp = Instantiate(GridTile, positions[i], Quaternion.identity) as GameObject;
+                    temp = Instantiate(GridTile, positions.Pop(), Quaternion.identity) as GameObject;
                     selectionGrids.Push(temp);
                 }
             }
