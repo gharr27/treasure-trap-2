@@ -7,12 +7,14 @@ public class TileScript : MonoBehaviour {
 
     BoxCollider boxCollider;
     bool isMouseOver = false;
+    bool isWhite;
 
     GameManager gameManager;
     GameObject gameController;
 
-    PlayerScript player;
-    GameObject playerObject;
+    PlayerScript playerWhite;
+    PlayerScript playerBlack;
+    GameObject[] playerObject = new GameObject[2];
 
     static int queenId = 1;
     static int antId = 1;
@@ -24,14 +26,27 @@ public class TileScript : MonoBehaviour {
 
     string id;
 
+    public bool GetTileColor() {
+        return isWhite;
+    }
+
     // Start is called before the first frame update
     void Start() {
         boxCollider = this.GetComponent(typeof(BoxCollider)) as BoxCollider;
         gameController = GameObject.FindWithTag("GameController");
         gameManager = gameController.GetComponent(typeof(GameManager)) as GameManager;
 
-        playerObject = GameObject.FindWithTag("Player");
-        player = playerObject.GetComponent(typeof(PlayerScript)) as PlayerScript;
+        playerObject = GameObject.FindGameObjectsWithTag("Player");
+        playerBlack = playerObject[0].GetComponent(typeof(PlayerScript)) as PlayerScript;
+        playerWhite = playerObject[1].GetComponent(typeof(PlayerScript)) as PlayerScript;
+
+        //Weird Logic, check if it is currently blacks turn, if so this piece that has just been created is white
+        if (gameManager.GetTurn() == 1) {
+            isWhite = true;
+        }
+        else {
+            isWhite = false;
+        }
 
         if (tileName == "Queen") {
             id = tileName + queenId;
@@ -56,9 +71,11 @@ public class TileScript : MonoBehaviour {
     }
 
     void Update() {
-        if (Input.GetMouseButtonDown(0) && isMouseOver) {
-            player.SetTile(this.gameObject);
-            Debug.Log(id);
+        if (Input.GetMouseButtonDown(0) && isMouseOver && gameManager.GetTurn() == 0 && isWhite) {
+            playerWhite.SetTile(this.gameObject);
+        }
+        else if (Input.GetMouseButtonDown(0) && isMouseOver && gameManager.GetTurn() == 1 && !isWhite) {
+            playerBlack.SetTile(this.gameObject);
         }
     }
 
