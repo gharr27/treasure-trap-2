@@ -12,6 +12,12 @@ public class RadioButtonSystem : MonoBehaviour
         toggleGroup = GetComponent<ToggleGroup>();
     }
 
+    void Update()
+    {
+        Toggle toggle = toggleGroup.ActiveToggles().FirstOrDefault();
+        PlayerPrefs.SetString(what, toggle.name + " _ " + toggle.GetComponentInChildren<Text>().text);
+    }
+
     public void Submit()
     {
         Toggle toggle = toggleGroup.ActiveToggles().FirstOrDefault();
