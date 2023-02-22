@@ -56,7 +56,7 @@ public class MenusManager : MonoBehaviour
 
     public void GoToGameBoard()
     {
-        SceneManager.LoadScene("GameBoard");
+        SceneManager.LoadScene("SampleScene");
     }
 
     public void GoToLoserScreen()
@@ -69,9 +69,15 @@ public class MenusManager : MonoBehaviour
         SceneManager.LoadScene("WinnerScreen");
     }
 
+    public void GoToLoadingScreen()
+    {
+        SceneManager.LoadScene("Loading");
+    }
+
     public void ExitGame()
     {
         Debug.Log("Your Application is closed");
         Application.Quit();
     }
+
 }
