@@ -11,6 +11,8 @@ TagManager:
   - Beetle
   - Spider
   - Grasshopper
+  - White
+  - Black
   layers:
   - Default
   - TransparentFX
