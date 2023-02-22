@@ -56,6 +56,9 @@ public class GameManager : MonoBehaviour {
     PlayerScript playerBlack;
     GameObject[] playerObject = new GameObject[2];
 
+    MenusManager menuManager;
+    GameObject menuManagerObject;
+
     Dictionary<Vector3, GameGridCell> gameGrid = new Dictionary<Vector3, GameGridCell>();
 
     public int GetRound() {
@@ -73,6 +76,9 @@ public class GameManager : MonoBehaviour {
         playerObject = GameObject.FindGameObjectsWithTag("Player");
         playerBlack = playerObject[1].GetComponent(typeof(PlayerScript)) as PlayerScript;
         playerWhite = playerObject[0].GetComponent(typeof(PlayerScript)) as PlayerScript;
+
+        menuManagerObject = GameObject.FindWithTag("Menu");
+        menuManager = menuManagerObject.GetComponent(typeof(MenusManager)) as MenusManager;
     }
 
     // Update is called once per frame
@@ -97,15 +103,22 @@ public class GameManager : MonoBehaviour {
         else {
             if (isWhiteWin) {
                 Debug.Log("White Wins!");
+                menuManager.GoToWinnerScreen();
+
             }
             else {
                 Debug.Log("Black Wins!");
+                menuManager.GoToLoserScreen();
             }
         }
 
 
         if (Input.GetKeyDown(KeyCode.Space)) {
             Debug.Log(gameGrid.Count);
+        }
+
+        if (Input.GetKeyDown(KeyCode.Escape)) {
+            menuManager.GoToMainMenu();
         }
     }
 
