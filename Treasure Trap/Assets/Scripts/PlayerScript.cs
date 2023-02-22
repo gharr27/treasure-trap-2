@@ -26,6 +26,14 @@ public class PlayerScript : MonoBehaviour {
     int beetleCount = 2;
     int spiderCount = 2;
 
+    int whiteOrBlack;
+
+    int queenCount = 1;
+    int antCount = 3;
+    int grasshopperCount = 3;
+    int beetleCount = 2;
+    int spiderCount = 2;
+
     // Start is called before the first frame update
     void Start() {
         gameController = GameObject.FindWithTag("GameController");
@@ -116,7 +124,7 @@ public class PlayerScript : MonoBehaviour {
         isMove = true;
         tile = newTile;
         isTileSelected = true;
-
+        
         StartCoroutine(Move(true));
     }
 

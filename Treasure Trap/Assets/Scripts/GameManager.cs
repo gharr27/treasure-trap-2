@@ -280,6 +280,7 @@ public class GameManager : MonoBehaviour {
             Stack<Vector3> emptySpaces = new Stack<Vector3>();
 
             emptySpaces = GetEmptySpaces(pos);
+            Debug.Log(emptySpaces.Peek());
 
             if (tileScript.GetTileName() == "Queen") {
                 validMoves = QueenPossibleMoves(tile, emptySpaces);
