@@ -10,7 +10,7 @@ public class Test : MonoBehaviour
     {
         if (active == false)
         {
-            RulesPanel.transform.RulesPanel.SetActive(true);
+            //RulesPanel.transform.RulesPanel.SetActive(true);
             active = true;
         }
     }
@@ -18,7 +18,7 @@ public class Test : MonoBehaviour
     {
         if (active == true)
         {
-            RulesPanel.transform.RulesPanel.SetActive(false);
+            //RulesPanel.transform.RulesPanel.SetActive(false);
             active = false;
         }
     }
