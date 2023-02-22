@@ -56,7 +56,7 @@ public class MenusManager : MonoBehaviour
 
     public void GoToGameBoard()
     {
-        SceneManager.LoadScene("GameBoard");
+        SceneManager.LoadScene("SampleScene");
     }
 
     public void GoToLoserScreen()
