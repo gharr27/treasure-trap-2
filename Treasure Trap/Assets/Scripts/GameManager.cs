@@ -326,13 +326,99 @@ public class GameManager : MonoBehaviour {
         return emptySpaces;
     }
 
-    bool IsBreaksHive(Vector3 pos) {
-        
-        if (GetBoarderCount(pos) == 1) {
-            return false;
+    //gets all occupied spaces of pieces and puts them in a Stack
+    Stack<Vector3> GetOccupiedSpaces(Vector3 pos) {
+        Stack<Vector3> occupiedSpaces = new Stack<Vector3>();
+
+        float x = pos.x;
+        float y = pos.y;
+        float z = pos.z;
+
+        //Above
+        Vector3 newPos = new Vector3(x + 1, y, z);
+        if (gameGrid[newPos].isFilled) {
+            occupiedSpaces.Push(newPos);
         }
+
+        //Below
+        newPos = new Vector3(x - 1, y, z);
+        if (gameGrid[newPos].isFilled) {
+            occupiedSpaces.Push(newPos);
+        }
+
+
+        //Top Left
+        newPos = new Vector3(x + .5f, y, z + 1);
+        if (gameGrid[newPos].isFilled) {
+            occupiedSpaces.Push(newPos);
+        }
+
+
+        //Bottom Left
+        newPos = new Vector3(x - .5f, y, z + 1);
+        if (gameGrid[newPos].isFilled) {
+            occupiedSpaces.Push(newPos);
+        }
+
+
+        //Top Right
+        newPos = new Vector3(x + .5f, y, z - 1);
+        if (gameGrid[newPos].isFilled) {
+            occupiedSpaces.Push(newPos);
+        }
+
+
+        //Bottom Right
+        newPos = new Vector3(x - .5f, y, z - 1);
+        if (gameGrid[newPos].isFilled) {
+            occupiedSpaces.Push(newPos);
+        }
+
+        return occupiedSpaces;
+    }
+
+    //HAS TO BE MODIFIED, trying to check if each space is occupied
+    Vector3 CheckForOccupied(Vector3 pos, bool isFirstTime, float xDir, float zDir) {
+        float x = pos.x;
+        float y = pos.y;
+        float z = pos.z;
+
+
+        Vector3 validPos = pos;
+
+        Vector3 newPos = new Vector3(x + xDir, y, z + zDir);
+        if (gameGrid.ContainsKey(newPos)) {
+            if (gameGrid[newPos].isFilled && isFirstTime) {
+                return validPos;
+            }
+            else if (gameGrid[newPos].isFilled && !isFirstTime) {
+                return newPos;
+            }
+            else {
+                return CheckForOccupied(newPos, false, xDir, zDir);
+            }
+        }
+
+        return validPos;
+    }
+    
+    //takes a stack of occupied spaces, goes through the stack and checks to see if each piece has at least one or more pieces next to it
+    bool IsBreaksHive(Stack<Vector3> occupiedSpaces) {
+
+        Stack<Vector3> visitedPieces = new Stack<Vector3>();
+        if (/*piece is being moved*/) {
+            for (int i = 0; i < occupiedSpaces.Count; i++) {
+                while (CheckForOccupied(occupiedSpaces[i])) {
+
+                }
+            }
+        }
+
+        //if (GetBoarderCount(pos) == 1) {
+        //    return false;
+        //}
         
-        return true;
+        //return true;
     }
 
     int GetBoarderCount(Vector3 pos) {
