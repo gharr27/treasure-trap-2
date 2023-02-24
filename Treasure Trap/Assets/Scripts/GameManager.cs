@@ -378,6 +378,7 @@ public class GameManager : MonoBehaviour {
     }
 
     //HAS TO BE MODIFIED, trying to check if each space is occupied
+    //UPDATE: may not need this 
     Vector3 CheckForOccupied(Vector3 pos, bool isFirstTime, float xDir, float zDir) {
         float x = pos.x;
         float y = pos.y;
@@ -401,23 +402,35 @@ public class GameManager : MonoBehaviour {
 
         return validPos;
     }
-    
+
     //takes a stack of occupied spaces, goes through the stack and checks to see if each piece has at least one or more pieces next to it
-    bool IsBreaksHive(Stack<Vector3> occupiedSpaces) {
-
+    //start from the position where the user wants to move the piece
+    //if Hive is broken then the places visited will be less than the total amount of pieces on the board
+    bool IsBreaksHive(Vector3 pos) {
+        Stack<Vector3> occupiedSpaces = new Stack<Vector3>();
         Stack<Vector3> visitedPieces = new Stack<Vector3>();
-        if (/*piece is being moved*/) {
-            for (int i = 0; i < occupiedSpaces.Count; i++) {
-                while (CheckForOccupied(occupiedSpaces[i])) {
+        Vector3 newPos = pos;
 
+       // if (/*piece is being moved*/) {
+            while (visitedPieces.Count < occupiedSpaces.Count) {
+
+                //fill occupiedSpaces with positions returned from GetOccupiedSpaces
+                occupiedSpaces = GetOccupiedSpaces(pos);
+                visitedPieces.Push(newPos);
+                
+                if (visitedPieces.Count < occupiedSpaces.Count) {
+                    return true;
+                }
+                else {
+                    return false;
                 }
             }
-        }
+       // }
 
         //if (GetBoarderCount(pos) == 1) {
         //    return false;
         //}
-        
+
         //return true;
     }
 
