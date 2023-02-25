@@ -52,6 +52,7 @@ public class GameManager : MonoBehaviour {
     bool isQueen1OnBoard = false;
     bool isQueen2OnBoard = false;
 
+
     PlayerScript playerWhite;
     PlayerScript playerBlack;
     GameObject[] playerObject = new GameObject[2];
@@ -71,8 +72,9 @@ public class GameManager : MonoBehaviour {
         gamePieces = new GameObject[PIECE_COUNT];
 
         playerObject = GameObject.FindGameObjectsWithTag("Player");
-        playerBlack = playerObject[1].GetComponent(typeof(PlayerScript)) as PlayerScript;
-        playerWhite = playerObject[0].GetComponent(typeof(PlayerScript)) as PlayerScript;
+        playerBlack = playerObject[0].GetComponent(typeof(PlayerScript)) as PlayerScript;
+        playerWhite = playerObject[1].GetComponent(typeof(PlayerScript)) as PlayerScript;
+
     }
 
     // Update is called once per frame
@@ -84,7 +86,6 @@ public class GameManager : MonoBehaviour {
                 if (turn == 0) {
                     //White Move
                     Debug.Log("White Move");
-                    Debug.Log(round);
                     StartCoroutine(playerWhite.Move(true));
                 }
                 else {
@@ -160,8 +161,14 @@ public class GameManager : MonoBehaviour {
 
         GameGridCell gridCell = new GameGridCell();
 
+        //On Top
+        Vector3 newPos = new Vector3(x + 1, y + 1, z);
+        if (!gameGrid.ContainsKey(newPos)) {
+            gameGrid.Add(newPos, gridCell);
+        }
+
         //Above
-        Vector3 newPos = new Vector3(x + 1, y, z);
+        newPos = new Vector3(x + 1, y, z);
         if (!gameGrid.ContainsKey(newPos)) {
             gameGrid.Add(newPos, gridCell);
         }
@@ -280,7 +287,6 @@ public class GameManager : MonoBehaviour {
             Stack<Vector3> emptySpaces = new Stack<Vector3>();
 
             emptySpaces = GetEmptySpaces(pos);
-            Debug.Log(emptySpaces.Peek());
 
             if (tileScript.GetTileName() == "Queen") {
                 validMoves = QueenPossibleMoves(tile, emptySpaces);
@@ -295,8 +301,8 @@ public class GameManager : MonoBehaviour {
                 validMoves = BeetlePossibleMoves(tile, emptySpaces);
             }
             else if (tileScript.GetTileName() == "Spider") {
-                validMoves = AntPossibleMoves(tile);
-                //validMoves = SpiderPossibleMoves(tile, emptySpaces);
+                //validMoves = AntPossibleMoves(tile);
+                validMoves = SpiderPossibleMoves(tile, emptySpaces);
             }
 
         //}
@@ -313,54 +319,192 @@ public class GameManager : MonoBehaviour {
 
         //Above
         Vector3 newPos = new Vector3(x + 1, y, z);
-        if (!gameGrid[newPos].isFilled) {
+        if (gameGrid.ContainsKey(newPos)) {
+            if (!gameGrid[newPos].isFilled) {
+                emptySpaces.Push(newPos);
+            }
+        }
+        else {
+            gameGrid[newPos] = new GameGridCell();
             emptySpaces.Push(newPos);
         }
 
         //Below
         newPos = new Vector3(x - 1, y, z);
-        if (!gameGrid[newPos].isFilled) {
+        if (gameGrid.ContainsKey(newPos)) {
+            if (!gameGrid[newPos].isFilled) {
+                emptySpaces.Push(newPos);
+            }
+        }
+        else {
+            gameGrid[newPos] = new GameGridCell();
             emptySpaces.Push(newPos);
         }
 
 
         //Top Left
         newPos = new Vector3(x + .5f, y, z + 1);
-        if (!gameGrid[newPos].isFilled) {
+        if (gameGrid.ContainsKey(newPos)) {
+            if (!gameGrid[newPos].isFilled) {
+                emptySpaces.Push(newPos);
+            }
+        }
+        else {
+            gameGrid[newPos] = new GameGridCell();
             emptySpaces.Push(newPos);
         }
 
 
         //Bottom Left
         newPos = new Vector3(x - .5f, y, z + 1);
-        if (!gameGrid[newPos].isFilled) {
+        if (gameGrid.ContainsKey(newPos)) {
+            if (!gameGrid[newPos].isFilled) {
+                emptySpaces.Push(newPos);
+            }
+        }
+        else {
+            gameGrid[newPos] = new GameGridCell();
             emptySpaces.Push(newPos);
         }
 
 
         //Top Right
         newPos = new Vector3(x + .5f, y, z - 1);
-        if (!gameGrid[newPos].isFilled) {
+        if (gameGrid.ContainsKey(newPos)) {
+            if (!gameGrid[newPos].isFilled) {
+                emptySpaces.Push(newPos);
+            }
+        }
+        else {
+            gameGrid[newPos] = new GameGridCell();
             emptySpaces.Push(newPos);
         }
 
 
         //Bottom Right
         newPos = new Vector3(x - .5f, y, z - 1);
-        if (!gameGrid[newPos].isFilled) {
+        if (gameGrid.ContainsKey(newPos)) {
+            if (!gameGrid[newPos].isFilled) {
+                emptySpaces.Push(newPos);
+            }
+        }
+        else {
+            gameGrid[newPos] = new GameGridCell();
             emptySpaces.Push(newPos);
         }
 
         return emptySpaces;
     }
 
-    bool IsBreaksHive(Vector3 pos) {
-        
-        if (GetBoarderCount(pos) == 1) {
-            return false;
+    //gets all occupied spaces of pieces and puts them in a Stack
+    Stack<Vector3> GetOccupiedSpaces(Vector3 pos) {
+        Stack<Vector3> occupiedSpaces = new Stack<Vector3>();
+
+        float x = pos.x;
+        float y = pos.y;
+        float z = pos.z;
+
+        //Above
+        Vector3 newPos = new Vector3(x + 1, y, z);
+        if (gameGrid[newPos].isFilled) {
+            occupiedSpaces.Push(newPos);
         }
-        
-        return true;
+
+        //Below
+        newPos = new Vector3(x - 1, y, z);
+        if (gameGrid[newPos].isFilled) {
+            occupiedSpaces.Push(newPos);
+        }
+
+
+        //Top Left
+        newPos = new Vector3(x + .5f, y, z + 1);
+        if (gameGrid[newPos].isFilled) {
+            occupiedSpaces.Push(newPos);
+        }
+
+
+        //Bottom Left
+        newPos = new Vector3(x - .5f, y, z + 1);
+        if (gameGrid[newPos].isFilled) {
+            occupiedSpaces.Push(newPos);
+        }
+
+
+        //Top Right
+        newPos = new Vector3(x + .5f, y, z - 1);
+        if (gameGrid[newPos].isFilled) {
+            occupiedSpaces.Push(newPos);
+        }
+
+
+        //Bottom Right
+        newPos = new Vector3(x - .5f, y, z - 1);
+        if (gameGrid[newPos].isFilled) {
+            occupiedSpaces.Push(newPos);
+        }
+
+        return occupiedSpaces;
+    }
+
+    //HAS TO BE MODIFIED, trying to check if each space is occupied
+    //UPDATE: may not need this 
+    Vector3 CheckForOccupied(Vector3 pos, bool isFirstTime, float xDir, float zDir) {
+        float x = pos.x;
+        float y = pos.y;
+        float z = pos.z;
+
+
+        Vector3 validPos = pos;
+
+        Vector3 newPos = new Vector3(x + xDir, y, z + zDir);
+        if (gameGrid.ContainsKey(newPos)) {
+            if (gameGrid[newPos].isFilled && isFirstTime) {
+                return validPos;
+            }
+            else if (gameGrid[newPos].isFilled && !isFirstTime) {
+                return newPos;
+            }
+            else {
+                return CheckForOccupied(newPos, false, xDir, zDir);
+            }
+        }
+
+        return validPos;
+    }
+
+    //takes a stack of occupied spaces, goes through the stack and checks to see if each piece has at least one or more pieces next to it
+    //start from the position where the user wants to move the piece
+    //if Hive is broken then the places visited will be less than the total amount of pieces on the board
+    bool IsBreaksHive(Vector3 pos) {
+        Stack<Vector3> occupiedSpaces = new Stack<Vector3>();
+        Stack<Vector3> visitedPieces = new Stack<Vector3>();
+        Vector3 newPos = pos;
+
+        // if (/*piece is being moved*/) {
+        while (visitedPieces.Count < occupiedSpaces.Count) {
+
+            //fill occupiedSpaces with positions returned from GetOccupiedSpaces
+            occupiedSpaces = GetOccupiedSpaces(pos);
+            visitedPieces.Push(newPos);
+
+            if (visitedPieces.Count < occupiedSpaces.Count) {
+                return true;
+            }
+            else {
+                return false;
+            }
+
+        }
+
+        return false;
+        // }
+
+        //if (GetBoarderCount(pos) == 1) {
+        //    return false;
+        //}
+
+        //return true;
     }
 
     int GetBoarderCount(Vector3 pos) {
@@ -568,38 +712,311 @@ public class GameManager : MonoBehaviour {
         while (emptySpaces.Count > 0) {
             Vector3 pos = emptySpaces.Pop();
 
-            if (CheckIfValid(tilePos, pos)) {
+            if (CheckIfBeetleValid(tilePos, pos)) {
                 validMovePositions.Push(pos);
+            }
+            Dictionary<Vector3, int> validPos = CheckOntopHive(tilePos);
+
+            foreach (KeyValuePair<Vector3, int> goodPos in validPos) {
+                validMovePositions.Push(goodPos.Key);
             }
         }
 
         return validMovePositions;
+    }
+
+    Dictionary<Vector3, int> CheckOntopHive(Vector3 pos) {
+        Dictionary<Vector3, int> validPos = new Dictionary<Vector3, int>();
+        float x = pos.x;
+        float y = pos.y;
+        float z = pos.z;
+
+        //Above
+        Vector3 newPos = new Vector3(x + 1, y, z);
+        if (gameGrid.ContainsKey(newPos)) {
+            while (gameGrid[newPos].isFilled) {
+                newPos = new Vector3(x + 1, y += 1, z);
+            }
+            validPos[newPos] = 420;
+        }
+        else {
+            gameGrid.Add(new Vector3(x + 1, y += 1, z), new GameGridCell());
+        }
+
+        y = 0;
+
+        //Below
+        newPos = new Vector3(x - 1, y, z);
+        if (gameGrid.ContainsKey(newPos)) {
+            while (gameGrid[newPos].isFilled) {
+                newPos = new Vector3(x - 1, y += 1, z);
+            }
+            validPos[newPos] = 420;
+        }
+        else {
+            gameGrid.Add(new Vector3(x - 1, y += 1, z), new GameGridCell());
+        }
+
+        y = 0;
+
+        //Top Left
+        newPos = new Vector3(x + .5f, y, z + 1);
+        if (gameGrid.ContainsKey(newPos)) {
+            while (gameGrid[newPos].isFilled) {
+                newPos = new Vector3(x + .5f, y += 1, z + 1);
+            }
+            validPos[newPos] = 420;
+        }
+        else {
+            gameGrid.Add(new Vector3(x + .5f, y += 1, z + 1), new GameGridCell());
+        }
+
+        y = 0;
+
+        //Bottom Left
+        newPos = new Vector3(x - .5f, y, z + 1);
+        if (gameGrid.ContainsKey(newPos)) {
+            while (gameGrid[newPos].isFilled) {
+                newPos = new Vector3(x - .5f, y += 1, z + 1);
+            }
+            validPos[newPos] = 420;
+        }
+        else {
+            gameGrid.Add(new Vector3(x - .5f, y += 1, z + 1), new GameGridCell());
+        }
+
+        y = 0;
+
+        //Top Right
+        newPos = new Vector3(x + .5f, y, z - 1);
+        if (gameGrid.ContainsKey(newPos)) {
+            while (gameGrid[newPos].isFilled) {
+                newPos = new Vector3(x + .5f, y += 1, z - 1);
+            }
+            validPos[newPos] = 420;
+        }
+        else {
+            gameGrid.Add(new Vector3(x + .5f, y += 1, z - 1), new GameGridCell());
+        }
+
+        y = 0;
+
+        //Bottom Right
+        newPos = new Vector3(x - .5f, y, z - 1);
+        if (gameGrid.ContainsKey(newPos)) {
+            while (gameGrid[newPos].isFilled) {
+                newPos = new Vector3(x - .5f, y += 1, z - 1);
+            }
+            validPos[newPos] = 420;
+        }
+        else {
+            gameGrid.Add(new Vector3(x - .5f, y += 1, z - 1), new GameGridCell());
+        }
+
+        return validPos;
+    }
+
+    bool CheckIfBeetleValid(Vector3 tilePos, Vector3 spacePos) {
+        float x = spacePos.x;
+        float y = spacePos.y;
+        float z = spacePos.z;
+
+        //Above
+        Vector3 newPos = new Vector3(x + 1, y, z);
+        if (gameGrid.ContainsKey(newPos)) {
+            if (gameGrid[newPos].isFilled && newPos != tilePos) {
+                return true;
+            }
+        }
+
+        //Below
+        newPos = new Vector3(x - 1, y, z);
+        if (gameGrid.ContainsKey(newPos)) {
+            if (gameGrid[newPos].isFilled && newPos != tilePos) {
+                return true;
+            }
+        }
+
+
+        //Top Left
+        newPos = new Vector3(x + .5f, y, z + 1);
+        if (gameGrid.ContainsKey(newPos)) {
+            if (gameGrid[newPos].isFilled && newPos != tilePos) {
+                return true;
+            }
+        }
+
+
+        //Bottom Left
+        newPos = new Vector3(x - .5f, y, z + 1);
+        if (gameGrid.ContainsKey(newPos)) {
+            if (gameGrid[newPos].isFilled && newPos != tilePos) {
+                return true;
+            }
+        }
+
+
+        //Top Right
+        newPos = new Vector3(x + .5f, y, z - 1);
+        if (gameGrid.ContainsKey(newPos)) {
+            if (gameGrid[newPos].isFilled && newPos != tilePos) {
+                return true;
+            }
+        }
+
+
+        //Bottom Right
+        newPos = new Vector3(x - .5f, y, z - 1);
+        if (gameGrid.ContainsKey(newPos)) {
+            if (gameGrid[newPos].isFilled && newPos != tilePos) {
+                return true;
+            }
+        }
+
+        //On Top Hive
+        //Above
+        newPos = new Vector3(x + 1, y + 1, z);
+        if (gameGrid.ContainsKey(newPos)) {
+            if (gameGrid[newPos].isFilled && newPos != tilePos) {
+                return true;
+            }
+        }
+
+        //Below
+        newPos = new Vector3(x - 1, y + 1, z);
+        if (gameGrid.ContainsKey(newPos)) {
+            if (gameGrid[newPos].isFilled && newPos != tilePos) {
+                return true;
+            }
+        }
+
+
+        //Top Left
+        newPos = new Vector3(x + .5f, y + 1, z + 1);
+        if (gameGrid.ContainsKey(newPos)) {
+            if (gameGrid[newPos].isFilled && newPos != tilePos) {
+                return true;
+            }
+        }
+
+
+        //Bottom Left
+        newPos = new Vector3(x - .5f, y + 1, z + 1);
+        if (gameGrid.ContainsKey(newPos)) {
+            if (gameGrid[newPos].isFilled && newPos != tilePos) {
+                return true;
+            }
+        }
+
+
+        //Top Right
+        newPos = new Vector3(x + .5f, y + 1, z - 1);
+        if (gameGrid.ContainsKey(newPos)) {
+            if (gameGrid[newPos].isFilled && newPos != tilePos) {
+                return true;
+            }
+        }
+
+
+        //Bottom Right
+        newPos = new Vector3(x - .5f, y + 1, z - 1);
+        if (gameGrid.ContainsKey(newPos)) {
+            if (gameGrid[newPos].isFilled && newPos != tilePos) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     Stack<Vector3> SpiderPossibleMoves(GameObject tile, Stack<Vector3> emptySpaces) {
         Stack<Vector3> validMovePositions = new Stack<Vector3>();
         Vector3 tilePos = tile.transform.position;
 
-        SimulateMoves(tilePos, tilePos, emptySpaces, ref validMovePositions, 0);
+        validMovePositions = SimulateMoves(tilePos, emptySpaces);
 
         return validMovePositions;
     }
-
-    void SimulateMoves(Vector3 curPos, Vector3 prevPos, Stack<Vector3> emptySpaces, ref Stack<Vector3> validMovePos, int counter) {
+    Stack<Vector3> SimulateMoves(Vector3 curPos, Stack<Vector3> emptySpaces) {
         //Check Sides
-        while (emptySpaces.Count > 0) {
-            Vector3 newPos = emptySpaces.Pop();
+        Stack<Vector3> ret = new Stack<Vector3>();
+        Stack<Vector3> validMovePos = new Stack<Vector3>();
+        Stack<Vector3> vector1 = new Stack<Vector3>();
+        Stack<Vector3> vector2 = new Stack<Vector3>();
+        Dictionary<Vector3, int> invalidPos = new Dictionary<Vector3, int>();
+        Dictionary<Vector3, int> prevPos = new Dictionary<Vector3, int>();
 
-            if (CheckIfValid(curPos, newPos) && counter < 3) {
-                if (newPos != prevPos) {
-                    SimulateMoves(newPos, curPos, GetEmptySpaces(newPos), ref validMovePos, counter++);
-                }
+        while (emptySpaces.Count > 0) {
+            Vector3 pos = emptySpaces.Pop();
+
+            if (CheckIfValid(curPos, pos)) {
+                vector1.Push(pos);
             }
-            else {
-                validMovePos.Push(newPos);
-                emptySpaces.Clear();
+            else if (!invalidPos.ContainsKey(pos)) {
+                invalidPos.Add(pos, 69);
+                
             }
         }
+
+        while (vector1.Count > 0) {
+            prevPos[curPos] = 69;   //Nice
+            curPos = vector1.Peek();
+            emptySpaces = GetEmptySpaces(vector1.Pop());
+
+            Vector3 pos;
+
+            while (emptySpaces.Count > 0) {
+                pos = emptySpaces.Pop();
+
+                if (CheckIfValid(curPos, pos)) {
+                    vector2.Push(pos);
+                }
+                else if (!invalidPos.ContainsKey(pos)) {
+                    invalidPos.Add(pos, 69);
+                }
+            }
+        }
+
+        while (vector2.Count > 0) {
+            prevPos[curPos] = 69;
+            curPos = vector2.Peek();
+            emptySpaces = GetEmptySpaces(vector2.Pop());
+
+            Vector3 pos;
+
+            while (emptySpaces.Count > 0) {
+                pos = emptySpaces.Pop();
+
+                if (CheckIfValid(curPos, pos)) {
+                    validMovePos.Push(pos);
+                }
+            }
+        }
+
+        while (validMovePos.Count > 0) {
+            bool isValid = true;
+            Vector3 pos = validMovePos.Pop();
+
+            foreach (KeyValuePair<Vector3, int> badPos in invalidPos) {
+                if (pos == badPos.Key) {
+                    isValid = false;
+                }
+            }
+
+            foreach (KeyValuePair<Vector3, int> badPos in prevPos) {
+                if (pos == badPos.Key) {
+                    isValid = false;
+                }
+            }
+
+            if (isValid) {
+                ret.Push(pos);
+            }
+        }
+
+
+
+        return ret;
     }
 
     Vector3 CheckForEmpty(Vector3 pos, bool isFirstTime, float xDir, float zDir) {
@@ -712,44 +1129,109 @@ public class GameManager : MonoBehaviour {
     //Returns a vector of all the valid movement/placement positions
     Stack<Vector3> GetMovePositions() {
         Stack<Vector3> positions = new Stack<Vector3>();
+        Stack<Vector3> ret = new Stack<Vector3>();
+        Dictionary<Vector3, int> invalidMove = new Dictionary<Vector3, int>();
 
         //Checks for the open positions around a tile for creating potential move positions
 
         for (int i = 0; gamePieces[i] != null; i++) {
+            bool canPlace = true;
+            TileScript tileScript = gamePieces[i].GetComponent(typeof(TileScript)) as TileScript;
 
-            float x = gamePieces[i].transform.position.x;
-            float z = gamePieces[i].transform.position.z;
+            if (round != 1) {
+                if (turn == 0) {
+                    if (!tileScript.GetTileColor()) {
+                        canPlace = false;
+                    }
+                }
+                else {
+                    if (tileScript.GetTileColor()) {
+                        canPlace = false;
+                    }
+                }
+            }
 
-            Vector3 pos;
+            if (canPlace) {
 
-            //North of Tile
+                float x = gamePieces[i].transform.position.x;
+                float z = gamePieces[i].transform.position.z;
 
-            pos = new Vector3(x + 1, 0, z);
-            positions.Push(pos);
+                Vector3 pos;
 
-            //South of Tile
-            pos = new Vector3(x - 1, 0, z);
-            positions.Push(pos);
+                //North of Tile
+                pos = new Vector3(x + 1, 0, z);
+                positions.Push(pos);
 
-            //North East of Tile
-            pos = new Vector3(x + .5f, 0, z + 1);
-            positions.Push(pos);
+                //South of Tile
+                pos = new Vector3(x - 1, 0, z);
+                positions.Push(pos);
 
-            //North West of Tile
-            pos = new Vector3(x + .5f, 0, z - 1);
-            positions.Push(pos);
+                //North East of Tile
+                pos = new Vector3(x + .5f, 0, z + 1);
+                positions.Push(pos);
 
-            //South East of Tile
-            pos = new Vector3(x - .5f, 0, z + 1);
-            positions.Push(pos);
+                //North West of Tile
+                pos = new Vector3(x + .5f, 0, z - 1);
+                positions.Push(pos);
 
-            //South West of Tile
-            pos = new Vector3(x - .5f, 0, z - 1);
-            positions.Push(pos);
+                //South East of Tile
+                pos = new Vector3(x - .5f, 0, z + 1);
+                positions.Push(pos);
+
+                //South West of Tile
+                pos = new Vector3(x - .5f, 0, z - 1);
+                positions.Push(pos);
+            }
+            else {
+                float x = gamePieces[i].transform.position.x;
+                float z = gamePieces[i].transform.position.z;
+
+                Vector3 pos;
+
+                //North of Tile
+
+                pos = new Vector3(x + 1, 0, z);
+                invalidMove[pos] = 69;
+
+                //South of Tile
+                pos = new Vector3(x - 1, 0, z);
+                invalidMove[pos] = 69;
+
+                //North East of Tile
+                pos = new Vector3(x + .5f, 0, z + 1);
+                invalidMove[pos] = 69;
+
+                //North West of Tile
+                pos = new Vector3(x + .5f, 0, z - 1);
+                invalidMove[pos] = 69;
+
+                //South East of Tile
+                pos = new Vector3(x - .5f, 0, z + 1);
+                invalidMove[pos] = 69;
+
+                //South West of Tile
+                pos = new Vector3(x - .5f, 0, z - 1);
+                invalidMove[pos] = 69;
+            }
+        }
+
+        while (positions.Count > 0) {
+            bool isValid = true;
+            Vector3 pos = positions.Pop();
+
+            foreach (KeyValuePair<Vector3, int> badPos in invalidMove) {
+                if (pos == badPos.Key) {
+                    isValid = false;
+                }
+            }
+
+            if (isValid) {
+                ret.Push(pos);
+            }
         }
 
 
-        return positions;
+        return ret;
     }
 
     //Creates the selection grid at valid move positions
@@ -758,12 +1240,17 @@ public class GameManager : MonoBehaviour {
             ClearMoveGrid();
 
             if (isMove) {
-                Stack<Vector3> positions = ValidateMoves(tile);
 
-                while (positions.Count > 0) {
-                    GameObject grid;
-                    grid = Instantiate(GridTile, positions.Pop(), Quaternion.identity) as GameObject;
-                    selectionGrids.Push(grid);
+                if (!IsBreaksHive(tile.transform.position)) {
+                    Stack<Vector3> positions = ValidateMoves(tile);
+                    //Checks for Gates
+                
+
+                    while (positions.Count > 0) {
+                        GameObject grid;
+                        grid = Instantiate(GridTile, positions.Pop(), Quaternion.identity) as GameObject;
+                        selectionGrids.Push(grid);
+                    }
                 }
             }
             else {

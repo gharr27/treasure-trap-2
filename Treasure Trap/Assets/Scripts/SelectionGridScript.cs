@@ -22,8 +22,8 @@ public class SelectionGridScript : MonoBehaviour
         gameManager = gameController.GetComponent(typeof(GameManager)) as GameManager;
 
         playerObject = GameObject.FindGameObjectsWithTag("Player");
-        playerBlack = playerObject[1].GetComponent(typeof(PlayerScript)) as PlayerScript;
-        playerWhite = playerObject[0].GetComponent(typeof(PlayerScript)) as PlayerScript;
+        playerBlack = playerObject[0].GetComponent(typeof(PlayerScript)) as PlayerScript;
+        playerWhite = playerObject[1].GetComponent(typeof(PlayerScript)) as PlayerScript;
     }
 
     // Update is called once per frame
