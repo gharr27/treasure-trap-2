@@ -422,6 +422,7 @@ public class GameManager : MonoBehaviour {
         Vector3 newPos = new Vector3(x + 1, y, z);
         if (gameGrid[newPos].isFilled) {
             occupiedSpaces.Push(newPos);
+
         }
 
         //Below
@@ -513,6 +514,7 @@ public class GameManager : MonoBehaviour {
 
         return false;
         // }
+
 
         //if (GetBoarderCount(pos) == 1) {
         //    return false;
