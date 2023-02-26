@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameManager : MonoBehaviour {
+public class GameManagerAI : MonoBehaviour {
 
     public class GameGridCell {
         public bool isFilled;
@@ -53,7 +53,7 @@ public class GameManager : MonoBehaviour {
     bool isQueen2OnBoard = false;
 
 
-    PlayerScript playerWhite;
+    AI playerWhite;
     PlayerScript playerBlack;
     GameObject playerWhiteObj;
     GameObject playerBlackObj;
@@ -78,11 +78,11 @@ public class GameManager : MonoBehaviour {
         playerWhiteObj = GameObject.FindWithTag("White");
         playerBlackObj = GameObject.FindWithTag("Black");
 
-        playerWhite = playerWhiteObj.GetComponent(typeof(PlayerScript)) as PlayerScript;
+        playerWhite = playerWhiteObj.GetComponent(typeof(AI)) as AI;
         playerBlack = playerBlackObj.GetComponent(typeof(PlayerScript)) as PlayerScript;
 
-        menuManagerObject = GameObject.FindWithTag("Menu");
-        menuManager = menuManagerObject.GetComponent(typeof(MenusManager)) as MenusManager;
+        //menuManagerObject = GameObject.FindWithTag("Menu");
+        //menuManager = menuManagerObject.GetComponent(typeof(MenusManager)) as MenusManager;
 
     }
 
@@ -95,7 +95,7 @@ public class GameManager : MonoBehaviour {
                 if (turn == 0) {
                     //White Move
                     Debug.Log("White Move");
-                    StartCoroutine(playerWhite.Move(true));
+                    playerWhite.Move(gameGrid, round, true);
                 }
                 else {
                     //Black Move
@@ -107,12 +107,12 @@ public class GameManager : MonoBehaviour {
         else {
             if (isWhiteWin) {
                 Debug.Log("White Wins!");
-                menuManager.GoToWinnerScreen();
+                //menuManager.GoToWinnerScreen();
 
             }
             else {
                 Debug.Log("Black Wins!");
-                menuManager.GoToLoserScreen();
+                //menuManager.GoToLoserScreen();
             }
         }
 
@@ -300,26 +300,26 @@ public class GameManager : MonoBehaviour {
 
         //if (!IsBreaksHive(pos)) {
 
-            Stack<Vector3> emptySpaces = new Stack<Vector3>();
+        Stack<Vector3> emptySpaces = new Stack<Vector3>();
 
-            emptySpaces = GetEmptySpaces(pos);
+        emptySpaces = GetEmptySpaces(pos);
 
-            if (tileScript.GetTileName() == "Queen") {
-                validMoves = QueenPossibleMoves(tile, emptySpaces);
-            }
-            else if (tileScript.GetTileName() == "Ant") {
-                validMoves = AntPossibleMoves(tile);
-            }
-            else if (tileScript.GetTileName() == "Grasshopper") {
-                validMoves = GrasshopperPossibleMoves(tile);
-            }
-            else if (tileScript.GetTileName() == "Beetle") {
-                validMoves = BeetlePossibleMoves(tile, emptySpaces);
-            }
-            else if (tileScript.GetTileName() == "Spider") {
-                //validMoves = AntPossibleMoves(tile);
-                validMoves = SpiderPossibleMoves(tile, emptySpaces);
-            }
+        if (tileScript.GetTileName() == "Queen") {
+            validMoves = QueenPossibleMoves(tile, emptySpaces);
+        }
+        else if (tileScript.GetTileName() == "Ant") {
+            validMoves = AntPossibleMoves(tile);
+        }
+        else if (tileScript.GetTileName() == "Grasshopper") {
+            validMoves = GrasshopperPossibleMoves(tile);
+        }
+        else if (tileScript.GetTileName() == "Beetle") {
+            validMoves = BeetlePossibleMoves(tile, emptySpaces);
+        }
+        else if (tileScript.GetTileName() == "Spider") {
+            //validMoves = AntPossibleMoves(tile);
+            validMoves = SpiderPossibleMoves(tile, emptySpaces);
+        }
 
         //}
 
@@ -974,7 +974,7 @@ public class GameManager : MonoBehaviour {
             }
             else if (!invalidPos.ContainsKey(pos)) {
                 invalidPos.Add(pos, 69);
-                
+
             }
         }
 
@@ -1056,7 +1056,7 @@ public class GameManager : MonoBehaviour {
                 return newPos;
             }
             else {
-                 return CheckForEmpty(newPos, false, xDir, zDir);
+                return CheckForEmpty(newPos, false, xDir, zDir);
             }
         }
 
@@ -1083,7 +1083,7 @@ public class GameManager : MonoBehaviour {
                         else {
                             isWhiteWin = true;
                         }
-                        
+
                     }
                 }
             }
@@ -1264,7 +1264,7 @@ public class GameManager : MonoBehaviour {
                 if (!IsBreaksHive(tile.transform.position)) {
                     Stack<Vector3> positions = ValidateMoves(tile);
                     //Checks for Gates
-                
+
 
                     while (positions.Count > 0) {
                         GameObject grid;
