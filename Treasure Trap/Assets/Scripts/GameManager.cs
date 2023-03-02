@@ -1250,6 +1250,7 @@ public class GameManager : MonoBehaviour {
         return ret;
     }
 
+   
     //Creates the selection grid at valid move positions
     public void SetMoveGrid(GameObject tile, bool isMove) {
         if (tilesPlaced > 0) {
