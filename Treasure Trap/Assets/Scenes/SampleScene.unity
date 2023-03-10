@@ -459,6 +459,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4762478688846900886}
   - component: {fileID: 4762478688846900887}
+  - component: {fileID: 4762478688846900888}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: GameController
@@ -511,6 +512,7 @@ MeshRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3427310410106060614}
   m_Enabled: 1
+<<<<<<< Updated upstream
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -547,10 +549,21 @@ MeshRenderer:
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!64 &3427310410106060665
 MeshCollider:
+=======
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ce66d55de3fe054587da178afc4ac36, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GridTile: {fileID: 8767865269051293877, guid: 9bb24095a22f1a1438c192d3061cf2f3, type: 3}
+  Player: {fileID: 2492933341662750378, guid: e7108ba85b2077145a7c964ddfb9b58b, type: 3}
+--- !u!114 &4762478688846900888
+MonoBehaviour:
+>>>>>>> Stashed changes
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
+<<<<<<< Updated upstream
   m_GameObject: {fileID: 3427310410106060614}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
@@ -583,3 +596,21 @@ MeshFilter:
   m_GameObject: {fileID: 3427310410106060614}
   m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
 
+=======
+  m_GameObject: {fileID: 4762478688846900880}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 999
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
+>>>>>>> Stashed changes
