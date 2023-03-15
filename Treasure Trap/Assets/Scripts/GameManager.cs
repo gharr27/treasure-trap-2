@@ -596,8 +596,8 @@ public class GameManager : MonoBehaviour {
         //return true;
     }
 
-    int GetBoarderCount(Vector3 pos) {
-        int boarderCount = 0;
+    Dictionary<Vector3, int> GetBoarderTiles(Vector3 pos) {
+        Dictionary<Vector3, int> ret = new Dictionary<Vector3, int>();
 
         float x = pos.x;
         float y = pos.y;
@@ -605,45 +605,75 @@ public class GameManager : MonoBehaviour {
 
         //Above
         Vector3 newPos = new Vector3(x + 1, y, z);
-        if (gameGrid[newPos].isFilled) {
-            boarderCount++;
+        if (gameGrid.ContainsKey(newPos)) {
+            if (gameGrid[newPos].isFilled) {
+                ret.Add(newPos, 69);
+            }
+        }
+        else {
+            gameGrid.Add(newPos, new GameGridCell());
         }
 
         //Below
         newPos = new Vector3(x - 1, y, z);
-        if (gameGrid[newPos].isFilled) {
-            boarderCount++;
+        if (gameGrid.ContainsKey(newPos)) {
+            if (gameGrid[newPos].isFilled) {
+                ret.Add(newPos, 69);
+            }
+        }
+        else {
+            gameGrid.Add(newPos, new GameGridCell());
         }
 
 
         //Top Left
         newPos = new Vector3(x + .5f, y, z + 1);
-        if (gameGrid[newPos].isFilled) {
-            boarderCount++;
+        if (gameGrid.ContainsKey(newPos)) {
+            if (gameGrid[newPos].isFilled) {
+                ret.Add(newPos, 69);
+            }
+        }
+        else {
+            gameGrid.Add(newPos, new GameGridCell());
         }
 
 
         //Bottom Left
         newPos = new Vector3(x - .5f, y, z + 1);
-        if (gameGrid[newPos].isFilled) {
-            boarderCount++;
+        if (gameGrid.ContainsKey(newPos)) {
+            if (gameGrid[newPos].isFilled) {
+                ret.Add(newPos, 69);
+            }
+        }
+        else {
+            gameGrid.Add(newPos, new GameGridCell());
         }
 
 
         //Top Right
         newPos = new Vector3(x + .5f, y, z - 1);
-        if (gameGrid[newPos].isFilled) {
-            boarderCount++;
+        if (gameGrid.ContainsKey(newPos)) {
+            if (gameGrid[newPos].isFilled) {
+                ret.Add(newPos, 69);
+            }
+        }
+        else {
+            gameGrid.Add(newPos, new GameGridCell());
         }
 
 
         //Bottom Right
         newPos = new Vector3(x - .5f, y, z - 1);
-        if (gameGrid[newPos].isFilled) {
-            boarderCount++;
+        if (gameGrid.ContainsKey(newPos)) {
+            if (gameGrid[newPos].isFilled) {
+                ret.Add(newPos, 69);
+            }
+        }
+        else {
+            gameGrid.Add(newPos, new GameGridCell());
         }
 
-        return boarderCount;
+        return ret;
     }
 
     bool CheckIfValid(Vector3 tilePos, Vector3 spacePos) {
@@ -1030,27 +1060,56 @@ public class GameManager : MonoBehaviour {
         //Check Sides
         Stack<Vector3> ret = new Stack<Vector3>();
         Stack<Vector3> validMovePos = new Stack<Vector3>();
-        Stack<Vector3> vector1 = new Stack<Vector3>();
-        Stack<Vector3> vector2 = new Stack<Vector3>();
+        Stack<Vector3> firstMoves = new Stack<Vector3>();
+        Stack<Vector3> firstMovesValid = new Stack<Vector3>();
+        Stack<Vector3> secondMoves = new Stack<Vector3>();
+        Stack<Vector3> secondMovesValid = new Stack<Vector3>();
+        Stack<Vector3> thirdMoves = new Stack<Vector3>();
+        Stack<Vector3> thirdMovesValid = new Stack<Vector3>();
         Dictionary<Vector3, int> invalidPos = new Dictionary<Vector3, int>();
         Dictionary<Vector3, int> prevPos = new Dictionary<Vector3, int>();
+        Dictionary<Vector3, int> boarderTiles = new Dictionary<Vector3, int>();
 
+        //1st Moves
         while (emptySpaces.Count > 0) {
             Vector3 pos = emptySpaces.Pop();
 
             if (CheckIfValid(curPos, pos)) {
-                vector1.Push(pos);
+                firstMoves.Push(pos);
             }
             else if (!invalidPos.ContainsKey(pos)) {
                 invalidPos.Add(pos, 69);
-                
+            }
+
+            boarderTiles = GetBoarderTiles(curPos);
+
+            //Build KeyValuePairs Dictionary here
+
+            foreach (KeyValuePair<Vector3, int> tile in boarderTiles) {
+                if (firstMoves.Count > 0) {
+                    bool isValid = false;
+                    Vector3 temp = firstMoves.Pop();
+                    Dictionary<Vector3, int> keyValuePairs = GetBoarderTiles(temp);
+
+                    foreach (KeyValuePair<Vector3, int> tile2 in keyValuePairs) {
+                        if (tile2.Key == tile.Key) {
+                            isValid = true;
+                        }
+                    }
+
+                    if (isValid) {
+                        firstMovesValid.Push(temp);
+                    }
+                }
             }
         }
 
-        while (vector1.Count > 0) {
+
+        //2nd Moves
+        while (firstMovesValid.Count > 0) {
             prevPos[curPos] = 69;   //Nice
-            curPos = vector1.Peek();
-            emptySpaces = GetEmptySpaces(vector1.Pop());
+            curPos = firstMovesValid.Peek();
+            emptySpaces = GetEmptySpaces(firstMovesValid.Pop());
 
             Vector3 pos;
 
@@ -1058,18 +1117,41 @@ public class GameManager : MonoBehaviour {
                 pos = emptySpaces.Pop();
 
                 if (CheckIfValid(curPos, pos)) {
-                    vector2.Push(pos);
+                    secondMoves.Push(pos);
                 }
                 else if (!invalidPos.ContainsKey(pos)) {
                     invalidPos.Add(pos, 69);
                 }
             }
+
+            boarderTiles = GetBoarderTiles(curPos);
+
+            //Build KeyValuePairs Dictionary here
+
+            foreach (KeyValuePair<Vector3, int> tile in boarderTiles) {
+                if (secondMoves.Count > 0) {
+                    bool isValid = false;
+                    Vector3 temp = secondMoves.Pop();
+                    Dictionary<Vector3, int> keyValuePairs = GetBoarderTiles(temp);
+
+                    foreach (KeyValuePair<Vector3, int> tile2 in keyValuePairs) {
+                        if (tile2.Key == tile.Key) {
+                            isValid = true;
+                        }
+                    }
+
+                    if (isValid) {
+                        secondMovesValid.Push(temp);
+                    }
+                }
+            }
         }
 
-        while (vector2.Count > 0) {
+        //3rd Moves
+        while (secondMovesValid.Count > 0) {
             prevPos[curPos] = 69;
-            curPos = vector2.Peek();
-            emptySpaces = GetEmptySpaces(vector2.Pop());
+            curPos = secondMovesValid.Peek();
+            emptySpaces = GetEmptySpaces(secondMovesValid.Pop());
 
             Vector3 pos;
 
@@ -1077,14 +1159,36 @@ public class GameManager : MonoBehaviour {
                 pos = emptySpaces.Pop();
 
                 if (CheckIfValid(curPos, pos)) {
-                    validMovePos.Push(pos);
+                    thirdMoves.Push(pos);
+                }
+            }
+
+            boarderTiles = GetBoarderTiles(curPos);
+
+            //Build KeyValuePairs Dictionary here
+
+            foreach (KeyValuePair<Vector3, int> tile in boarderTiles) {
+                if (thirdMoves.Count > 0) {
+                    bool isValid = false;
+                    Vector3 temp = thirdMoves.Pop();
+                    Dictionary<Vector3, int> keyValuePairs = GetBoarderTiles(temp);
+
+                    foreach (KeyValuePair<Vector3, int> tile2 in keyValuePairs) {
+                        if (tile2.Key == tile.Key) {
+                            isValid = true;
+                        }
+                    }
+
+                    if (isValid) {
+                        thirdMovesValid.Push(temp);
+                    }
                 }
             }
         }
 
-        while (validMovePos.Count > 0) {
+        while (thirdMovesValid.Count > 0) {
             bool isValid = true;
-            Vector3 pos = validMovePos.Pop();
+            Vector3 pos = thirdMovesValid.Pop();
 
             foreach (KeyValuePair<Vector3, int> badPos in invalidPos) {
                 if (pos == badPos.Key) {
@@ -1102,8 +1206,6 @@ public class GameManager : MonoBehaviour {
                 ret.Push(pos);
             }
         }
-
-
 
         return ret;
     }
