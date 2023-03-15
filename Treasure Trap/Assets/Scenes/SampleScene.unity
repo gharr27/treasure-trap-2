@@ -294,7 +294,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
   m_LocalRotation: {x: 0.5, y: 0.5, z: -0.5, w: 0.5}
-  m_LocalPosition: {x: 0, y: 6, z: -0}
+  m_LocalPosition: {x: 0, y: 8, z: -0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -355,6 +355,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1032354503812031234}
   - component: {fileID: 1032354503812031237}
+  - component: {fileID: 1032354503812031238}
   m_Layer: 0
   m_Name: Player-White
   m_TagString: White
@@ -396,6 +397,29 @@ MonoBehaviour:
   - {fileID: 8388596035331099963, guid: 1c94f7e799a357544b8bf0c6ab861c95, type: 3}
   - {fileID: 2859850552348427938, guid: 8231a310f57375641ab1f270409793f1, type: 3}
   isWhite: 1
+  isNetworkGame: 1
+--- !u!114 &1032354503812031238
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1970020267}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 1
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &3636939324978350424
 GameObject:
   m_ObjectHideFlags: 0
@@ -406,6 +430,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3636939324978350425}
   - component: {fileID: 3636939324978350426}
+  - component: {fileID: 3636939324978350427}
   m_Layer: 0
   m_Name: Player-Black
   m_TagString: Black
@@ -447,6 +472,29 @@ MonoBehaviour:
   - {fileID: 5750900686715244409, guid: 0e3acac27e105774dae66de2dedafd1a, type: 3}
   - {fileID: 4782476565982883196, guid: a6ddd26765ed9434d988a4dc1896e344, type: 3}
   isWhite: 0
+  isNetworkGame: 1
+--- !u!114 &3636939324978350427
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3636939324978350424}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 2
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &4762478688846900880
 GameObject:
   m_ObjectHideFlags: 0
@@ -457,6 +505,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4762478688846900886}
   - component: {fileID: 4762478688846900887}
+  - component: {fileID: 4762478688846900888}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: GameController
@@ -479,12 +528,15 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+
 --- !u!114 &4762478688846900887
 MonoBehaviour:
+
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
+
   m_GameObject: {fileID: 4762478688846900880}
   m_Enabled: 1
   m_EditorHideFlags: 0
@@ -492,3 +544,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   GridTile: {fileID: 8767865269051293877, guid: 9bb24095a22f1a1438c192d3061cf2f3, type: 3}
+

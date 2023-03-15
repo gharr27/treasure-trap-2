@@ -1,14 +1,19 @@
+using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
 public class PlayerScript : MonoBehaviour {
 
     public GameObject[] Tiles;
     public bool isWhite;
+    public bool isNetworkGame = false;
 
     GameManager gameManager;
     GameObject gameController;
+
+    PhotonView photonView;
 
     GameObject tile = null;
     Vector3 pos = Vector3.zero;
@@ -26,10 +31,13 @@ public class PlayerScript : MonoBehaviour {
     int beetleCount = 2;
     int spiderCount = 2;
 
+
     // Start is called before the first frame update
     void Start() {
         gameController = GameObject.FindWithTag("GameController");
         gameManager = gameController.GetComponent(typeof(GameManager)) as GameManager;
+
+        PhotonView photonView = this.GetComponent<PhotonView>();
     }
 
     void Update() {
@@ -78,7 +86,7 @@ public class PlayerScript : MonoBehaviour {
             }
         }
     }
-
+    [PunRPC]
     public IEnumerator Move(bool isPlaying) {
         this.isPlaying = isPlaying;
 
@@ -98,10 +106,24 @@ public class PlayerScript : MonoBehaviour {
         yield return new WaitWhile(IsPosSelected);
         Debug.Log("Pos Selected");
 
-        gameManager.MakeMove(tile, pos, isMove);
+
+        if (isNetworkGame) {
+            Debug.Log(photonView);
+            photonView.RPC("MakeMove", RpcTarget.All, tile, pos, isMove);
+        }
+        else {
+            MakeMove(tile, pos, isMove);
+        }
+
+
         isTileSelected = false;
         isPosSelected = false;
         this.isPlaying = false;
+    }
+
+    [PunRPC]
+    private void MakeMove(GameObject tile, Vector3 pos, bool isMove) {
+        gameManager.MakeMove(tile, pos, isMove);
     }
 
     bool IsTileSelected() {
