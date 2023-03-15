@@ -58,15 +58,26 @@ public class AI : MonoBehaviour {
         }
     }
 
-    public AIMove Move(Dictionary<Vector3, GameManager.GameGridCell> gameGrid, int round, bool isWhite) {
+    GameManagerAI gameManager;
+    GameObject gameManagerObj;
+
+    private void Start() {
+        gameManagerObj = GameObject.FindWithTag("GameController");
+        gameManager = gameManagerObj.GetComponent(typeof(GameManagerAI)) as GameManagerAI;
+    }
+
+    public Move Move(Dictionary<Vector3, GameManagerAI.GameGridCell> gameGrid, int round, bool isWhite) {
         //AIMove move = MiniMax(gameGrid, isWhite, maxDepth, 0 - INT_MAX, INT_MAX);
 
-        Stack<AIMove> moves = getPossibleMoves(gameGrid, round, isWhite);
+        Stack<Move> moves = GetPossibleMoves(gameGrid, round, isWhite);
+        Move move = moves.Pop();
+
+        gameManager.MakeMove(move.tile, move.pos, false);
 
         return moves.Pop();
     }
 
-    AIMove MiniMax(Dictionary<Vector3, GameManager.GameGridCell> gameGrid, bool isWhite, int depth, int alpha, int beta) {
+    AIMove MiniMax(Dictionary<Vector3, GameManagerAI.GameGridCell> gameGrid, bool isWhite, int depth, int alpha, int beta) {
         GameObject tile = null;
         Vector3 pos = Vector3.zero;
 
@@ -83,33 +94,50 @@ public class AI : MonoBehaviour {
         return new AIMove(new Move(tile, pos), scoreGame(gameGrid, isWhite));
     }
 
-    int scoreGame(Dictionary<Vector3, GameManager.GameGridCell> gameGrid, bool isWhite) {
+    int scoreGame(Dictionary<Vector3, GameManagerAI.GameGridCell> gameGrid, bool isWhite) {
 
 
         return 0;
     }
 
-    Stack<AIMove> getPossibleMoves(Dictionary<Vector3, GameManager.GameGridCell> gameGrid, int round, bool isWhite) {
+    Stack<Move> GetPossibleMoves(Dictionary<Vector3, GameManagerAI.GameGridCell> gameGrid, int round, bool isWhite) {
+        Stack<Move> moves = new Stack<Move>();
 
-        Stack<AIMove> moves = new Stack<AIMove>();
-        Move move;
-        AIMove aiMove;
-
-        if (round == 1) {
-            //Place Grasshopper
-            if (isWhite) {
-                move = new Move(tiles[3], Vector3.zero);
-                aiMove = new AIMove(move, 10);
-            }
-            else {
-                move = new Move(tiles[3], new Vector3(1, 0, 0));
-                aiMove = new AIMove(move, 10);
-            }
-
-            moves.Push(aiMove);
+        if (gameGrid.Count == 0) {
+            //Place Grasshopper First
+            Move move = new Move(tiles[2], Vector3.zero);
+            moves.Push(move);
+        }
+        else {
+            Stack<KeyValuePair<Vector3, GameManagerAI.GameGridCell>> tilesOnBoard = GetTilesOnBoard(gameGrid, isWhite);
         }
 
-        return new Stack<AIMove>();
+        return moves;
+    }
+
+    //Gets all AIs tile pieces from the board
+    Stack<KeyValuePair<Vector3, GameManagerAI.GameGridCell>> GetTilesOnBoard(Dictionary<Vector3, GameManagerAI.GameGridCell> gameGrid, bool isWhite) {
+        Stack<KeyValuePair<Vector3, GameManagerAI.GameGridCell>> tilesOnGrid = new Stack<KeyValuePair<Vector3, GameManagerAI.GameGridCell>>();
+
+        foreach(KeyValuePair<Vector3, GameManagerAI.GameGridCell> gridTile in gameGrid) {
+            if (gridTile.Value.isFilled) {
+                GameObject tile = gridTile.Value.tile;
+                TileScript tileScript = tile.GetComponent(typeof(TileScript)) as TileScript;
+
+                if (isWhite) {
+                    if (tileScript.GetTileColor()) {
+                        tilesOnGrid.Push(gridTile);
+                    }
+                }
+                else {
+                    if (!tileScript.GetTileColor()) {
+                        tilesOnGrid.Push(gridTile);
+                    }
+                }
+            }
+        }
+
+        return tilesOnGrid;
     }
     
 }
