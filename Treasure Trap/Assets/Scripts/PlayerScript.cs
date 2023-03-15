@@ -2,7 +2,6 @@ using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Photon.Pun;
 
 public class PlayerScript : MonoBehaviour {
 
@@ -106,16 +105,8 @@ public class PlayerScript : MonoBehaviour {
         yield return new WaitWhile(IsPosSelected);
         Debug.Log("Pos Selected");
 
-
-        if (isNetworkGame) {
-            Debug.Log(photonView);
-            photonView.RPC("MakeMove", RpcTarget.All, tile, pos, isMove);
-        }
-        else {
-            MakeMove(tile, pos, isMove);
-        }
-
-
+        gameManager.NetworkMakeMove(tile, pos, isMove);
+        gameManager.UpdateTurn();
         isTileSelected = false;
         isPosSelected = false;
         this.isPlaying = false;
