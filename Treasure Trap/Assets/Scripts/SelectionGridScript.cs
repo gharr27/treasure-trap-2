@@ -12,7 +12,8 @@ public class SelectionGridScript : MonoBehaviour
 
     PlayerScript playerWhite;
     PlayerScript playerBlack;
-    GameObject[] playerObject = new GameObject[2];
+    GameObject playerWhiteObj;
+    GameObject playerBlackObj;
 
     // Start is called before the first frame update
     void Start()
@@ -21,9 +22,17 @@ public class SelectionGridScript : MonoBehaviour
         gameController = GameObject.FindWithTag("GameController");
         gameManager = gameController.GetComponent(typeof(GameManager)) as GameManager;
 
+
+        playerWhiteObj = GameObject.FindWithTag("White");
+        playerBlackObj = GameObject.FindWithTag("Black");
+
+        playerWhite = playerWhiteObj.GetComponent(typeof(PlayerScript)) as PlayerScript;
+        playerBlack = playerBlackObj.GetComponent(typeof(PlayerScript)) as PlayerScript;
+
         playerObject = GameObject.FindGameObjectsWithTag("Player");
-        playerBlack = playerObject[0].GetComponent(typeof(PlayerScript)) as PlayerScript;
-        playerWhite = playerObject[1].GetComponent(typeof(PlayerScript)) as PlayerScript;
+        playerBlack = playerObject[1].GetComponent(typeof(PlayerScript)) as PlayerScript;
+        playerWhite = playerObject[0].GetComponent(typeof(PlayerScript)) as PlayerScript;
+
     }
 
     // Update is called once per frame
