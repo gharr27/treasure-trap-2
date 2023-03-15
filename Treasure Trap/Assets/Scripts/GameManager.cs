@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
 public class GameManager : MonoBehaviour {
 
@@ -36,6 +37,7 @@ public class GameManager : MonoBehaviour {
 
     //Contains Grid Prefab for creating MoveGrid
     public GameObject GridTile;
+    public GameObject Player;
 
     const int PIECE_COUNT = 22;
 
@@ -55,7 +57,10 @@ public class GameManager : MonoBehaviour {
 
     PlayerScript playerWhite;
     PlayerScript playerBlack;
-    GameObject[] playerObject = new GameObject[2];
+    PlayerScript player;
+    GameObject[] playerObjects = new GameObject[2];
+    GameObject playerObject;
+    
 
     MenusManager menuManager;
     GameObject menuManagerObject;
@@ -74,14 +79,37 @@ public class GameManager : MonoBehaviour {
         selectionGrids = new Stack<GameObject>();
         gamePieces = new GameObject[PIECE_COUNT];
 
-        playerObject = GameObject.FindGameObjectsWithTag("Player");
+        playerObjects = GameObject.FindGameObjectsWithTag("Player");
 
-        playerBlack = playerObject[1].GetComponent(typeof(PlayerScript)) as PlayerScript;
-        playerWhite = playerObject[0].GetComponent(typeof(PlayerScript)) as PlayerScript;
+        playerBlack = playerObjects[1].GetComponent(typeof(PlayerScript)) as PlayerScript;
+        playerWhite = playerObjects[0].GetComponent(typeof(PlayerScript)) as PlayerScript;
+
+        playerObject = PhotonNetwork.Instantiate(Player.name, Vector3.zero, Quaternion.identity);
+        player = playerObject.GetComponent(typeof(PlayerScript)) as PlayerScript;
 
         menuManagerObject = GameObject.FindWithTag("Menu");
         menuManager = menuManagerObject.GetComponent(typeof(MenusManager)) as MenusManager;
 
+        //Is Host
+        if (PhotonNetwork.IsMasterClient) {
+            Debug.Log("True");
+            player.isWhite = true;
+        }
+        else {
+            Debug.Log("False");
+            player.isWhite = false;
+        }
+
+    }
+
+    [PunRPC]
+    public void UpdateTurn() {
+        if (turn == 0) {
+            turn = 1;
+        }
+        else {
+            turn = 0;
+        }
     }
 
     // Update is called once per frame
@@ -122,6 +150,51 @@ public class GameManager : MonoBehaviour {
         if (Input.GetKeyDown(KeyCode.Escape)) {
             menuManager.GoToMainMenu();
         }
+    }
+
+    [PunRPC]
+    public void NetworkMakeMove(GameObject tile, Vector3 pos, bool isMove) {
+        if (turn == 0) {
+            turn = 1;
+        }
+        else {
+            turn = 0;
+            round++;
+        }
+
+        if (isMove) {
+            gameGrid[tile.transform.position] = new GameGridCell();
+            tile.transform.position = pos;
+
+            GameGridCell gridCell = new GameGridCell(true, tile);
+
+            if (!gameGrid.ContainsKey(pos)) {
+                gameGrid.Add(pos, gridCell);
+            }
+            else {
+                gameGrid[pos] = gridCell;
+            }
+        }
+        else {
+            GameObject tilePiece = PhotonNetwork.Instantiate(tile.name, pos, Quaternion.identity);
+            gamePieces[tilesPlaced] = tilePiece;
+            GameGridCell gridCell = new GameGridCell(true, tilePiece);
+
+            if (gameGrid.ContainsKey(pos)) {
+                gameGrid[pos] = gridCell;
+            }
+            else {
+                gameGrid.Add(pos, gridCell);
+            }
+            tilesPlaced++;
+        }
+
+        UpdateGameGrid(pos);
+
+        ClearMoveGrid();
+        CheckForWin();
+
+        isPlaying = false;
     }
 
     public void MakeMove(GameObject tile, Vector3 pos, bool isMove) {

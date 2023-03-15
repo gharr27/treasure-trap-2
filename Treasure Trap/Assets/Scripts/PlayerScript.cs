@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
 public class PlayerScript : MonoBehaviour {
 
@@ -78,7 +79,7 @@ public class PlayerScript : MonoBehaviour {
             }
         }
     }
-
+    [PunRPC]
     public IEnumerator Move(bool isPlaying) {
         this.isPlaying = isPlaying;
 
@@ -98,7 +99,8 @@ public class PlayerScript : MonoBehaviour {
         yield return new WaitWhile(IsPosSelected);
         Debug.Log("Pos Selected");
 
-        gameManager.MakeMove(tile, pos, isMove);
+        gameManager.NetworkMakeMove(tile, pos, isMove);
+        gameManager.UpdateTurn();
         isTileSelected = false;
         isPosSelected = false;
         this.isPlaying = false;
