@@ -12,6 +12,7 @@ public class ConnectServer : MonoBehaviourPunCallbacks
     public static ConnectServer Instance;
 
 	[SerializeField] TMP_InputField roomNameInputField;
+	[SerializeField] TMP_InputField userNameInput;
 	[SerializeField] TMP_Text errorText;
 	[SerializeField] TMP_Text roomNameText;
 	[SerializeField] Transform roomListContent;
@@ -19,6 +20,8 @@ public class ConnectServer : MonoBehaviourPunCallbacks
 	[SerializeField] Transform playerListContent;
 	[SerializeField] GameObject PlayerListItemPrefab;
 	[SerializeField] GameObject startGameButton;
+	RoomOptions roomOptions = new RoomOptions();
+
 
 	void Awake()
 	{
@@ -42,11 +45,6 @@ public class ConnectServer : MonoBehaviourPunCallbacks
 	{
 		MenuManager.Instance.OpenMenu("title");
 		Debug.Log("Joined Lobby");
-		// roomNameText.text = PhotonNetwork.CurrentRoom.Name;
-        //PhotonNetwork.Name = "Player " + Random.Range(0, 1000).ToString("0000");
-
-		//random name
-		PhotonNetwork.NickName = "Player " + Random.Range(0, 1000).ToString("0000");
 	}
 
 	public void CreateRoom()
@@ -56,7 +54,10 @@ public class ConnectServer : MonoBehaviourPunCallbacks
 		{
 			return;
 		}
-		PhotonNetwork.CreateRoom(roomNameInputField.text);
+		Debug.Log("Input room info");
+        //only 2 players can connect
+		roomOptions.MaxPlayers = 2;
+		PhotonNetwork.CreateRoom(roomNameInputField.text, roomOptions);
 		MenuManager.Instance.OpenMenu("loading");
 	}
 
@@ -64,7 +65,10 @@ public class ConnectServer : MonoBehaviourPunCallbacks
 	{
 		MenuManager.Instance.OpenMenu("room");
 		roomNameText.text = PhotonNetwork.CurrentRoom.Name;
-
+		
+		Debug.Log("User name input: " + userNameInput.text);
+		PhotonNetwork.NickName = userNameInput.text + " " + Random.Range(0, 1000).ToString("0000");
+		
 		Photon.Realtime.Player[] photonPlayers = PhotonNetwork.PlayerList;
 
 		foreach (Transform child in playerListContent)
@@ -95,6 +99,17 @@ public class ConnectServer : MonoBehaviourPunCallbacks
 		Debug.LogError("Room Creation Failed: " + message);
 		MenuManager.Instance.OpenMenu("error");
 	}
+
+	public override void OnJoinRoomFailed(short returnCode, string message)
+{
+    // Get the error message
+    string errorMessage = message;
+    
+    // Display the error message
+    // Debug.LogError(errorMessage);
+	MenuManager.Instance.OpenMenu("error");
+}
+
 
 	public void StartGame()
 	{
@@ -139,5 +154,6 @@ public class ConnectServer : MonoBehaviourPunCallbacks
 	{
 		Debug.Log("Player entered roomm");
 		Instantiate(PlayerListItemPrefab, playerListContent).GetComponent<PlayerListItem>().SetUp(newPlayer);
+		
 	}
 }
