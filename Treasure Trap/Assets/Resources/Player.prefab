@@ -52,6 +52,7 @@ MonoBehaviour:
   - {fileID: 8388596035331099963, guid: 1c94f7e799a357544b8bf0c6ab861c95, type: 3}
   - {fileID: 2859850552348427938, guid: 8231a310f57375641ab1f270409793f1, type: 3}
   isWhite: 0
+  isNetworkGame: 0
 --- !u!114 &5466223323204370725
 MonoBehaviour:
   m_ObjectHideFlags: 0
