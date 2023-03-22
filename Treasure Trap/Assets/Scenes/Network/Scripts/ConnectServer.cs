@@ -49,6 +49,7 @@ public class ConnectServer : MonoBehaviourPunCallbacks
 
 	public void CreateRoom()
 	{
+
         Debug.Log("Created room");
 		if(string.IsNullOrEmpty(roomNameInputField.text))
 		{
@@ -59,6 +60,7 @@ public class ConnectServer : MonoBehaviourPunCallbacks
 		roomOptions.MaxPlayers = 2;
 		PhotonNetwork.CreateRoom(roomNameInputField.text, roomOptions);
 		MenuManager.Instance.OpenMenu("loading");
+		roomNameInputField.text = "";
 	}
 
 	public override void OnJoinedRoom()
@@ -84,7 +86,7 @@ public class ConnectServer : MonoBehaviourPunCallbacks
 				.GetComponent<PlayerListItem>()
 				.SetUp(photonPlayers[i]);
 		}
-
+		
 		startGameButton.SetActive(PhotonNetwork.IsMasterClient);
 	}
 

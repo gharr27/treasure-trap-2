@@ -27,6 +27,13 @@ public class ChatManager : MonoBehaviour, IChatClientListener
             Debug.LogError("No AppID Provided");
             return;
         }
+        msgInput.onEndEdit.AddListener((string text) =>
+        {
+            if (Input.GetKey(KeyCode.Return) || Input.GetKey(KeyCode.KeypadEnter))
+            {
+                SendMsg();
+            }
+        });
     }
 
     void Update()
@@ -67,6 +74,7 @@ public class ChatManager : MonoBehaviour, IChatClientListener
     public void SendMsg()
     {
         chatClient.PublishMessage(PhotonNetwork.CurrentRoom.Name, PhotonNetwork.NickName + ": " + msgInput.text);
+        msgInput.text = "";
     }
 
     public void Join()
