@@ -11,6 +11,7 @@ public class ConnectServer : MonoBehaviourPunCallbacks
 {
     public static ConnectServer Instance;
 
+	public const byte UpdateRoomEventCode = 1;
 	[SerializeField] TMP_InputField roomNameInputField;
 	[SerializeField] TMP_InputField userNameInput;
 	[SerializeField] TMP_Text errorText;
@@ -65,6 +66,7 @@ public class ConnectServer : MonoBehaviourPunCallbacks
 
 	public override void OnJoinedRoom()
 	{
+
 		MenuManager.Instance.OpenMenu("room");
 		roomNameText.text = PhotonNetwork.CurrentRoom.Name;
 		
@@ -78,15 +80,20 @@ public class ConnectServer : MonoBehaviourPunCallbacks
 			Destroy(child.gameObject);
 		}
 
-		for (int i = 0; i < photonPlayers.Length; i++)
+		// for (int i = 0; i < photonPlayers.Length; i++)
+		// {
+		// 	Debug.Log("Instantiating");
+		// 	Debug.Log(photonPlayers[i]);
+		// 	Instantiate(PlayerListItemPrefab, playerListContent).GetComponent<PlayerListItem>()
+		// 		.SetUp(photonPlayers[i]);
+		// }
+
+		 foreach (Photon.Realtime.Player player in PhotonNetwork.CurrentRoom.Players.Values)
 		{
-			Debug.Log("Instantiating");
-			Debug.Log(photonPlayers[i]);
-			Instantiate(PlayerListItemPrefab, playerListContent)
-				.GetComponent<PlayerListItem>()
-				.SetUp(photonPlayers[i]);
+			Instantiate(PlayerListItemPrefab, playerListContent).GetComponent<PlayerListItem>().SetUp(player);
 		}
-		
+
+		// userNameInput.text = "";
 		startGameButton.SetActive(PhotonNetwork.IsMasterClient);
 	}
 
@@ -151,12 +158,43 @@ public class ConnectServer : MonoBehaviourPunCallbacks
 			Instantiate(roomListItemPrefab, roomListContent).GetComponent<RoomListItem>().SetUp(roomList[i]);
 		}
 	}
+	public void UpdatePlayerList()
+	{
+		Debug.Log("UPDATING current room");
+
+		foreach (Transform child in playerListContent.transform)
+		{
+			Destroy(child.gameObject);
+		}
+
+		 foreach (Photon.Realtime.Player player in PhotonNetwork.CurrentRoom.Players.Values)
+		{
+			Instantiate(PlayerListItemPrefab, playerListContent).GetComponent<PlayerListItem>().SetUp(player);
+		}
+	}
 
 	public override void OnPlayerEnteredRoom(Photon.Realtime.Player newPlayer)
 	{
-		  // userNameInput.text = newPlayer.NickName; // 
-		Debug.Log("Player entered roomm");
-		Instantiate(PlayerListItemPrefab, playerListContent).GetComponent<PlayerListItem>().SetUp(newPlayer);
+		// userNameInput.text = "";
+		// userNameInput.text = newPlayer.NickName; 
+		// PhotonNetwork.NickName = userNameInput.text + " " + Random.Range(0, 1000).ToString("0000");
+		// userNameInput.text = PhotonNetwork.NickName;
+		// Debug.Log("Player entered room" + userNameInput.text + "empty");
+		 Instantiate(PlayerListItemPrefab, playerListContent).GetComponent<PlayerListItem>().SetUp(newPlayer);
+		//  if (PhotonNetwork.IsMasterClient)
+		// {
+		// 	// If the master client joined, do nothing
+		// 	if (newPlayer.IsMasterClient)
+		// 		return;
+
+		// 	// Refresh the player list UI
+		// 	UpdatePlayerList();
+		// 	Debug.Log("refreshing page");
+		// 	// Show the start game button only for the master client
+		// 	startGameButton.SetActive(PhotonNetwork.IsMasterClient);
+		// }
+			
+
 		
 	}
 }
