@@ -152,6 +152,7 @@ public class ConnectServer : MonoBehaviourPunCallbacks
 
 	public override void OnPlayerEnteredRoom(Photon.Realtime.Player newPlayer)
 	{
+		  // userNameInput.text = newPlayer.NickName; // 
 		Debug.Log("Player entered roomm");
 		Instantiate(PlayerListItemPrefab, playerListContent).GetComponent<PlayerListItem>().SetUp(newPlayer);
 		

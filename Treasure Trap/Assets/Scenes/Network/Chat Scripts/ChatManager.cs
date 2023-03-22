@@ -17,6 +17,10 @@ public class ChatManager : MonoBehaviour, IChatClientListener
 
     void Start()
     {
+          Debug.Log("Connecting chat now");
+        chatClient = new ChatClient(this);
+        chatClient.Connect(PhotonNetwork.PhotonServerSettings.AppSettings.AppIdChat, PhotonNetwork.AppVersion,
+            new Photon.Chat.AuthenticationValues(PhotonNetwork.NickName));
         Application.runInBackground = true;
         if(string.IsNullOrEmpty(PhotonNetwork.PhotonServerSettings.AppSettings.AppIdChat))
         {
@@ -51,10 +55,7 @@ public class ChatManager : MonoBehaviour, IChatClientListener
 
      public void ConnectToServer()
     {
-        Debug.Log("Connecting");
-        chatClient = new ChatClient(this);
-        chatClient.Connect(PhotonNetwork.PhotonServerSettings.AppSettings.AppIdChat, PhotonNetwork.AppVersion,
-            new Photon.Chat.AuthenticationValues(PhotonNetwork.NickName));
+      
     }
 
     public void DisconnectFromServer()
@@ -93,6 +94,8 @@ public class ChatManager : MonoBehaviour, IChatClientListener
 
     public void OnConnected()
     {
+        Debug.Log("Moving to chatpanel");
+
         // MenuManager.Instance.OpenMenu("chatPanel");
         chatClient.Subscribe(new string[] {PhotonNetwork.CurrentRoom.Name});
         chatClient.SetOnlineStatus(ChatUserStatus.Online);
@@ -110,9 +113,9 @@ public class ChatManager : MonoBehaviour, IChatClientListener
 
     public void OnSubscribed(string[] channels, bool[] results)
     {
-        foreach(var channel in channels){
-            this.chatClient.PublishMessage(channel, "joined");
-        }
+        // foreach(var channel in channels){
+        //     this.chatClient.PublishMessage(channel, "joined");
+        // }
     
         
     }
