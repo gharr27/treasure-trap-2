@@ -8,6 +8,7 @@ public class PlayerScript : MonoBehaviour {
     public GameObject[] Tiles;
     public bool isWhite;
     public bool isNetworkGame = false;
+    public bool isTurn;
 
     GameManager gameManager;
     GameObject gameController;
@@ -86,30 +87,47 @@ public class PlayerScript : MonoBehaviour {
         }
     }
     [PunRPC]
-    public IEnumerator Move(bool isPlaying) {
-        this.isPlaying = isPlaying;
-
-        Debug.Log("Waiting For Tile Select");
-        yield return new WaitWhile(IsTileSelected);
-        Debug.Log("Tile Selected");
-
-        if (!isFirstMove || gameManager.GetTurn() == 1) {
-            gameManager.SetMoveGrid(tile, isMove);
+    void UpdateTurn() {
+        if (isTurn) {
+            isTurn = false;
         }
         else {
-            isPosSelected = true;
-            isFirstMove = false;
+            isTurn = true;
         }
+    }
 
-        Debug.Log("Waiting for Pos Select");
-        yield return new WaitWhile(IsPosSelected);
-        Debug.Log("Pos Selected");
+    [PunRPC]
+    public IEnumerator Move(bool isPlaying) {
+        if (isTurn) {
 
-        gameManager.NetworkMakeMove(tile, pos, isMove);
-        gameManager.UpdateTurn();
-        isTileSelected = false;
-        isPosSelected = false;
-        this.isPlaying = false;
+            Debug.Log(isWhite);
+
+            this.isPlaying = isPlaying;
+            gameManager.isPlaying = isPlaying;
+
+            Debug.Log("Waiting For Tile Select");
+            yield return new WaitWhile(IsTileSelected);
+            Debug.Log("Tile Selected");
+
+            if (!isFirstMove || gameManager.GetTurn() == 1) {
+                gameManager.SetMoveGrid(tile, isMove);
+            }
+            else {
+                isPosSelected = true;
+                isFirstMove = false;
+            }
+
+            Debug.Log("Waiting for Pos Select");
+            yield return new WaitWhile(IsPosSelected);
+            Debug.Log("Pos Selected");
+
+            gameManager.NetworkMakeMove(tile, pos, isMove);
+            UpdateTurn();
+            isTileSelected = false;
+            isPosSelected = false;
+            this.isPlaying = false;
+            gameManager.isPlaying = isPlaying;
+        }
     }
 
     [PunRPC]

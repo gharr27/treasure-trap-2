@@ -48,12 +48,11 @@ public class GameManager : MonoBehaviour {
     private GameObject[] gamePieces;
     private Stack<GameObject> selectionGrids;
 
-    bool isPlaying = false;
+    public bool isPlaying = false;
     bool isWin = false;
     bool isWhiteWin;
     bool isQueen1OnBoard = false;
     bool isQueen2OnBoard = false;
-    bool isUpdate = false;
 
 
     PlayerScript playerWhite;
@@ -106,48 +105,34 @@ public class GameManager : MonoBehaviour {
         if (PhotonNetwork.IsMasterClient) {
             Debug.Log("True");
             player.isWhite = true;
+            player.isTurn = true;
         }
         else {
             Debug.Log("False");
             player.isWhite = false;
+            player.isTurn = false;
         }
 
-    }
-
-    [PunRPC]
-    public void UpdateTurn() {
-        if (turn == 0) {
-            turn = 1;
-        }
-        else {
-            turn = 0;
-            round++;
-        }
-        isUpdate = false;
-        Debug.Log(turn);
     }
 
     // Update is called once per frame
     void Update() {
-        Debug.Log(turn);
 
         if (!isWin) {
             if (!isPlaying) {
-                if (turn == 0 && player.isWhite) {
-                    isPlaying = true;
-                    //White Move
-                    Debug.Log("White Move");
-                    StartCoroutine(player.Move(true));
-                }
-                else if (turn == 1 && !player.isWhite) {
-                    isPlaying = true;
-                    //Black Move
-                    Debug.Log("Black Move");
-                    StartCoroutine(player.Move(true));
-                }
-            }
-            else if(isUpdate) {
-                UpdateTurn();
+                StartCoroutine(player.Move(true));
+                //if (turn == 0 && player.isWhite) {
+                //    isPlaying = true;
+                //    //White Move
+                //    Debug.Log("White Move");
+                //    StartCoroutine(player.Move(true));
+                //}
+                //else if (turn == 1 && !player.isWhite) {
+                //    isPlaying = true;
+                //    //Black Move
+                //    Debug.Log("Black Move");
+                //    StartCoroutine(player.Move(true));
+                //}
             }
         }
         else {
@@ -207,7 +192,6 @@ public class GameManager : MonoBehaviour {
         ClearMoveGrid();
         CheckForWin();
 
-        isUpdate = true;
         isPlaying = false;
         Debug.Log("Turn over");
     }
