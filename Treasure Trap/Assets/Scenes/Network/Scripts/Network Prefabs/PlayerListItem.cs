@@ -11,17 +11,11 @@ public class PlayerListItem : MonoBehaviourPunCallbacks
 	[SerializeField] TMP_Text text;
 	// [SerializeField] string playerName = "Player ";
 	Photon.Realtime.Player player;
-	
-	// public void SetUp(Player _player)
-	// {
-	// 	player = _player;
-	// 	text.text = PhotonNetwork.NickName;
-		
-	// }
 
 	public void SetUp(Photon.Realtime.Player _player)
 	{
 		player = _player;
+		Debug.Log("received name" + _player.NickName);
 		text.text = _player.NickName;
 	}
 
