@@ -38,10 +38,12 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Menus/Edwin/CharSelection.unity
     guid: 98c03e37c776c34419bec601f65ef150
+
   - enabled: 1
     path: Assets/Scenes/Menus/Edwin/LoserScreen.unity
     guid: 87d7829c3e83cc1458e96d0374a47b5e
   - enabled: 1
     path: Assets/Scenes/Menus/Edwin/WinnerScreen.unity
+
     guid: 1dcabf9cd0d59714688afee8619a2af8
   m_configObjects: {}
