@@ -1136,6 +1136,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 90, y: 90, z: 0}
+
 --- !u!1 &1027719408
 GameObject:
   m_ObjectHideFlags: 0
@@ -1760,6 +1761,7 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1822126861}
   m_CullTransparentMesh: 1
+
 --- !u!1 &1842098033
 GameObject:
   m_ObjectHideFlags: 0
@@ -2198,4 +2200,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   GridTile: {fileID: 8767865269051293877, guid: 9bb24095a22f1a1438c192d3061cf2f3, type: 3}
-  Player: {fileID: 0}
+
+  Player: {fileID: 2492933341662750378, guid: e7108ba85b2077145a7c964ddfb9b58b, type: 3}
+
