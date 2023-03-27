@@ -120,6 +120,7 @@ public class GameManager : MonoBehaviour {
 
         if (!isWin) {
             if (!isPlaying) {
+                Debug.Log(player.isWhite);
                 StartCoroutine(player.Move(true));
                 //if (turn == 0 && player.isWhite) {
                 //    isPlaying = true;
@@ -191,9 +192,9 @@ public class GameManager : MonoBehaviour {
 
         ClearMoveGrid();
         CheckForWin();
+        player.UpdateTurn();
 
         isPlaying = false;
-        Debug.Log("Turn over");
     }
 
     public void MakeMove(GameObject tile, Vector3 pos, bool isMove) {

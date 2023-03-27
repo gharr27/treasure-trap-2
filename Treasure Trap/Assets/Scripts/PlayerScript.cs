@@ -87,7 +87,7 @@ public class PlayerScript : MonoBehaviour {
         }
     }
     [PunRPC]
-    void UpdateTurn() {
+    public void UpdateTurn() {
         if (isTurn) {
             isTurn = false;
         }
@@ -99,7 +99,6 @@ public class PlayerScript : MonoBehaviour {
     [PunRPC]
     public IEnumerator Move(bool isPlaying) {
         if (isTurn) {
-
             Debug.Log(isWhite);
 
             this.isPlaying = isPlaying;
@@ -122,7 +121,6 @@ public class PlayerScript : MonoBehaviour {
             Debug.Log("Pos Selected");
 
             gameManager.NetworkMakeMove(tile, pos, isMove);
-            UpdateTurn();
             isTileSelected = false;
             isPosSelected = false;
             this.isPlaying = false;
