@@ -5,6 +5,7 @@ using Photon.Pun;
 using TMPro;
 using Photon.Realtime;
 using System.Linq;
+using UnityEngine.UI;
 
 
 public class ConnectServer : MonoBehaviourPunCallbacks
@@ -21,7 +22,13 @@ public class ConnectServer : MonoBehaviourPunCallbacks
 	[SerializeField] Transform playerListContent;
 	[SerializeField] GameObject PlayerListItemPrefab;
 	[SerializeField] GameObject startGameButton;
+	// [SerializeField] GameObject CreateRoom;
+
 	RoomOptions roomOptions = new RoomOptions();
+
+	public Button CreateRoomBtn;
+	public Button CreateRoomBtn2;
+	public Button JoinRoomBtn;
 
 
 	void Awake()
@@ -35,6 +42,18 @@ public class ConnectServer : MonoBehaviourPunCallbacks
 		PhotonNetwork.ConnectUsingSettings();
 	}
 
+	void Update()
+	{
+		if(string.IsNullOrEmpty(userNameInput.text))
+		{
+			CreateRoomBtn.interactable = false;
+			JoinRoomBtn.interactable = false;
+		}
+		else{
+			CreateRoomBtn.interactable = true;
+			JoinRoomBtn.interactable = true;
+		}
+	}
 	public override void OnConnectedToMaster()
 	{
 		Debug.Log("Connected to Master");
@@ -46,16 +65,28 @@ public class ConnectServer : MonoBehaviourPunCallbacks
 	{
 		MenuManager.Instance.OpenMenu("title");
 		Debug.Log("Joined Lobby");
+		CreateRoomBtn.interactable = false;
+
 	}
 
+	// public void ifInputEmpty(){
+	// 	Debug.Log("input is empty");
+	// 	if(string.IsNullOrEmpty(userNameInput.text))
+	// 	{
+	// 		return;
+	// 	}
+	// 	else{
+	// 		CreateRoomBtn.interactable = true;
+	// 	}
+	// }
 	public void CreateRoom()
 	{
-
-        Debug.Log("Created room");
 		if(string.IsNullOrEmpty(roomNameInputField.text))
 		{
 			return;
 		}
+
+		Debug.Log("Created room");
 		Debug.Log("Input room info");
         //only 2 players can connect
 		roomOptions.MaxPlayers = 2;
@@ -142,6 +173,15 @@ public class ConnectServer : MonoBehaviourPunCallbacks
 		MenuManager.Instance.OpenMenu("title");
 	}
 
+	public void DisconnectUser()
+	{
+		Debug.Log("Disconnect");
+
+		if (PhotonNetwork.IsConnected)
+		{
+			PhotonNetwork.Disconnect();
+		}
+	}
 	public override void OnRoomListUpdate(List<RoomInfo> roomList)
 	{
 		//clear list every time we update
