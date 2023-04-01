@@ -44,6 +44,10 @@ MonoBehaviour:
   - Move
   - NetworkMakeMove
   - UpdateTurn
+  - SetPlayers
+  - AddTilePiece
+  - AddToGamePieces
+  - IncrementTilesPlaced
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

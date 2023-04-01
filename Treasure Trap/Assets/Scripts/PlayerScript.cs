@@ -6,7 +6,7 @@ using UnityEngine;
 public class PlayerScript : MonoBehaviour {
 
     public GameObject[] Tiles;
-    public bool isWhite;
+    public string color;
     public bool isNetworkGame = false;
 
     GameManager gameManager;
@@ -85,7 +85,7 @@ public class PlayerScript : MonoBehaviour {
             }
         }
     }
-    [PunRPC]
+
     public IEnumerator Move(bool isPlaying) {
         this.isPlaying = isPlaying;
 
@@ -105,8 +105,7 @@ public class PlayerScript : MonoBehaviour {
         yield return new WaitWhile(IsPosSelected);
         Debug.Log("Pos Selected");
 
-        gameManager.NetworkMakeMove(tile, pos, isMove);
-        gameManager.UpdateTurn();
+        gameManager.Move(tile, pos, isMove);
         isTileSelected = false;
         isPosSelected = false;
         this.isPlaying = false;
