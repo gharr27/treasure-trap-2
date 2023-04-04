@@ -2777,7 +2777,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 230.14581, y: 33.149323}
+  m_AnchoredPosition: {x: 230.14581, y: -89.4}
   m_SizeDelta: {x: 700, y: 700}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1250763849
@@ -3289,7 +3289,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1310651324
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3343,7 +3343,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Blue
+  m_Text: Queen
 --- !u!222 &1310651326
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -3449,7 +3449,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1476520673
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3503,7 +3503,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Blue
+  m_Text: Kid
 --- !u!222 &1476520675
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -3682,7 +3682,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1571542265
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3736,7 +3736,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Red
+  m_Text: Ghost
 --- !u!222 &1571542267
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -4140,9 +4140,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d945625854a6aa44c93514cbaf56c12e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  charRed: {fileID: 859371674}
-  charGreen: {fileID: 1250763849}
-  charBlue: {fileID: 1306819676}
+  ghostChar: {fileID: 859371674}
+  cowChar: {fileID: 1250763849}
+  kidChar: {fileID: 1306819676}
+  queenChar: {fileID: 292266975}
 --- !u!1 &1701966490
 GameObject:
   m_ObjectHideFlags: 0
@@ -4236,7 +4237,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1706614658
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4290,7 +4291,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Green
+  m_Text: Cow
 --- !u!222 &1706614660
 CanvasRenderer:
   m_ObjectHideFlags: 0
