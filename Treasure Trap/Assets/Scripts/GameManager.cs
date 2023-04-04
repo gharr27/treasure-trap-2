@@ -48,7 +48,7 @@ public class GameManager : MonoBehaviour {
     private GameObject[] gamePieces;
     private Stack<GameObject> selectionGrids;
 
-    bool isPlaying = false;
+    public bool isPlaying = false;
     bool isWin = false;
     bool isWhiteWin;
     bool isQueen1OnBoard = false;
@@ -83,16 +83,16 @@ public class GameManager : MonoBehaviour {
         gamePieces = new GameObject[PIECE_COUNT];
 
 
-        playerWhiteObj = GameObject.FindWithTag("White");
-        playerBlackObj = GameObject.FindWithTag("Black");
+        //playerWhiteObj = GameObject.FindWithTag("White");
+        //playerBlackObj = GameObject.FindWithTag("Black");
 
-        playerWhite = playerWhiteObj.GetComponent(typeof(PlayerScript)) as PlayerScript;
-        playerBlack = playerBlackObj.GetComponent(typeof(PlayerScript)) as PlayerScript;
+        //playerWhite = playerWhiteObj.GetComponent(typeof(PlayerScript)) as PlayerScript;
+        //playerBlack = playerBlackObj.GetComponent(typeof(PlayerScript)) as PlayerScript;
 
-        playerObjects = GameObject.FindGameObjectsWithTag("Player");
+        //playerObjects = GameObject.FindGameObjectsWithTag("Player");
 
-        playerBlack = playerObjects[1].GetComponent(typeof(PlayerScript)) as PlayerScript;
-        playerWhite = playerObjects[0].GetComponent(typeof(PlayerScript)) as PlayerScript;
+        //playerBlack = playerObjects[1].GetComponent(typeof(PlayerScript)) as PlayerScript;
+        //playerWhite = playerObjects[0].GetComponent(typeof(PlayerScript)) as PlayerScript;
 
         playerObject = PhotonNetwork.Instantiate(Player.name, Vector3.zero, Quaternion.identity);
         player = playerObject.GetComponent(typeof(PlayerScript)) as PlayerScript;
@@ -105,22 +105,14 @@ public class GameManager : MonoBehaviour {
         if (PhotonNetwork.IsMasterClient) {
             Debug.Log("True");
             player.isWhite = true;
+            player.isTurn = true;
         }
         else {
             Debug.Log("False");
             player.isWhite = false;
+            player.isTurn = false;
         }
 
-    }
-
-    [PunRPC]
-    public void UpdateTurn() {
-        if (turn == 0) {
-            turn = 1;
-        }
-        else {
-            turn = 0;
-        }
     }
 
     // Update is called once per frame
@@ -128,17 +120,20 @@ public class GameManager : MonoBehaviour {
 
         if (!isWin) {
             if (!isPlaying) {
-                isPlaying = true;
-                if (turn == 0) {
-                    //White Move
-                    Debug.Log("White Move");
-                    StartCoroutine(playerWhite.Move(true));
-                }
-                else {
-                    //Black Move
-                    Debug.Log("Black Move");
-                    StartCoroutine(playerBlack.Move(true));
-                }
+                Debug.Log(player.isWhite);
+                StartCoroutine(player.Move(true));
+                //if (turn == 0 && player.isWhite) {
+                //    isPlaying = true;
+                //    //White Move
+                //    Debug.Log("White Move");
+                //    StartCoroutine(player.Move(true));
+                //}
+                //else if (turn == 1 && !player.isWhite) {
+                //    isPlaying = true;
+                //    //Black Move
+                //    Debug.Log("Black Move");
+                //    StartCoroutine(player.Move(true));
+                //}
             }
         }
         else {
@@ -165,13 +160,6 @@ public class GameManager : MonoBehaviour {
 
     [PunRPC]
     public void NetworkMakeMove(GameObject tile, Vector3 pos, bool isMove) {
-        if (turn == 0) {
-            turn = 1;
-        }
-        else {
-            turn = 0;
-            round++;
-        }
 
         if (isMove) {
             gameGrid[tile.transform.position] = new GameGridCell();
@@ -204,6 +192,7 @@ public class GameManager : MonoBehaviour {
 
         ClearMoveGrid();
         CheckForWin();
+        player.UpdateTurn();
 
         isPlaying = false;
     }
