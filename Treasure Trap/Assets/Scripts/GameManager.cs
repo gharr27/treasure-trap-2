@@ -50,11 +50,12 @@ public class GameManager : MonoBehaviour {
     private GameObject[] gamePieces;
     private Stack<GameObject> selectionGrids;
 
-    bool isPlaying = false;
+    public bool isPlaying = false;
     bool isWin = false;
     bool isWhiteWin;
     bool isQueen1OnBoard = false;
     bool isQueen2OnBoard = false;
+
     bool isP1;
 
     PlayerScript p1;
@@ -93,12 +94,14 @@ public class GameManager : MonoBehaviour {
 
         //Is Host
         if (PhotonNetwork.IsMasterClient) {
+
             isP1 = true;
             Debug.Log("P1");
         }
         else {
             isP1 = false;
             Debug.Log("P2");
+
         }
 
         p1 = playerObject1.GetComponent(typeof(PlayerScript)) as PlayerScript;
@@ -109,6 +112,7 @@ public class GameManager : MonoBehaviour {
 
         activePlayer = p1;
     }
+
 
     public void UpdateActivePlayer() {
         activePlayer = activePlayer == p1 ? p2 : p1;
@@ -124,12 +128,12 @@ public class GameManager : MonoBehaviour {
             round++;
         }
     }
-
     // Update is called once per frame
     void Update() {
 
         if (!isWin) {
             if (!isPlaying) {
+
                 if (activePlayer.color == "white" && isP1) {
                     isPlaying = true;
                     //White Move
@@ -143,6 +147,7 @@ public class GameManager : MonoBehaviour {
                     Debug.Log(round);
                     StartCoroutine(p2.Move(true));
                 }
+
             }
         }
         else {
@@ -205,12 +210,18 @@ public class GameManager : MonoBehaviour {
 
         ClearMoveGrid();
         CheckForWin();
+
     }
 
     [PunRPC]
     void AddToGamePieces(GameObject tilePiece) {
         gamePieces[tilesPlaced] = tilePiece;
         Debug.Log(gamePieces.Length);
+
+        player.UpdateTurn();
+
+        isPlaying = false;
+
     }
 
     [PunRPC]

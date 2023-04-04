@@ -8,6 +8,7 @@ public class PlayerScript : MonoBehaviour {
     public GameObject[] Tiles;
     public string color;
     public bool isNetworkGame = false;
+    public bool isTurn;
 
     GameManager gameManager;
     GameObject gameController;
@@ -86,29 +87,37 @@ public class PlayerScript : MonoBehaviour {
         }
     }
 
+    [PunRPC]
     public IEnumerator Move(bool isPlaying) {
-        this.isPlaying = isPlaying;
+        if (isTurn) {
+            Debug.Log(isWhite);
 
-        Debug.Log("Waiting For Tile Select");
-        yield return new WaitWhile(IsTileSelected);
-        Debug.Log("Tile Selected");
+            this.isPlaying = isPlaying;
+            gameManager.isPlaying = isPlaying;
 
-        if (!isFirstMove || gameManager.GetTurn() == 1) {
-            gameManager.SetMoveGrid(tile, isMove);
+            Debug.Log("Waiting For Tile Select");
+            yield return new WaitWhile(IsTileSelected);
+            Debug.Log("Tile Selected");
+
+            if (!isFirstMove || gameManager.GetTurn() == 1) {
+                gameManager.SetMoveGrid(tile, isMove);
+            }
+            else {
+                isPosSelected = true;
+                isFirstMove = false;
+            }
+
+            Debug.Log("Waiting for Pos Select");
+            yield return new WaitWhile(IsPosSelected);
+            Debug.Log("Pos Selected");
+
+            gameManager.NetworkMakeMove(tile, pos, isMove);
+            isTileSelected = false;
+            isPosSelected = false;
+            this.isPlaying = false;
+            gameManager.isPlaying = isPlaying;
         }
-        else {
-            isPosSelected = true;
-            isFirstMove = false;
-        }
 
-        Debug.Log("Waiting for Pos Select");
-        yield return new WaitWhile(IsPosSelected);
-        Debug.Log("Pos Selected");
-
-        gameManager.Move(tile, pos, isMove);
-        isTileSelected = false;
-        isPosSelected = false;
-        this.isPlaying = false;
     }
 
     [PunRPC]
