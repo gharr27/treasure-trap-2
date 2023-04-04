@@ -219,7 +219,7 @@ GameObject:
   - component: {fileID: 373840745}
   - component: {fileID: 373840744}
   m_Layer: 5
-  m_Name: PressAnyKeyTExt
+  m_Name: PressAnyKeyText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
