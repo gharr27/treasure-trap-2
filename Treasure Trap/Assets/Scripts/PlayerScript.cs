@@ -6,7 +6,7 @@ using UnityEngine;
 public class PlayerScript : MonoBehaviour {
 
     public GameObject[] Tiles;
-    public bool isWhite;
+    public string color;
     public bool isNetworkGame = false;
     public bool isTurn;
 
@@ -86,15 +86,6 @@ public class PlayerScript : MonoBehaviour {
             }
         }
     }
-    [PunRPC]
-    public void UpdateTurn() {
-        if (isTurn) {
-            isTurn = false;
-        }
-        else {
-            isTurn = true;
-        }
-    }
 
     [PunRPC]
     public IEnumerator Move(bool isPlaying) {
@@ -126,6 +117,7 @@ public class PlayerScript : MonoBehaviour {
             this.isPlaying = false;
             gameManager.isPlaying = isPlaying;
         }
+
     }
 
     [PunRPC]
