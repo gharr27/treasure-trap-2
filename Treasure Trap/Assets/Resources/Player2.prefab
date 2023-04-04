@@ -53,6 +53,7 @@ MonoBehaviour:
   - {fileID: 2859850552348427938, guid: 8231a310f57375641ab1f270409793f1, type: 3}
   color: 
   isNetworkGame: 0
+  isTurn: 0
 --- !u!114 &9036404740500290310
 MonoBehaviour:
   m_ObjectHideFlags: 0

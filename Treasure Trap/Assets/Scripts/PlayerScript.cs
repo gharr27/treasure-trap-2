@@ -24,6 +24,7 @@ public class PlayerScript : MonoBehaviour {
     bool isFirstMove = true;
     bool isPlaying = false;
     bool canPlace = true;
+    bool isWhite;
 
     int queenCount = 1;
     int antCount = 3;

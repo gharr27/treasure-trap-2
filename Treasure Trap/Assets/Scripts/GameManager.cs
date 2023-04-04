@@ -177,7 +177,7 @@ public class GameManager : MonoBehaviour {
     }
 
     [PunRPC]
-    void NetworkMakeMove(GameObject tile, Vector3 pos, bool isMove) {
+    public void NetworkMakeMove(GameObject tile, Vector3 pos, bool isMove) {
         Debug.Log("test");
         if (isMove) {
             gameGrid[tile.transform.position] = new GameGridCell();
@@ -217,11 +217,6 @@ public class GameManager : MonoBehaviour {
     void AddToGamePieces(GameObject tilePiece) {
         gamePieces[tilesPlaced] = tilePiece;
         Debug.Log(gamePieces.Length);
-
-        player.UpdateTurn();
-
-        isPlaying = false;
-
     }
 
     [PunRPC]
