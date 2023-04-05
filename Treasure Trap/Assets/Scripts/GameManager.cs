@@ -44,7 +44,7 @@ public class GameManager : MonoBehaviour {
     const int PIECE_COUNT = 22;
 
     public int tilesPlaced = 0;
-    private int turn = 0;
+    public int turn = 0;
     private int round = 1;
 
     private GameObject[] gamePieces;
@@ -58,8 +58,8 @@ public class GameManager : MonoBehaviour {
 
     bool isP1;
 
-    PlayerScript p1;
-    PlayerScript p2;
+    public PlayerScript p1;
+    public PlayerScript p2;
     PlayerScript activePlayer;
     GameObject playerObject1;
     GameObject playerObject2; 
@@ -111,11 +111,24 @@ public class GameManager : MonoBehaviour {
         p2.color = "black";
 
         activePlayer = p1;
+        p1.isTurn = true;
+        p2.isTurn = false;
     }
 
 
-    public void UpdateActivePlayer() {
+    private void UpdateActivePlayer() {
         activePlayer = activePlayer == p1 ? p2 : p1;
+
+        if (activePlayer.color == "white") {
+            p1.isTurn = true;
+            p2.isTurn = false;
+        }
+        else {
+            p1.isTurn = false;
+            p2.isTurn = true;
+        }
+
+        Debug.Log(activePlayer.color);
         UpdateTurn();
     }
 
@@ -133,7 +146,6 @@ public class GameManager : MonoBehaviour {
 
         if (!isWin) {
             if (!isPlaying) {
-
                 if (activePlayer.color == "white" && isP1) {
                     isPlaying = true;
                     //White Move
@@ -144,7 +156,6 @@ public class GameManager : MonoBehaviour {
                     isPlaying = true;
                     //Black Move
                     Debug.Log("Black Move");
-                    Debug.Log(round);
                     StartCoroutine(p2.Move(true));
                 }
 
@@ -171,12 +182,6 @@ public class GameManager : MonoBehaviour {
         }
     }
 
-    public void Move(GameObject tile, Vector3 pos, bool isMove) {
-        Debug.Log("test");
-        photonView.RPC("NetworkMakeMove", RpcTarget.All, tile, pos, isMove);
-    }
-
-    [PunRPC]
     public void NetworkMakeMove(GameObject tile, Vector3 pos, bool isMove) {
         Debug.Log("test");
         if (isMove) {
@@ -194,7 +199,7 @@ public class GameManager : MonoBehaviour {
         }
         else {
             GameObject tilePiece = PhotonNetwork.Instantiate(tile.name, pos, Quaternion.identity);
-            photonView.RPC("AddToGamePieces", RpcTarget.All, tilePiece);
+            gamePieces[tilesPlaced] = tilePiece;
             GameGridCell gridCell = new GameGridCell(true, tilePiece);
 
             if (gameGrid.ContainsKey(pos)) {
@@ -203,25 +208,15 @@ public class GameManager : MonoBehaviour {
             else {
                 gameGrid.Add(pos, gridCell);
             }
-            photonView.RPC("IncrementTilesPlaced", RpcTarget.All, 1);
+            tilesPlaced++;
         }
 
         UpdateGameGrid(pos);
-
+        UpdateActivePlayer();
         ClearMoveGrid();
         CheckForWin();
 
-    }
-
-    [PunRPC]
-    void AddToGamePieces(GameObject tilePiece) {
-        gamePieces[tilesPlaced] = tilePiece;
-        Debug.Log(gamePieces.Length);
-    }
-
-    [PunRPC]
-    void IncrementTilesPlaced(int i) {
-        tilesPlaced += i;
+        isPlaying = false;
     }
 
     public void MakeMove(GameObject tile, Vector3 pos, bool isMove) {

@@ -37,9 +37,6 @@ public class TileScript : MonoBehaviour {
         gameController = GameObject.FindWithTag("GameController");
         gameManager = gameController.GetComponent(typeof(GameManager)) as GameManager;
 
-        gameManager.UpdateActivePlayer();
-
-
         playerWhiteObj = GameObject.FindWithTag("White");
         playerBlackObj = GameObject.FindWithTag("Black");
 

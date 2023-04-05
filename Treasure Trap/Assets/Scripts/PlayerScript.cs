@@ -15,9 +15,9 @@ public class PlayerScript : MonoBehaviour {
 
     PhotonView photonView;
 
-    GameObject tile = null;
-    Vector3 pos = Vector3.zero;
-    bool isMove = false;
+    public GameObject tile = null;
+    public Vector3 pos = Vector3.zero;
+    public bool isMove = false;
     bool isPosSelected = false;
     bool isGridSet = false;
     bool isTileSelected = false;
@@ -38,7 +38,7 @@ public class PlayerScript : MonoBehaviour {
         gameController = GameObject.FindWithTag("GameController");
         gameManager = gameController.GetComponent(typeof(GameManager)) as GameManager;
 
-        PhotonView photonView = this.GetComponent<PhotonView>();
+        photonView = GetComponent<PhotonView>();
     }
 
     void Update() {
@@ -87,8 +87,6 @@ public class PlayerScript : MonoBehaviour {
             }
         }
     }
-
-    [PunRPC]
     public IEnumerator Move(bool isPlaying) {
         if (isTurn) {
             Debug.Log(isWhite);
@@ -112,13 +110,32 @@ public class PlayerScript : MonoBehaviour {
             yield return new WaitWhile(IsPosSelected);
             Debug.Log("Pos Selected");
 
-            gameManager.NetworkMakeMove(tile, pos, isMove);
+            if (gameManager.turn == 0) {
+                Debug.Log("Copied piece values to P2");
+                gameManager.p2.tile = tile;
+                gameManager.p2.pos = pos;
+                gameManager.p2.isMove = isMove;
+            }
+            else {
+                Debug.Log("Copied piece values to P1");
+                gameManager.p1.tile = tile;
+                gameManager.p1.pos = pos;
+                gameManager.p1.isMove = isMove;
+            }
+
+            photonView.RPC("SendMove", RpcTarget.All);
             isTileSelected = false;
             isPosSelected = false;
             this.isPlaying = false;
             gameManager.isPlaying = isPlaying;
         }
+    }
 
+    [PunRPC]
+    private void SendMove() {
+        Debug.Log("Move Sent");
+        Debug.Log(isTurn);
+        gameManager.NetworkMakeMove(tile, pos, isMove);
     }
 
     [PunRPC]

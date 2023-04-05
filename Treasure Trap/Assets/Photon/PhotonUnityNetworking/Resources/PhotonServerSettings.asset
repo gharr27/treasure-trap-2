@@ -48,6 +48,7 @@ MonoBehaviour:
   - AddTilePiece
   - AddToGamePieces
   - IncrementTilesPlaced
+  - SendMove
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1
