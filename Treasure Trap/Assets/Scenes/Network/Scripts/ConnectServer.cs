@@ -222,7 +222,7 @@ public class ConnectServer : MonoBehaviourPunCallbacks
     }
     public override void OnRoomListUpdate(List<RoomInfo> roomList)
     {
-        // clear list every time we update
+        // // clear list every time we update
         foreach(Transform trans in roomListContent)
         {
             Destroy(trans.gameObject);
@@ -251,12 +251,6 @@ public class ConnectServer : MonoBehaviourPunCallbacks
         {
             Destroy(child.gameObject);
         }
-
-        //  foreach (Photon.Realtime.Player player in PhotonNetwork.CurrentRoom.Players.Values)
-        // {
-        //  Instantiate(PlayerListItemPrefab, playerListContent).GetComponent<PlayerListItem>().SetUp(player);
-        // }
-
         for (int i = 0; i < photonPlayers.Length; i++)
         {
             // Debug.Log("Instantiating");
