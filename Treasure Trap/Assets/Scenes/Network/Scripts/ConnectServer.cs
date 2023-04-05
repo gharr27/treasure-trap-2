@@ -92,23 +92,8 @@ public class ConnectServer : MonoBehaviourPunCallbacks
         
     }
 
-    // public void ifInputEmpty(){
-    //  Debug.Log("input is empty");
-    //  if(string.IsNullOrEmpty(userNameInput.text))
-    //  {
-    //      return;
-    //  }
-    //  else{
-    //      CreateRoomBtn.interactable = true;
-    //  }
-    // }
     public void CreateRoom()
     {
-        // if(string.IsNullOrEmpty(roomNameInputField.text))
-        // {
-        //     return;
-        // }
-		// CreateRoomBtn2.interactable = false;
 
         Debug.Log("Created room");
         Debug.Log("Input room info");
@@ -151,7 +136,7 @@ public class ConnectServer : MonoBehaviourPunCallbacks
 
         startGameButton.gameObject.SetActive(PhotonNetwork.IsMasterClient);
         // startGameButton.interactable = (PhotonNetwork.CurrentRoom.PlayerCount > 1);
-
+		userNameInput.text = "";
     }
 
     public override void OnMasterClientSwitched(Photon.Realtime.Player newMasterClient)
@@ -194,9 +179,19 @@ public class ConnectServer : MonoBehaviourPunCallbacks
             startGameButton.interactable = true;
         }
     }
-    public void LeaveRoom()
+    public void LeaveRoom2()
     {
         DisconnectUser();
+        Debug.Log("Leave room");
+        playerLeftRoom = true;
+        // PhotonNetwork.LeaveRoom();
+        MenuManager.Instance.OpenMenu("loading");
+        
+    }
+
+	public void LeaveRoom()
+    {
+       	// DisconnectUser();
         Debug.Log("Leave room");
         playerLeftRoom = true;
         PhotonNetwork.LeaveRoom();
@@ -238,6 +233,7 @@ public class ConnectServer : MonoBehaviourPunCallbacks
             Debug.Log("Room updated");
             if(roomList[i].RemovedFromList)
                 continue;
+			 Debug.Log(roomList[i] + "this is a room");
             Instantiate(roomListItemPrefab, roomListContent).GetComponent<RoomListItem>().SetUp(roomList[i]);
         }
     }
@@ -268,16 +264,7 @@ public class ConnectServer : MonoBehaviourPunCallbacks
     public override void OnPlayerEnteredRoom(Photon.Realtime.Player newPlayer)
     {
         playerEnteredRoom = true;
-        // userNameInput.text = "";
-        // userNameInput.text = newPlayer.NickName; 
-        // PhotonNetwork.NickName = userNameInput.text + " " + Random.Range(0, 1000).ToString("0000");
-        // userNameInput.text = PhotonNetwork.NickName;
-        // Debug.Log("Player entered room" + userNameInput.text + "empty");
         Instantiate(PlayerListItemPrefab, playerListContent).GetComponent<PlayerListItem>().SetUp(newPlayer);
-
-            
-
-        
     }
 }
 
