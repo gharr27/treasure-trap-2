@@ -222,18 +222,23 @@ public class ConnectServer : MonoBehaviourPunCallbacks
     }
     public override void OnRoomListUpdate(List<RoomInfo> roomList)
     {
-        //clear list every time we update
+        // clear list every time we update
         foreach(Transform trans in roomListContent)
         {
             Destroy(trans.gameObject);
         }
 
+		// for (int i = roomListContent.childCount - 1; i >= 0; i--)
+		// {
+		// 	Destroy(roomListContent.GetChild(i).gameObject);
+		// }
+
         for(int i = 0; i < roomList.Count; i++)
         {
             Debug.Log("Room updated");
+			Debug.Log(roomList[i] + "this is a room");
             if(roomList[i].RemovedFromList)
                 continue;
-			 Debug.Log(roomList[i] + "this is a room");
             Instantiate(roomListItemPrefab, roomListContent).GetComponent<RoomListItem>().SetUp(roomList[i]);
         }
     }

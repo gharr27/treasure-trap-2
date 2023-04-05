@@ -14,20 +14,15 @@ public class RoomListItem : MonoBehaviour
 
 	public void SetUp(RoomInfo _info)
 	{
-		Debug.Log("Input room info");
+		Debug.Log(_info + " Input room info");
 		info = _info;
 		text.text = _info.Name;
 	}
 
 	public void OnClick()
 	{
-		// RoomOptions roomOptions = new RoomOptions();
-		// if(ConnectServer.Instance.MaxPlayers > 2){
-		// 	Debug.Log("Only 2 players per game");
-		// }
-		// else{
-			ConnectServer.Instance.JoinRoom(info);
-		// }
+	
+		ConnectServer.Instance.JoinRoom(info);
 		
 	}
 }
