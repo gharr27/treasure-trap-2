@@ -1,0 +1,22 @@
+fileFormatVersion: 2
+guid: 6ab0da9a4e96447eabbf4a1a28b7f7d5
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontNames:
+  - brush-tipTexe TRIAL
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: 6a0fd512c2b278445a003a5edd4b10ff, type: 3}
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  useLegacyBoundsCalculation: 0
+  shouldRoundAdvanceValue: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

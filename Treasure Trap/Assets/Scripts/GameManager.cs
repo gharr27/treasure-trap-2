@@ -166,9 +166,10 @@ public class GameManager : MonoBehaviour {
             Debug.Log(gameGrid.Count);
         }
 
-        if (Input.GetKeyDown(KeyCode.Escape)) {
-            menuManager.GoToMainMenu();
-        }
+        // if (Input.GetKeyDown(KeyCode.Escape)) {
+        //     //instance of disconnect
+        //     menuManager.GoToMainMenu();
+        // }
     }
 
     public void Move(GameObject tile, Vector3 pos, bool isMove) {

@@ -1,0 +1,22 @@
+fileFormatVersion: 2
+guid: 26b37c34be3f9441d83bcf1d0e38284a
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontNames:
+  - thedarkestpearl
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: 80b6f5ba3de99f641bd79b801863e8c3, type: 3}
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  useLegacyBoundsCalculation: 0
+  shouldRoundAdvanceValue: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

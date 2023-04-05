@@ -11,17 +11,23 @@ public class ChatManager : MonoBehaviour, IChatClientListener
 {
     
     private ChatClient chatClient;
-    
     public TMP_InputField msgInput;
     public TMP_Text msgArea;
+    MenusManager menuManager;
+    GameObject menuManagerObject;
+
 
     void Start()
     {
-          Debug.Log("Connecting chat now");
+        Debug.Log("Connecting chat now");
+        menuManagerObject = GameObject.FindWithTag("Menu");
+        menuManager = menuManagerObject.GetComponent(typeof(MenusManager)) as MenusManager;
+
         chatClient = new ChatClient(this);
         chatClient.Connect(PhotonNetwork.PhotonServerSettings.AppSettings.AppIdChat, PhotonNetwork.AppVersion,
             new Photon.Chat.AuthenticationValues(PhotonNetwork.NickName));
         Application.runInBackground = true;
+        
         if(string.IsNullOrEmpty(PhotonNetwork.PhotonServerSettings.AppSettings.AppIdChat))
         {
             Debug.LogError("No AppID Provided");
@@ -34,6 +40,7 @@ public class ChatManager : MonoBehaviour, IChatClientListener
                 SendMsg();
             }
         });
+
     }
 
     void Update()
@@ -41,6 +48,20 @@ public class ChatManager : MonoBehaviour, IChatClientListener
         if (chatClient != null)
         {
             chatClient.Service();
+        }
+
+        if (Input.GetKeyDown(KeyCode.Escape)) {
+            Leave();
+
+        }
+        if (PhotonNetwork.CurrentRoom != null && PhotonNetwork.CurrentRoom.PlayerCount == 1)
+        {
+            //load "come back" scene
+            Debug.Log("Player left is leaving");
+            // chatClient.PublishMessage(PhotonNetwork.CurrentRoom.Name, $"{PhotonNetwork.NickName} has left the room.");
+            Leave();
+            menuManager.GoToMainMenu();
+
         }
     }
 
@@ -62,13 +83,18 @@ public class ChatManager : MonoBehaviour, IChatClientListener
 
      public void ConnectToServer()
     {
-      
+
     }
 
     public void DisconnectFromServer()
     {
-        Debug.Log("Leaving");
-        chatClient.Disconnect(ChatDisconnectCause.None);
+        Debug.Log("Leaving...");
+        // chatClient.Disconnect(ChatDisconnectCause.None);
+
+        if (chatClient.State == ChatState.ConnectedToFrontEnd || chatClient.State == ChatState.ConnectedToNameServer)
+        {
+            chatClient.Disconnect(ChatDisconnectCause.None);
+        }
     }
 
     public void SendMsg()
@@ -82,11 +108,23 @@ public class ChatManager : MonoBehaviour, IChatClientListener
     
     }
 
+    // public void Leave()
+    // {
+    //      Debug.Log("Leave room");
+    //     chatClient.Unsubscribe(new string[] {PhotonNetwork.CurrentRoom.Name});
+    //     chatClient.SetOnlineStatus(ChatUserStatus.Offline);
+    // }
+
     public void Leave()
     {
-        chatClient.Unsubscribe(new string[] {PhotonNetwork.CurrentRoom.Name});
+        Debug.Log("Leave room");
+        chatClient.Unsubscribe(new string[] { PhotonNetwork.CurrentRoom.Name });
         chatClient.SetOnlineStatus(ChatUserStatus.Offline);
+        DisconnectFromServer(); // disconnect from Photon Chat
+        PhotonNetwork.LeaveRoom(); // disconnect from Photon PUN
+        PhotonNetwork.Disconnect();
     }
+
 
     public void DebugReturn(DebugLevel level, string message)
     {
@@ -97,7 +135,11 @@ public class ChatManager : MonoBehaviour, IChatClientListener
 
     public void OnDisconnected()
     {
-        
+        Debug.Log("ON Disconnect room");
+        Debug.Log("going to MAIN");
+        menuManager.GoToMainMenu();
+
+
     }
 
     public void OnConnected()
@@ -146,6 +188,7 @@ public class ChatManager : MonoBehaviour, IChatClientListener
 
     public void OnUserUnsubscribed(string channel, string user)
     {
-        
+        Debug.Log("ON unsubscribed room");
+
     }
 }
