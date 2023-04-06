@@ -183,8 +183,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "\u200B"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 4fee17704173248768845c0218bf219f, type: 2}
+  m_sharedMaterial: {fileID: 3749300176243364882, guid: 4fee17704173248768845c0218bf219f, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -208,15 +208,15 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 40
-  m_fontSizeBase: 40
+  m_fontSize: 49
+  m_fontSizeBase: 49
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
-  m_fontStyle: 0
-  m_HorizontalAlignment: 1
-  m_VerticalAlignment: 256
+  m_fontStyle: 16
+  m_HorizontalAlignment: 2
+  m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_wordSpacing: 0
@@ -1010,6 +1010,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 7966060023010933482, guid: 05e8fad234f638f4a9802038436d797e, type: 3}
   m_PrefabInstance: {fileID: 424431434}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &424431436 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7966060023010933483, guid: 05e8fad234f638f4a9802038436d797e, type: 3}
+  m_PrefabInstance: {fileID: 424431434}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &427080894
 GameObject:
   m_ObjectHideFlags: 0
@@ -4069,6 +4080,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerEnteredRoom: 0
+  playerLeftRoom: 0
   roomNameInputField: {fileID: 1492413825}
   userNameInput: {fileID: 1146425486}
   errorText: {fileID: 1323159023}
@@ -4079,7 +4091,7 @@ MonoBehaviour:
   PlayerListItemPrefab: {fileID: 385862905789652110, guid: 444e77e98e65e48a8a2ce29862884f2f, type: 3}
   startGameButton: {fileID: 579343268}
   CreateRoomBtn: {fileID: 1924374982}
-  CreateRoomBtn2: {fileID: 0}
+  CreateRoomBtn2: {fileID: 424431436}
   JoinRoomBtn: {fileID: 1145430755}
 --- !u!1 &1536431111
 GameObject:

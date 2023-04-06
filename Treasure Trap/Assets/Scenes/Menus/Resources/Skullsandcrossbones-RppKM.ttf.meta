@@ -1,0 +1,22 @@
+fileFormatVersion: 2
+guid: 46407eb17308745e6b99c1c70b69df07
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontNames:
+  - skullsandcrossbones
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: 813c57aa318ca9e4298b458687ede199, type: 3}
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  useLegacyBoundsCalculation: 0
+  shouldRoundAdvanceValue: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
