@@ -149,16 +149,16 @@ public class ConnectServer : MonoBehaviourPunCallbacks
 
     public override void OnCreateRoomFailed(short returnCode, string message)
     {
+
         errorText.text = "Room Creation Failed: " + message;
-        Debug.LogError("Room Creation Failed: " + message);
         MenuManager.Instance.OpenMenu("error");
     }
 
     public override void OnJoinRoomFailed(short returnCode, string message)
     {
         // Get the error message
-        string errorMessage = message;
-        
+        string errorMessage = "Room is full";
+         errorText.text = errorMessage;
         MenuManager.Instance.OpenMenu("error");
     }
 
