@@ -4628,7 +4628,7 @@ MonoBehaviour:
   roomNameText: {fileID: 971418828}
   roomListContent: {fileID: 1966242681}
   roomListItemPrefab: {fileID: 5799313597591310585, guid: 45a062dd095814717bcafc65e6b6eb9a, type: 3}
-  playerListContent: {fileID: 7143311941639495114, guid: 45a062dd095814717bcafc65e6b6eb9a, type: 3}
+  playerListContent: {fileID: 602539506}
   PlayerListItemPrefab: {fileID: 385862905789652110, guid: 444e77e98e65e48a8a2ce29862884f2f, type: 3}
   startGameButton: {fileID: 579343268}
   CreateRoomBtn: {fileID: 1924374982}

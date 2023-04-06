@@ -102,8 +102,8 @@ public class ConnectServer : MonoBehaviourPunCallbacks
         //only 2 players can connect
         roomOptions.MaxPlayers = 2;
         PhotonNetwork.CreateRoom(roomNameInputField.text, roomOptions);
+		roomNameInputField.text = "";
         MenuManager.Instance.OpenMenu("loading");
-        roomNameInputField.text = "";
     }
 
     public override void OnJoinedRoom()
