@@ -17,6 +17,7 @@ public class ConnectServer : MonoBehaviourPunCallbacks
     [SerializeField] TMP_InputField roomNameInputField;
     [SerializeField] TMP_InputField userNameInput;
     [SerializeField] TMP_Text errorText;
+	[SerializeField] TMP_Text errorText2;
     [SerializeField] TMP_Text roomNameText;
     [SerializeField] Transform roomListContent;
     [SerializeField] GameObject roomListItemPrefab;
@@ -158,7 +159,7 @@ public class ConnectServer : MonoBehaviourPunCallbacks
     {
         // Get the error message
         string errorMessage = "Room is full";
-         errorText.text = errorMessage;
+         errorText2.text = errorMessage;
         MenuManager.Instance.OpenMenu("error2");
     }
 

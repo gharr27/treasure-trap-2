@@ -5390,6 +5390,7 @@ MonoBehaviour:
   roomNameInputField: {fileID: 1492413825}
   userNameInput: {fileID: 1146425486}
   errorText: {fileID: 1323159023}
+  errorText2: {fileID: 628381794}
   roomNameText: {fileID: 971418828}
   roomListContent: {fileID: 1966242681}
   roomListItemPrefab: {fileID: 5799313597591310585, guid: 45a062dd095814717bcafc65e6b6eb9a, type: 3}
