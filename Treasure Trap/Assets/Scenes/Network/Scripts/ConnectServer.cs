@@ -22,8 +22,10 @@ public class ConnectServer : MonoBehaviourPunCallbacks
     [SerializeField] GameObject roomListItemPrefab;
     [SerializeField] Transform playerListContent;
     [SerializeField] GameObject PlayerListItemPrefab;
-    // [SerializeField] GameObject startGameButton;
-    // [SerializeField] GameObject CreateRoom;
+	private List<GameObject> roomListItems = new List<GameObject>();
+	
+	// List<RoomListItem> roomListItems = new List<RoomListItem>();
+
 
     RoomOptions roomOptions = new RoomOptions();
     public Button startGameButton;
@@ -220,28 +222,65 @@ public class ConnectServer : MonoBehaviourPunCallbacks
             PhotonNetwork.Disconnect();
         }
     }
-    public override void OnRoomListUpdate(List<RoomInfo> roomList)
-    {
-        // // clear list every time we update
-        foreach(Transform trans in roomListContent)
-        {
-            Destroy(trans.gameObject);
-        }
 
-		// for (int i = roomListContent.childCount - 1; i >= 0; i--)
-		// {
-		// 	Destroy(roomListContent.GetChild(i).gameObject);
-		// }
+    // public override void OnRoomListUpdate(List<RoomInfo> roomList)
+    // {
+    //     // // clear list every time we update
+    //     foreach(Transform trans in roomListContent)
+    //     {
+    //         Destroy(trans.gameObject);
+    //     }
 
-        for(int i = 0; i < roomList.Count; i++)
-        {
-            Debug.Log("Room updated");
-			Debug.Log(roomList[i] + "this is a room");
-            if(roomList[i].RemovedFromList)
-                continue;
-            Instantiate(roomListItemPrefab, roomListContent).GetComponent<RoomListItem>().SetUp(roomList[i]);
-        }
-    }
+    //     for(int i = 0; i < roomList.Count; i++)
+    //     {
+    //         Debug.Log("Room updated");
+	// 		Debug.Log(roomList[i] + "this is a room");
+    //         if(roomList[i].RemovedFromList)
+    //             continue;
+    //         Instantiate(roomListItemPrefab, roomListContent).GetComponent<RoomListItem>().SetUp(roomList[i]);
+    //     }
+
+    // }
+
+	public override void OnRoomListUpdate(List<RoomInfo> roomList)
+	{
+		foreach (RoomInfo room in roomList)
+		{
+			if (room.RemovedFromList)
+			{
+				// Remove the room from the room list
+				Debug.Log("removing from list");
+				GameObject roomItem = roomListItems.Find(item => item.GetComponent<RoomListItem>().info.Name == room.Name);
+				if (roomItem != null)
+				{
+					roomListItems.Remove(roomItem);
+					Debug.Log("destroying room");
+					Destroy(roomItem);
+				}
+			}
+			else
+			{
+				// Update or add the room to the room list
+				GameObject roomItem = roomListItems.Find(item => item.GetComponent<RoomListItem>().info.Name == room.Name);
+				if (roomItem != null)
+				{
+					Debug.Log("update room");
+					// Update the existing room item
+					roomItem.GetComponent<RoomListItem>().SetUp(room);
+				}
+				else
+				{
+					// Instantiate a new room item prefab
+					roomItem = Instantiate(roomListItemPrefab, roomListContent);
+					Debug.Log("adding room");
+					roomListItems.Add(roomItem);
+					roomItem.GetComponent<RoomListItem>().SetUp(room);
+				}
+			}
+		}
+	}
+
+
     public void UpdatePlayerList()
     {
         // Debug.Log("UPDATING current room");
