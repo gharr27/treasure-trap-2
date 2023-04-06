@@ -151,15 +151,14 @@ public class ConnectServer : MonoBehaviourPunCallbacks
     public override void OnCreateRoomFailed(short returnCode, string message)
     {
 
-        errorText.text = "Room Creation Failed: " + message;
+        errorText.text = "Room Creation Failed: a game with the specified ID already exists";
         MenuManager.Instance.OpenMenu("error");
     }
 
     public override void OnJoinRoomFailed(short returnCode, string message)
     {
         // Get the error message
-        string errorMessage = "Room is full";
-         errorText2.text = errorMessage;
+        errorText2.text = "Joining Room Failed: room is already full";;
         MenuManager.Instance.OpenMenu("error2");
     }
 
