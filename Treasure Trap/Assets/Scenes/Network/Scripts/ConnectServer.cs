@@ -159,7 +159,7 @@ public class ConnectServer : MonoBehaviourPunCallbacks
         // Get the error message
         string errorMessage = "Room is full";
          errorText.text = errorMessage;
-        MenuManager.Instance.OpenMenu("error");
+        MenuManager.Instance.OpenMenu("error2");
     }
 
 
