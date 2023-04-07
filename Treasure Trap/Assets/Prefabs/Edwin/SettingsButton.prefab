@@ -383,7 +383,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mySounds: {fileID: 7607089531040345375}
   hoverSound: {fileID: 8300000, guid: 5f711984629370042b008195272dc735, type: 3}
-  clickSound: {fileID: 8300000, guid: 0eb12caaea0b80241854288c2c2662a8, type: 3}
+  clickSound: {fileID: 8300000, guid: df60afcb0e05389419ae1af58f1e93ba, type: 3}
 --- !u!114 &7607089531040345371
 MonoBehaviour:
   m_ObjectHideFlags: 0
