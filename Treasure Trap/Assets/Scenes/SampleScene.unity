@@ -1757,6 +1757,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   msgInput: {fileID: 2007893994}
   msgArea: {fileID: 342815583}
+  userName1: {fileID: 1317110607}
+  userName2: {fileID: 530874369}
 --- !u!4 &1283863798
 Transform:
   m_ObjectHideFlags: 0
