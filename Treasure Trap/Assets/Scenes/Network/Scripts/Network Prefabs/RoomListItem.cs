@@ -14,12 +14,15 @@ public class RoomListItem : MonoBehaviour
 
 	public void SetUp(RoomInfo _info)
 	{
+		Debug.Log(_info + " Input room info");
 		info = _info;
 		text.text = _info.Name;
 	}
 
 	public void OnClick()
 	{
+	
 		ConnectServer.Instance.JoinRoom(info);
+		
 	}
 }

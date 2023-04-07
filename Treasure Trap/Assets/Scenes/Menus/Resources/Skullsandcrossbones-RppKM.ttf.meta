@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 813c57aa318ca9e4298b458687ede199
+guid: 46407eb17308745e6b99c1c70b69df07
 TrueTypeFontImporter:
   externalObjects: {}
   serializedVersion: 4
@@ -10,7 +10,8 @@ TrueTypeFontImporter:
   includeFontData: 1
   fontNames:
   - skullsandcrossbones
-  fallbackFontReferences: []
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: 813c57aa318ca9e4298b458687ede199, type: 3}
   customCharacters: 
   fontRenderingMode: 0
   ascentCalculationMode: 1

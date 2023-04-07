@@ -15,7 +15,7 @@ MonoBehaviour:
   AppSettings:
     AppIdRealtime: 00c230af-32b0-42f5-9c76-630982711d48
     AppIdFusion: 
-    AppIdChat: 
+    AppIdChat: 57720abc-f399-4d28-9ff2-dc4c0f3b6a95
     AppIdVoice: 
     AppVersion: 
     UseNameServer: 1
@@ -28,7 +28,7 @@ MonoBehaviour:
     AuthMode: 0
     EnableLobbyStatistics: 0
     NetworkLogging: 1
-  DevRegion: 
+  DevRegion: us
   PunLogging: 0
   EnableSupportLogger: 0
   RunInBackground: 1
@@ -39,6 +39,15 @@ MonoBehaviour:
   - DestroySpaceship
   - Fire
   - RespawnSpaceship
+  - 
+  - MakeMove
+  - Move
+  - NetworkMakeMove
+  - UpdateTurn
+  - SetPlayers
+  - AddTilePiece
+  - AddToGamePieces
+  - IncrementTilesPlaced
   DisableAutoOpenWizard: 1
   ShowSettings: 1
-  DevRegionSetOnce: 0
+  DevRegionSetOnce: 1

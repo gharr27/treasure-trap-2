@@ -1,3 +1,4 @@
+using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,10 +6,14 @@ using UnityEngine;
 public class PlayerScript : MonoBehaviour {
 
     public GameObject[] Tiles;
-    public bool isWhite;
+    public string color;
+    public bool isNetworkGame = false;
+    public bool isTurn;
 
     GameManager gameManager;
     GameObject gameController;
+
+    PhotonView photonView;
 
     GameObject tile = null;
     Vector3 pos = Vector3.zero;
@@ -19,6 +24,7 @@ public class PlayerScript : MonoBehaviour {
     bool isFirstMove = true;
     bool isPlaying = false;
     bool canPlace = true;
+    bool isWhite;
 
     int queenCount = 1;
     int antCount = 3;
@@ -26,10 +32,13 @@ public class PlayerScript : MonoBehaviour {
     int beetleCount = 2;
     int spiderCount = 2;
 
+
     // Start is called before the first frame update
     void Start() {
         gameController = GameObject.FindWithTag("GameController");
         gameManager = gameController.GetComponent(typeof(GameManager)) as GameManager;
+
+        PhotonView photonView = this.GetComponent<PhotonView>();
     }
 
     void Update() {
@@ -79,29 +88,42 @@ public class PlayerScript : MonoBehaviour {
         }
     }
 
+    [PunRPC]
     public IEnumerator Move(bool isPlaying) {
-        this.isPlaying = isPlaying;
+        if (isTurn) {
+            Debug.Log(isWhite);
 
-        Debug.Log("Waiting For Tile Select");
-        yield return new WaitWhile(IsTileSelected);
-        Debug.Log("Tile Selected");
+            this.isPlaying = isPlaying;
+            gameManager.isPlaying = isPlaying;
 
-        if (!isFirstMove || gameManager.GetTurn() == 1) {
-            gameManager.SetMoveGrid(tile, isMove);
+            Debug.Log("Waiting For Tile Select");
+            yield return new WaitWhile(IsTileSelected);
+            Debug.Log("Tile Selected");
+
+            if (!isFirstMove || gameManager.GetTurn() == 1) {
+                gameManager.SetMoveGrid(tile, isMove);
+            }
+            else {
+                isPosSelected = true;
+                isFirstMove = false;
+            }
+
+            Debug.Log("Waiting for Pos Select");
+            yield return new WaitWhile(IsPosSelected);
+            Debug.Log("Pos Selected");
+
+            gameManager.NetworkMakeMove(tile, pos, isMove);
+            isTileSelected = false;
+            isPosSelected = false;
+            this.isPlaying = false;
+            gameManager.isPlaying = isPlaying;
         }
-        else {
-            isPosSelected = true;
-            isFirstMove = false;
-        }
 
-        Debug.Log("Waiting for Pos Select");
-        yield return new WaitWhile(IsPosSelected);
-        Debug.Log("Pos Selected");
+    }
 
+    [PunRPC]
+    private void MakeMove(GameObject tile, Vector3 pos, bool isMove) {
         gameManager.MakeMove(tile, pos, isMove);
-        isTileSelected = false;
-        isPosSelected = false;
-        this.isPlaying = false;
     }
 
     bool IsTileSelected() {
