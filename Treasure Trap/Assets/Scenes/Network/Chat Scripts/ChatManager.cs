@@ -13,6 +13,8 @@ public class ChatManager : MonoBehaviour, IChatClientListener
     private ChatClient chatClient;
     public TMP_InputField msgInput;
     public TMP_Text msgArea;
+    public TMP_Text userName1;
+    public TMP_Text userName2;
     MenusManager menuManager;
     GameObject menuManagerObject;
 
@@ -40,6 +42,16 @@ public class ChatManager : MonoBehaviour, IChatClientListener
                 SendMsg();
             }
         });
+
+        Photon.Realtime.Player[] photonPlayers = PhotonNetwork.PlayerList;
+
+        if (photonPlayers.Length >= 2)
+        {
+            userName1.text = photonPlayers[0].NickName;
+            userName2.text = photonPlayers[1].NickName;
+        }
+
+        // userName1.text = PhotonNetwork.NickName;
 
     }
 
