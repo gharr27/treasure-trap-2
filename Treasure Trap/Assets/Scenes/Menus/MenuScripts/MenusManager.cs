@@ -77,6 +77,7 @@ public class MenusManager : MonoBehaviour
     public void ExitGame()
     {
         Debug.Log("Your Application is closed");
+        PlayerPrefs.DeleteAll();
         Application.Quit();
     }
 
