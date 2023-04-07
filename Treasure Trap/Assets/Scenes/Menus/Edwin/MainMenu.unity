@@ -369,7 +369,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mySounds: {fileID: 49921472}
   hoverSound: {fileID: 8300000, guid: 5f711984629370042b008195272dc735, type: 3}
-  clickSound: {fileID: 8300000, guid: 0eb12caaea0b80241854288c2c2662a8, type: 3}
+  clickSound: {fileID: 8300000, guid: df60afcb0e05389419ae1af58f1e93ba, type: 3}
 --- !u!82 &49921472
 AudioSource:
   m_ObjectHideFlags: 0
@@ -891,7 +891,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mySounds: {fileID: 133389620}
   hoverSound: {fileID: 8300000, guid: 5f711984629370042b008195272dc735, type: 3}
-  clickSound: {fileID: 8300000, guid: 0eb12caaea0b80241854288c2c2662a8, type: 3}
+  clickSound: {fileID: 8300000, guid: df60afcb0e05389419ae1af58f1e93ba, type: 3}
 --- !u!82 &133389620
 AudioSource:
   m_ObjectHideFlags: 0
@@ -1184,7 +1184,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mySounds: {fileID: 141569591}
   hoverSound: {fileID: 8300000, guid: 5f711984629370042b008195272dc735, type: 3}
-  clickSound: {fileID: 8300000, guid: 0eb12caaea0b80241854288c2c2662a8, type: 3}
+  clickSound: {fileID: 8300000, guid: df60afcb0e05389419ae1af58f1e93ba, type: 3}
 --- !u!82 &141569591
 AudioSource:
   m_ObjectHideFlags: 0
@@ -1612,7 +1612,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mySounds: {fileID: 214938021}
   hoverSound: {fileID: 8300000, guid: 5f711984629370042b008195272dc735, type: 3}
-  clickSound: {fileID: 8300000, guid: 0eb12caaea0b80241854288c2c2662a8, type: 3}
+  clickSound: {fileID: 8300000, guid: df60afcb0e05389419ae1af58f1e93ba, type: 3}
 --- !u!82 &214938021
 AudioSource:
   m_ObjectHideFlags: 0
@@ -2107,7 +2107,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mySounds: {fileID: 352923538}
   hoverSound: {fileID: 8300000, guid: 5f711984629370042b008195272dc735, type: 3}
-  clickSound: {fileID: 8300000, guid: 0eb12caaea0b80241854288c2c2662a8, type: 3}
+  clickSound: {fileID: 8300000, guid: df60afcb0e05389419ae1af58f1e93ba, type: 3}
 --- !u!82 &352923538
 AudioSource:
   m_ObjectHideFlags: 0
@@ -2520,7 +2520,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mySounds: {fileID: 455051250}
   hoverSound: {fileID: 8300000, guid: 5f711984629370042b008195272dc735, type: 3}
-  clickSound: {fileID: 8300000, guid: 0eb12caaea0b80241854288c2c2662a8, type: 3}
+  clickSound: {fileID: 8300000, guid: df60afcb0e05389419ae1af58f1e93ba, type: 3}
 --- !u!82 &455051250
 AudioSource:
   m_ObjectHideFlags: 0
@@ -4362,7 +4362,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mySounds: {fileID: 1171912154}
   hoverSound: {fileID: 8300000, guid: 5f711984629370042b008195272dc735, type: 3}
-  clickSound: {fileID: 8300000, guid: 0eb12caaea0b80241854288c2c2662a8, type: 3}
+  clickSound: {fileID: 8300000, guid: df60afcb0e05389419ae1af58f1e93ba, type: 3}
 --- !u!82 &1171912154
 AudioSource:
   m_ObjectHideFlags: 0
@@ -5107,7 +5107,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mySounds: {fileID: 1569664800}
   hoverSound: {fileID: 8300000, guid: 5f711984629370042b008195272dc735, type: 3}
-  clickSound: {fileID: 8300000, guid: 0eb12caaea0b80241854288c2c2662a8, type: 3}
+  clickSound: {fileID: 8300000, guid: df60afcb0e05389419ae1af58f1e93ba, type: 3}
 --- !u!82 &1569664800
 AudioSource:
   m_ObjectHideFlags: 0
@@ -6578,6 +6578,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3556278152298043814, guid: 086af8f5e437e8045991d96e2e5b320a, type: 3}
+      propertyPath: clickSound
+      value: 
+      objectReference: {fileID: 8300000, guid: df60afcb0e05389419ae1af58f1e93ba, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 086af8f5e437e8045991d96e2e5b320a, type: 3}
 --- !u!1001 &3755767681065167106
@@ -6692,6 +6696,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: HelpButton
       objectReference: {fileID: 0}
+    - target: {fileID: 6419155460372227293, guid: d694a39e47a931841b6800d0ecab9103, type: 3}
+      propertyPath: clickSound
+      value: 
+      objectReference: {fileID: 8300000, guid: df60afcb0e05389419ae1af58f1e93ba, type: 3}
     - target: {fileID: 6419155460372227295, guid: d694a39e47a931841b6800d0ecab9103, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -6877,5 +6885,9 @@ PrefabInstance:
       propertyPath: square
       value: 
       objectReference: {fileID: 1525361755}
+    - target: {fileID: 7607089531040345372, guid: 0c5ae13e6e2b2bb4b9519198e6396225, type: 3}
+      propertyPath: clickSound
+      value: 
+      objectReference: {fileID: 8300000, guid: df60afcb0e05389419ae1af58f1e93ba, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0c5ae13e6e2b2bb4b9519198e6396225, type: 3}
