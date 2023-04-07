@@ -95,7 +95,7 @@ public class GameManagerAI : MonoBehaviour {
                 if (turn == 0) {
                     //White Move
                     Debug.Log("White Move");
-                    playerWhite.Move(gameGrid, round, true);
+                    //playerWhite.Move(gameGrid, round, true);
                 }
                 else {
                     //Black Move
