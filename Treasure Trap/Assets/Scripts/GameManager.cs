@@ -54,17 +54,13 @@ public class GameManager : MonoBehaviour {
     bool isQueen2OnBoard = false;
     bool isP1;
 
-<<<<<<< Updated upstream
-    PlayerScript p1;
-    PlayerScript p2;
-=======
     public bool isNetworkGame = false;
-    public bool isAIGame = false;
+    public bool isAIGame;
 
     public PlayerScript p1;
     public PlayerScript p2;
     public AI ai;
->>>>>>> Stashed changes
+
     PlayerScript activePlayer;
     GameObject playerObject1;
     GameObject playerObject2;
@@ -85,8 +81,6 @@ public class GameManager : MonoBehaviour {
 
     // Start is called before the first frame update
     void Start() {
-
-
         selectionGrids = new Stack<GameObject>();
         gamePieces = new GameObject[PIECE_COUNT];
 
@@ -95,6 +89,7 @@ public class GameManager : MonoBehaviour {
 
         //Network Game
         if (isNetworkGame) {
+            Debug.Log("Network Game");
             playerObject1 = PhotonNetwork.Instantiate(Players[0].name, Vector3.zero, Quaternion.identity);
             playerObject2 = PhotonNetwork.Instantiate(Players[1].name, Vector3.zero, Quaternion.identity);
             photonView = GetComponent<PhotonView>();
@@ -120,41 +115,29 @@ public class GameManager : MonoBehaviour {
             p1.isTurn = true;
             p2.isTurn = false;
         }
-        //Single Player Game
-        else if (isAIGame) {
+        else if (isAIGame) { //Single Player Game
+            Debug.Log("AI Game");
             playerObject1 = Instantiate(Players[0], Vector3.zero, Quaternion.identity);
             playerObject2 = Instantiate(AI, Vector3.zero, Quaternion.identity);
 
             p1 = playerObject1.GetComponent(typeof(PlayerScript)) as PlayerScript;
             ai = playerObject2.GetComponent(typeof(AI)) as AI;
+            p1.isTurn = true;
         }
-        //One Machine PVP Game
-        else {
+        else {  //One Machine PVP Game
+            Debug.Log("PVP Game");
             playerObject1 = Instantiate(Players[0], Vector3.zero, Quaternion.identity);
             playerObject2 = Instantiate(Players[1], Vector3.zero, Quaternion.identity);
 
-<<<<<<< Updated upstream
-        }
 
-        p1 = playerObject1.GetComponent(typeof(PlayerScript)) as PlayerScript;
-        p1.color = "white";
-
-        p2 = playerObject2.GetComponent(typeof(PlayerScript)) as PlayerScript;
-        p2.color = "black";
-
-        activePlayer = p1;
-    }
-
-
-    public void UpdateActivePlayer() {
-=======
             p1 = playerObject1.GetComponent(typeof(PlayerScript)) as PlayerScript;
             p2 = playerObject2.GetComponent(typeof(PlayerScript)) as PlayerScript;
-        } 
+
+            activePlayer = p1;
+        }
     }
 
-    private void UpdateActivePlayer() {
->>>>>>> Stashed changes
+    public void UpdateActivePlayer() {
         activePlayer = activePlayer == p1 ? p2 : p1;
         UpdateTurn();
     }
@@ -170,33 +153,6 @@ public class GameManager : MonoBehaviour {
     }
     // Update is called once per frame
     void Update() {
-<<<<<<< Updated upstream
-
-        if (!isWin) {
-            if (!isPlaying) {
-
-                if (activePlayer.color == "white" && isP1) {
-                    isPlaying = true;
-                    //White Move
-                    Debug.Log("White Move");
-                    StartCoroutine(p1.Move(true));
-                }
-                else if (activePlayer.color == "black" && !isP1) {
-                    isPlaying = true;
-                    //Black Move
-                    Debug.Log("Black Move");
-                    Debug.Log(round);
-                    StartCoroutine(p2.Move(true));
-                }
-
-            }
-        }
-        else {
-            if (isWhiteWin) {
-                Debug.Log("White Wins!");
-                menuManager.GoToWinnerScreen();
-
-=======
         //Network Game
         if (isNetworkGame) {
             if (!isWin) {
@@ -214,7 +170,6 @@ public class GameManager : MonoBehaviour {
                         StartCoroutine(p2.Move(true));
                     }
                 }
->>>>>>> Stashed changes
             }
             else {
                 if (isWhiteWin) {
@@ -265,7 +220,6 @@ public class GameManager : MonoBehaviour {
                     menuManager.GoToLoserScreen();
                 }
             }
-
 
             if (Input.GetKeyDown(KeyCode.Space)) {
                 Debug.Log(gameGrid.Count);
@@ -403,6 +357,15 @@ public class GameManager : MonoBehaviour {
         ClearMoveGrid();
         CheckForWin();
 
+        if (p1.isTurn) {
+            p1.isTurn = false;
+            turn = 1;
+        }
+        else {
+            p1.isTurn = true;
+            turn = 0;
+        }
+
         isPlaying = false;
     }
 
@@ -530,7 +493,7 @@ public class GameManager : MonoBehaviour {
     }
 
     // Checks the surrounding of the selected tile and if the position is filled then it adds a true to a list at that postion.
-    Stack<Vector3> ValidateMoves(GameObject tile) {
+    public Stack<Vector3> ValidateMoves(GameObject tile) {
         TileScript tileScript = tile.GetComponent(typeof(TileScript)) as TileScript;
         Stack<Vector3> validMoves = new Stack<Vector3>();
         Vector3 pos = tile.transform.position;

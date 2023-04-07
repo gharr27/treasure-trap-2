@@ -52,30 +52,33 @@ public class PlayerScript : MonoBehaviour {
         if (isPlaying) {
             //Selected Queen
             if (Input.GetKeyDown(KeyCode.Alpha1) && queenCount > 0 && gameManager.GetRound() != 1) {
-                photonView.RPC("SetGameTile", RpcTarget.All, 0);
+                //photonView.RPC("SetGameTile", RpcTarget.All, 0);
+                SetGameTile(0);
             }
             //Selected Ant
             else if (Input.GetKeyDown(KeyCode.Alpha2) && antCount > 0 && canPlace) {
-                photonView.RPC("SetGameTile", RpcTarget.All, 1);
+                //photonView.RPC("SetGameTile", RpcTarget.All, 1);
+                SetGameTile(1);
             }
             //Selected Grasshopper
             else if (Input.GetKeyDown(KeyCode.Alpha3) && grasshopperCount > 0 && canPlace) {
-                photonView.RPC("SetGameTile", RpcTarget.All, 2);
+                //photonView.RPC("SetGameTile", RpcTarget.All, 2);
+                SetGameTile(2);
             }
             //Selected Beetle
             else if (Input.GetKeyDown(KeyCode.Alpha4) && beetleCount > 0 && canPlace) {
-                photonView.RPC("SetGameTile", RpcTarget.All, 3);
+                //photonView.RPC("SetGameTile", RpcTarget.All, 3);
+                SetGameTile(3);
             }
             //Selected Spider
             else if (Input.GetKeyDown(KeyCode.Alpha5) && spiderCount > 0 && canPlace) {
-                photonView.RPC("SetGameTile", RpcTarget.All, 4);
+                //photonView.RPC("SetGameTile", RpcTarget.All, 4);
+                SetGameTile(4);
             }
         }
     }
 
     [PunRPC]
-<<<<<<< Updated upstream
-=======
     void SetGameTile(int index) {
         tile = Tiles[index];
         isMove = false;
@@ -100,13 +103,12 @@ public class PlayerScript : MonoBehaviour {
         }
     }
 
->>>>>>> Stashed changes
     public IEnumerator Move(bool isPlaying) {
         if (isTurn) {
             Debug.Log(isWhite);
 
             this.isPlaying = isPlaying;
-            gameManager.isPlaying = isPlaying;
+            //gameManager.isPlaying = isPlaying;
 
             Debug.Log("Waiting For Tile Select");
             yield return new WaitWhile(IsTileSelected);
@@ -124,11 +126,12 @@ public class PlayerScript : MonoBehaviour {
             yield return new WaitWhile(IsPosSelected);
             Debug.Log("Pos Selected");
 
-            gameManager.NetworkMakeMove(tile, pos, isMove);
+            //gameManager.NetWorkMakeMove(tile, pos, isMove);
+            gameManager.MakeMove(tile, pos, isMove);
             isTileSelected = false;
             isPosSelected = false;
             this.isPlaying = false;
-            gameManager.isPlaying = isPlaying;
+            //gameManager.isPlaying = isPlaying;
         }
 
     }
