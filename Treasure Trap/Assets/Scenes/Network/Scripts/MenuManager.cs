@@ -48,4 +48,8 @@ public class MenuManager : MonoBehaviour
 	{
 		menu.Close();
 	}
+
+	public void OpenButtons(GameObject menu){
+		menu.SetActive(true);
+	}
 }

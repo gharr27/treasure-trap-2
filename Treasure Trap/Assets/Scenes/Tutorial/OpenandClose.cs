@@ -29,6 +29,15 @@ public class OpenandClose : MonoBehaviour
         }
     }
 
+    public void OpenRules()
+    {
+        RulePages[0].SetActive(true);
+        // RulePages[1].SetActive(true);
+        // RulePages[2].SetActive(true);
+        // RulePages[3].SetActive(true);
+        // RulePages[4].SetActive(true);
+    }
+
     public void OpenRule1()
     {
         RulePages[0].SetActive(true);
