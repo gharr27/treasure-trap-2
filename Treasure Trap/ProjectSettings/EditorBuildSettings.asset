@@ -18,6 +18,9 @@ EditorBuildSettings:
     path: Assets/Scenes/Network/Loading.unity
     guid: 8dff7a852e5bb4b92b9a4d34cac69dd5
   - enabled: 1
+    path: Assets/Scenes/Tutorial/Rules(1).unity
+    guid: 6e8c9b248e1b909408931a4cefe7e003
+  - enabled: 1
     path: Assets/Scenes/Network/Game.unity
     guid: b2c63fa56d0c24936b433a758a83f4d5
   - enabled: 0

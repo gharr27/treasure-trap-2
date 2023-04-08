@@ -141,7 +141,7 @@ public class OpenandClose : MonoBehaviour
         RulePages[3].SetActive(false);
         RulePages[4].SetActive(false);
         RulePages[5].SetActive(false);
-        RulePages[5].SetActive(true);
+        RulePages[6].SetActive(true);
     }
  
 }
