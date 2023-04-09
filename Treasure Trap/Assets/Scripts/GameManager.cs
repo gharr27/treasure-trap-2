@@ -2,8 +2,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
+using TMPro;
 
 public class GameManager : MonoBehaviour {
+
+    public TextMeshProUGUI p1QueenCount;
+    public TextMeshProUGUI p1AntCount;
+    public TextMeshProUGUI p1GrasshopperCount;
+    public TextMeshProUGUI p1BeetleCount;
+    public TextMeshProUGUI p1SpiderCount;
+
+    public TextMeshProUGUI p2QueenCount;
+    public TextMeshProUGUI p2AntCount;
+    public TextMeshProUGUI p2GrasshopperCount;
+    public TextMeshProUGUI p2BeetleCount;
+    public TextMeshProUGUI p2SpiderCount;
 
     public class GameGridCell {
         public bool isFilled;
@@ -182,6 +195,18 @@ public class GameManager : MonoBehaviour {
         //     //instance of disconnect
         //     menuManager.GoToMainMenu();
         // }
+
+        p1QueenCount.text = "Queen" + p1.queenCount.ToString();
+        p1AntCount.text = "Ant" + p1.antCount.ToString();
+        p1GrasshopperCount.text = "Grass" + p1.grasshopperCount.ToString();
+        p1BeetleCount.text = "Beetle" + p1.beetleCount.ToString();
+        p1SpiderCount.text = "Spider" + p1.spiderCount.ToString();
+
+        p2QueenCount.text = "Queen" + p2.queenCount.ToString();
+        p2AntCount.text = "Ant" + p2.antCount.ToString();
+        p2GrasshopperCount.text = "grass" + p2.grasshopperCount.ToString();
+        p2BeetleCount.text = "Beetle" + p2.beetleCount.ToString();
+        p2SpiderCount.text = "Spider" + p2.spiderCount.ToString();
     }
 
     public void Move(GameObject tile, Vector3 pos, bool isMove) {

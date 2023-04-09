@@ -26,11 +26,11 @@ public class PlayerScript : MonoBehaviour {
     bool canPlace = true;
     bool isWhite;
 
-    int queenCount = 1;
-    int antCount = 3;
-    int grasshopperCount = 3;
-    int beetleCount = 2;
-    int spiderCount = 2;
+    public int queenCount = 1;
+    public int antCount = 3;
+    public int grasshopperCount = 3;
+    public int beetleCount = 2;
+    public int spiderCount = 2;
 
 
     // Start is called before the first frame update
