@@ -1,0 +1,22 @@
+fileFormatVersion: 2
+guid: 8ba203ea05a4b4d32ac81c2b7bfe399b
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontNames:
+  - Gothic Ultra Trendy
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: df02dad27ad71854ba96fc6265145435, type: 3}
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  useLegacyBoundsCalculation: 0
+  shouldRoundAdvanceValue: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

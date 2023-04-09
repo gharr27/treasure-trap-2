@@ -1,0 +1,22 @@
+fileFormatVersion: 2
+guid: 185c493884be741889c8153b761d9655
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontNames:
+  - Pirates Writers
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: a0ad8a8d8f48d9d4c85e0c836067edbb, type: 3}
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  useLegacyBoundsCalculation: 0
+  shouldRoundAdvanceValue: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
