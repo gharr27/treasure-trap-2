@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.18028334, g: 0.22571328, b: 0.3069217, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028305, g: 0.22571313, b: 0.3069213, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -527,6 +527,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 658037067}
+  - {fileID: 1601075247}
   - {fileID: 901503839}
   m_Father: {fileID: 963194228}
   m_RootOrder: 1
@@ -761,7 +762,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &901503839
 RectTransform:
   m_ObjectHideFlags: 0
@@ -775,10 +776,9 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1064129246}
-  - {fileID: 1601075247}
   - {fileID: 941466196}
   m_Father: {fileID: 467683554}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -931,7 +931,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 901503839}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -1508,7 +1508,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1601075247
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1524,13 +1524,13 @@ RectTransform:
   - {fileID: 1822126862}
   - {fileID: 342815585}
   - {fileID: 2007893993}
-  m_Father: {fileID: 901503839}
+  m_Father: {fileID: 467683554}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -522.3125, y: -713.25055}
-  m_SizeDelta: {x: 488.6106, y: 683.2772}
+  m_AnchoredPosition: {x: -30.3125, y: -224.25061}
+  m_SizeDelta: {x: -1271.3894, y: -366.72278}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1601075248
 MonoBehaviour:
@@ -2277,7 +2277,7 @@ MonoBehaviour:
   p2SpiderCount: {fileID: 1796855285}
   GridTile: {fileID: 8767865269051293877, guid: 9bb24095a22f1a1438c192d3061cf2f3, type: 3}
   Players:
-  - {fileID: 1927028709609692793, guid: 8d3205e69e1becb43aa76a2e79c42d21, type: 3}
+  - {fileID: 2492933341662750378, guid: e7108ba85b2077145a7c964ddfb9b58b, type: 3}
   - {fileID: 1451428673288182921, guid: a6da469ad0745c140bce5e92bc785f45, type: 3}
   AI: {fileID: 0}
   tilesPlaced: 0
@@ -2318,6 +2318,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 467683554}
     m_Modifications:
+    - target: {fileID: 7738052203001688308, guid: f3a72ad2300e48c44b75b8b21201fde0, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7738052204337778166, guid: f3a72ad2300e48c44b75b8b21201fde0, type: 3}
       propertyPath: m_Name
       value: EdwinGUI

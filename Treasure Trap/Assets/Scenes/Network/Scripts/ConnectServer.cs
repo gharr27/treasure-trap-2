@@ -75,7 +75,7 @@ public class ConnectServer : MonoBehaviourPunCallbacks
         }
 
         if(findRoomMenu != null && findRoomMenu.activeSelf && roomListItems.Count == 0 ){
-            Debug.Log("No one has created room");
+            // Debug.Log("No one has created room");
                 playerJoined.SetActive(true);
         }
     }
