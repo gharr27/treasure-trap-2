@@ -28,10 +28,6 @@ public class ConnectServer : MonoBehaviourPunCallbacks
     public GameObject findRoomMenu;
     public GameObject playerJoined;
 
-	
-	// List<RoomListItem> roomListItems = new List<RoomListItem>();
-
-
     RoomOptions roomOptions = new RoomOptions();
     public Button startGameButton;
     public Button CreateRoomBtn;
@@ -71,11 +67,8 @@ public class ConnectServer : MonoBehaviourPunCallbacks
         }
 
         if(playerEnteredRoom && playerLeftRoom == false){
-            // Debug.Log("someone entered");
             UpdatePlayerList();
             startGameButton.interactable = (PhotonNetwork.CurrentRoom.PlayerCount > 1);
-
-            // startGameButton.interactable = true;
         }
         else{
             startGameButton.interactable = false;
@@ -84,16 +77,7 @@ public class ConnectServer : MonoBehaviourPunCallbacks
         if(findRoomMenu != null && findRoomMenu.activeSelf && roomListItems.Count == 0 ){
             Debug.Log("No one has created room");
                 playerJoined.SetActive(true);
-            // if(scrollRect.content.rect.size == Vector2.zero){
-            //     playerJoined.SetActive(true);
-            // }
         }
-        // else if(playerEnteredRoom == true){
-        //     Debug.Log("SOMEONE has created room");
-        //     playerJoined.SetActive(false);
-        // }
-
-        // Debug.Log("refreshing page");
     }
     public override void OnConnectedToMaster()
     {
@@ -147,13 +131,7 @@ public class ConnectServer : MonoBehaviourPunCallbacks
                 .SetUp(photonPlayers[i]);
         }
 
-        //  foreach (Photon.Realtime.Player player in PhotonNetwork.CurrentRoom.Players.Values)
-        // {
-        //  Instantiate(PlayerListItemPrefab, playerListContent).GetComponent<PlayerListItem>().SetUp(player);
-        // }
-
         startGameButton.gameObject.SetActive(PhotonNetwork.IsMasterClient);
-        // startGameButton.interactable = (PhotonNetwork.CurrentRoom.PlayerCount > 1);
 		userNameInput.text = "";
     }
 
@@ -238,25 +216,6 @@ public class ConnectServer : MonoBehaviourPunCallbacks
         }
     }
 
-    // public override void OnRoomListUpdate(List<RoomInfo> roomList)
-    // {
-    //     // // clear list every time we update
-    //     foreach(Transform trans in roomListContent)
-    //     {
-    //         Destroy(trans.gameObject);
-    //     }
-
-    //     for(int i = 0; i < roomList.Count; i++)
-    //     {
-    //         Debug.Log("Room updated");
-	// 		Debug.Log(roomList[i] + "this is a room");
-    //         if(roomList[i].RemovedFromList)
-    //             continue;
-    //         Instantiate(roomListItemPrefab, roomListContent).GetComponent<RoomListItem>().SetUp(roomList[i]);
-    //     }
-
-    // }
-
 	public override void OnRoomListUpdate(List<RoomInfo> roomList)
 	{
 		foreach (RoomInfo room in roomList)
@@ -297,7 +256,6 @@ public class ConnectServer : MonoBehaviourPunCallbacks
 		}
 	}
 
-
     public void UpdatePlayerList()
     {
         // Debug.Log("UPDATING current room");
@@ -320,6 +278,16 @@ public class ConnectServer : MonoBehaviourPunCallbacks
     {
         playerEnteredRoom = true;
         Instantiate(PlayerListItemPrefab, playerListContent).GetComponent<PlayerListItem>().SetUp(newPlayer);
+    }
+
+    public void CleanInput(){
+
+        //roomNameInputField
+        roomNameInputField.text = "";
+
+        //userNameInput
+        userNameInput.text = "";
+
     }
 }
 
