@@ -9,7 +9,6 @@ using UnityEngine.UI;
 
 public class ChatManager : MonoBehaviour, IChatClientListener
 {
-    
     private ChatClient chatClient;
     public TMP_InputField msgInput;
     public TMP_Text msgArea;
