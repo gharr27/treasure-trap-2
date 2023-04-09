@@ -24,6 +24,10 @@ public class ConnectServer : MonoBehaviourPunCallbacks
     [SerializeField] Transform playerListContent;
     [SerializeField] GameObject PlayerListItemPrefab;
 	private List<GameObject> roomListItems = new List<GameObject>();
+    public ScrollRect scrollRect;
+    public GameObject findRoomMenu;
+    public GameObject playerJoined;
+
 	
 	// List<RoomListItem> roomListItems = new List<RoomListItem>();
 
@@ -77,6 +81,18 @@ public class ConnectServer : MonoBehaviourPunCallbacks
             startGameButton.interactable = false;
         }
 
+        if(findRoomMenu != null && findRoomMenu.activeSelf && roomListItems.Count == 0 ){
+            Debug.Log("No one has created room");
+                playerJoined.SetActive(true);
+            // if(scrollRect.content.rect.size == Vector2.zero){
+            //     playerJoined.SetActive(true);
+            // }
+        }
+        // else if(playerEnteredRoom == true){
+        //     Debug.Log("SOMEONE has created room");
+        //     playerJoined.SetActive(false);
+        // }
+
         // Debug.Log("refreshing page");
     }
     public override void OnConnectedToMaster()
@@ -97,7 +113,6 @@ public class ConnectServer : MonoBehaviourPunCallbacks
 
     public void CreateRoom()
     {
-
         Debug.Log("Created room");
         Debug.Log("Input room info");
         //only 2 players can connect
@@ -115,7 +130,7 @@ public class ConnectServer : MonoBehaviourPunCallbacks
         playerLeftRoom = false;
         Debug.Log("set button to false");
         Debug.Log("User name input: " + userNameInput.text);
-        PhotonNetwork.NickName = userNameInput.text + " " + Random.Range(0, 1000).ToString("0000");
+        PhotonNetwork.NickName = userNameInput.text + " " + Random.Range(0, 10).ToString("00");
         
         Photon.Realtime.Player[] photonPlayers = PhotonNetwork.PlayerList;
 
@@ -266,6 +281,7 @@ public class ConnectServer : MonoBehaviourPunCallbacks
 				{
 					Debug.Log("update room");
 					// Update the existing room item
+                    playerJoined.SetActive(false);
 					roomItem.GetComponent<RoomListItem>().SetUp(room);
 				}
 				else
@@ -273,6 +289,7 @@ public class ConnectServer : MonoBehaviourPunCallbacks
 					// Instantiate a new room item prefab
 					roomItem = Instantiate(roomListItemPrefab, roomListContent);
 					Debug.Log("adding room");
+                    playerJoined.SetActive(false);
 					roomListItems.Add(roomItem);
 					roomItem.GetComponent<RoomListItem>().SetUp(room);
 				}
