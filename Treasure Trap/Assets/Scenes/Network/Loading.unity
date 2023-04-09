@@ -1113,15 +1113,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7966060023010933482, guid: 05e8fad234f638f4a9802038436d797e, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.4296875
+      value: 0.42968747
       objectReference: {fileID: 0}
     - target: {fileID: 7966060023010933482, guid: 05e8fad234f638f4a9802038436d797e, type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.4296875
+      value: 0.42968747
       objectReference: {fileID: 0}
     - target: {fileID: 7966060023010933482, guid: 05e8fad234f638f4a9802038436d797e, type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.4296875
+      value: 0.42968747
       objectReference: {fileID: 0}
     - target: {fileID: 7966060023010933482, guid: 05e8fad234f638f4a9802038436d797e, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1153,11 +1153,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7966060023010933482, guid: 05e8fad234f638f4a9802038436d797e, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -295.87012
+      value: -295.8701
       objectReference: {fileID: 0}
     - target: {fileID: 7966060023010933482, guid: 05e8fad234f638f4a9802038436d797e, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -195.9797
+      value: -218.82584
       objectReference: {fileID: 0}
     - target: {fileID: 7966060023010933482, guid: 05e8fad234f638f4a9802038436d797e, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -1466,7 +1466,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7966060023337992593, guid: 05e8fad234f638f4a9802038436d797e, type: 3}
       propertyPath: m_text
-      value: Create Room
+      value: Host Game
       objectReference: {fileID: 0}
     - target: {fileID: 7966060023337992593, guid: 05e8fad234f638f4a9802038436d797e, type: 3}
       propertyPath: m_fontSize
@@ -3350,7 +3350,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7966060023337992593, guid: 05e8fad234f638f4a9802038436d797e, type: 3}
       propertyPath: m_text
-      value: Join Room
+      value: Join Game
       objectReference: {fileID: 0}
     - target: {fileID: 7966060023337992593, guid: 05e8fad234f638f4a9802038436d797e, type: 3}
       propertyPath: m_fontSize
@@ -4107,15 +4107,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7966060023010933482, guid: 05e8fad234f638f4a9802038436d797e, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.4296875
+      value: 0.42968747
       objectReference: {fileID: 0}
     - target: {fileID: 7966060023010933482, guid: 05e8fad234f638f4a9802038436d797e, type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.4296875
+      value: 0.42968747
       objectReference: {fileID: 0}
     - target: {fileID: 7966060023010933482, guid: 05e8fad234f638f4a9802038436d797e, type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.4296875
+      value: 0.42968747
       objectReference: {fileID: 0}
     - target: {fileID: 7966060023010933482, guid: 05e8fad234f638f4a9802038436d797e, type: 3}
       propertyPath: m_LocalPosition.x
@@ -4147,11 +4147,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7966060023010933482, guid: 05e8fad234f638f4a9802038436d797e, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -609.10077
+      value: -609.1007
       objectReference: {fileID: 0}
     - target: {fileID: 7966060023010933482, guid: 05e8fad234f638f4a9802038436d797e, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -357.27197
+      value: -357.272
       objectReference: {fileID: 0}
     - target: {fileID: 7966060023010933482, guid: 05e8fad234f638f4a9802038436d797e, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -5103,7 +5103,7 @@ RectTransform:
   m_GameObject: {fileID: 1492413823}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.0000001, y: 1.0000001, z: 1.0000001}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 758362500}
@@ -5112,7 +5112,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -295.87012, y: -142.15385}
+  m_AnchoredPosition: {x: -295.8701, y: -165}
   m_SizeDelta: {x: 257.6016, y: 46.2723}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1492413825

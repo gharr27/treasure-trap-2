@@ -48,7 +48,7 @@ public class ConnectServer : MonoBehaviourPunCallbacks
 
     void Update()
     {
-        if(string.IsNullOrEmpty(userNameInput.text))
+        if(string.IsNullOrWhiteSpace(userNameInput.text))
         {
             CreateRoomBtn.interactable = false;
             JoinRoomBtn.interactable = false;
@@ -57,8 +57,8 @@ public class ConnectServer : MonoBehaviourPunCallbacks
             CreateRoomBtn.interactable = true;
             JoinRoomBtn.interactable = true;
         }
-
-		if(string.IsNullOrEmpty(roomNameInputField.text))
+        //string.IsNullOrEmpty(roomNameInputField.text) && 
+		if(string.IsNullOrWhiteSpace(roomNameInputField.text))
         {
 			CreateRoomBtn2.interactable = false;
         }
