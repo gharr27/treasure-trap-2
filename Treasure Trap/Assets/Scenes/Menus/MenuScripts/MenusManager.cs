@@ -74,6 +74,11 @@ public class MenusManager : MonoBehaviour
         SceneManager.LoadScene("Loading");
     }
 
+    public void GoToAIGame()
+    {
+        SceneManager.LoadScene("AIGame");
+    }
+
     public void ExitGame()
     {
         Debug.Log("Your Application is closed");

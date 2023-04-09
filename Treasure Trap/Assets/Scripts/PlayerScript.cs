@@ -52,73 +52,84 @@ public class PlayerScript : MonoBehaviour {
         if (isPlaying) {
             //Selected Queen
             if (Input.GetKeyDown(KeyCode.Alpha1) && queenCount > 0 && gameManager.GetRound() != 1) {
-                tile = Tiles[0];
-                isMove = false;
-                isTileSelected = true;
-                queenCount--;
+                //photonView.RPC("SetGameTile", RpcTarget.All, 0);
+                SetGameTile(0);
             }
             //Selected Ant
             else if (Input.GetKeyDown(KeyCode.Alpha2) && antCount > 0 && canPlace) {
-                tile = Tiles[1];
-                isMove = false;
-                isTileSelected = true;
-                antCount--;
+                //photonView.RPC("SetGameTile", RpcTarget.All, 1);
+                SetGameTile(1);
             }
             //Selected Grasshopper
             else if (Input.GetKeyDown(KeyCode.Alpha3) && grasshopperCount > 0 && canPlace) {
-                tile = Tiles[2];
-                isMove = false;
-                isTileSelected = true;
-                grasshopperCount--;
+                //photonView.RPC("SetGameTile", RpcTarget.All, 2);
+                SetGameTile(2);
             }
             //Selected Beetle
             else if (Input.GetKeyDown(KeyCode.Alpha4) && beetleCount > 0 && canPlace) {
-                tile = Tiles[3];
-                isMove = false;
-                isTileSelected = true;
-                beetleCount--;
+                //photonView.RPC("SetGameTile", RpcTarget.All, 3);
+                SetGameTile(3);
             }
             //Selected Spider
             else if (Input.GetKeyDown(KeyCode.Alpha5) && spiderCount > 0 && canPlace) {
-                tile = Tiles[4];
-                isMove = false;
-                isTileSelected = true;
-                spiderCount--;
+                //photonView.RPC("SetGameTile", RpcTarget.All, 4);
+                SetGameTile(4);
             }
         }
     }
 
     [PunRPC]
+    void SetGameTile(int index) {
+        tile = Tiles[index];
+        isMove = false;
+        isTileSelected = true;
+        
+        switch(index) {
+            case 0:
+                queenCount--;
+                break;
+            case 1:
+                antCount--;
+                break;
+            case 2:
+                grasshopperCount--;
+                break;
+            case 3:
+                beetleCount--;
+                break;
+            case 4:
+                spiderCount--;
+                break;
+        }
+    }
+
     public IEnumerator Move(bool isPlaying) {
-        if (isTurn) {
-            Debug.Log(isWhite);
 
-            this.isPlaying = isPlaying;
-            gameManager.isPlaying = isPlaying;
+        this.isPlaying = isPlaying;
+        //gameManager.isPlaying = isPlaying;
 
-            Debug.Log("Waiting For Tile Select");
-            yield return new WaitWhile(IsTileSelected);
-            Debug.Log("Tile Selected");
+        Debug.Log("Waiting For Tile Select");
+        yield return new WaitWhile(IsTileSelected);
+        Debug.Log("Tile Selected");
 
-            if (!isFirstMove || gameManager.GetTurn() == 1) {
-                gameManager.SetMoveGrid(tile, isMove);
-            }
-            else {
-                isPosSelected = true;
-                isFirstMove = false;
-            }
-
-            Debug.Log("Waiting for Pos Select");
-            yield return new WaitWhile(IsPosSelected);
-            Debug.Log("Pos Selected");
-
-            gameManager.NetworkMakeMove(tile, pos, isMove);
-            isTileSelected = false;
-            isPosSelected = false;
-            this.isPlaying = false;
-            gameManager.isPlaying = isPlaying;
+        if (!isFirstMove || gameManager.GetTurn() == 1) {
+            gameManager.SetMoveGrid(tile, isMove);
+        }
+        else {
+            isPosSelected = true;
+            isFirstMove = false;
         }
 
+        Debug.Log("Waiting for Pos Select");
+        yield return new WaitWhile(IsPosSelected);
+        Debug.Log("Pos Selected");
+
+        //gameManager.NetWorkMakeMove(tile, pos, isMove);
+        gameManager.MakeMove(tile, pos, isMove);
+        isTileSelected = false;
+        isPosSelected = false;
+        this.isPlaying = false;
+        //gameManager.isPlaying = isPlaying;
     }
 
     [PunRPC]
