@@ -31,13 +31,12 @@ public class SelectionGridScript : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
-    {
+    void Update() {
         if (Input.GetMouseButtonDown(0) && isMouseOver && gameManager.GetTurn() == 0) {
-            playerWhite.SetPos(this.transform.position);
+            playerWhite.SetPos(transform.position);
         }
         else if (Input.GetMouseButtonDown(0) && isMouseOver && gameManager.GetTurn() == 1) {
-            playerBlack.SetPos(this.transform.position);
+            playerBlack.SetPos(transform.position);
         }
     }
 

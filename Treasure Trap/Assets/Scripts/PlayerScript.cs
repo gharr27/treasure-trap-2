@@ -18,13 +18,9 @@ public class PlayerScript : MonoBehaviour {
     GameObject tile = null;
     Vector3 pos = Vector3.zero;
     bool isMove = false;
-    bool isPosSelected = false;
-    bool isGridSet = false;
-    bool isTileSelected = false;
     bool isFirstMove = true;
-    bool isPlaying = false;
-    bool canPlace = true;
     bool isWhite;
+    bool isQueenPlaced = false;
 
     public int queenCount = 1;
     public int antCount = 3;
@@ -41,160 +37,110 @@ public class PlayerScript : MonoBehaviour {
         PhotonView photonView = this.GetComponent<PhotonView>();
     }
 
-    void Update() {
-        if (gameManager.GetRound() == 4 && !gameManager.AreQueensOnBoard()) {
-            canPlace = false;
-        }
-        else {
-            canPlace = true;
-        }
-
-        //if (isPlaying) {
-        //    //Selected Queen
-        //    if (Input.GetKeyDown(KeyCode.Alpha1) && queenCount > 0 && gameManager.GetRound() != 1) {
-        //        tile = Tiles[0];
-        //        isMove = false;
-        //        isTileSelected = true;
-        //        queenCount--;
-        //    }
-        //    //Selected Ant
-        //    else if (Input.GetKeyDown(KeyCode.Alpha2) && antCount > 0 && canPlace) {
-        //        tile = Tiles[1];
-        //        isMove = false;
-        //        isTileSelected = true;
-        //        antCount--;
-        //    }
-        //    //Selected Grasshopper
-        //    else if (Input.GetKeyDown(KeyCode.Alpha3) && grasshopperCount > 0 && canPlace) {
-        //        tile = Tiles[2];
-        //        isMove = false;
-        //        isTileSelected = true;
-        //        grasshopperCount--;
-        //    }
-        //    //Selected Beetle
-        //    else if (Input.GetKeyDown(KeyCode.Alpha4) && beetleCount > 0 && canPlace) {
-        //        tile = Tiles[3];
-        //        isMove = false;
-        //        isTileSelected = true;
-        //        beetleCount--;
-        //    }
-        //    //Selected Spider
-        //    else if (Input.GetKeyDown(KeyCode.Alpha5) && spiderCount > 0 && canPlace) {
-        //        tile = Tiles[4];
-        //        isMove = false;
-        //        isTileSelected = true;
-        //        spiderCount--;
-        //    }
-        //}
-    }
-
     public void selectedQueen()
     {
-        if (isPlaying && queenCount > 0 && gameManager.GetRound() != 1)
+        if (queenCount > 0 && gameManager.GetRound() != 1 && isTurn)
         {
             tile = Tiles[0];
             isMove = false;
-            isTileSelected = true;
             queenCount--;
+
+            if (!isFirstMove || gameManager.GetTurn() == 1) {
+                gameManager.SetMoveGrid(tile, isMove);
+            }
+            else {
+                pos = Vector3.zero;
+                Move();
+            }
         }
     }
-
     public void selectedAnt()
     {
-        if (isPlaying && antCount > 0 && canPlace)
-        {
-            tile = Tiles[1];
-            isMove = false;
-            isTileSelected = true;
-            antCount--;
+        if (gameManager.GetRound() < 4 || isQueenPlaced) {
+            if (antCount > 0 && isTurn) {
+                tile = Tiles[1];
+                isMove = false;
+                antCount--;
+
+                if (!isFirstMove || gameManager.GetTurn() == 1) {
+                    gameManager.SetMoveGrid(tile, isMove);
+                }
+                else {
+                    pos = Vector3.zero;
+                    Move();
+                }
+            }
         }
     }
-
     public void selectedGrasshopper()
     {
-        if (isPlaying && grasshopperCount > 0 && canPlace)
-        {
-            tile = Tiles[2];
-            isMove = false;
-            isTileSelected = true;
-            grasshopperCount--;
+        if (gameManager.GetRound() < 4 || isQueenPlaced) {
+            if (grasshopperCount > 0 && isTurn) {
+                tile = Tiles[2];
+                isMove = false;
+                grasshopperCount--;
+
+                if (!isFirstMove || gameManager.GetTurn() == 1) {
+                    gameManager.SetMoveGrid(tile, isMove);
+                }
+                else {
+                    pos = Vector3.zero;
+                    Move();
+                }
+            }
         }
     }
-
-    void selectedBeetle()
+    public void selectedBeetle()
     {
-        if (isPlaying && beetleCount > 0 && canPlace)
-        {
-            tile = Tiles[3];
-            isMove = false;
-            isTileSelected = true;
-            beetleCount--;
+        if (gameManager.GetRound() < 4 || isQueenPlaced) {
+            if (beetleCount > 0 && isTurn) {
+                tile = Tiles[3];
+                isMove = false;
+                beetleCount--;
+
+                if (!isFirstMove || gameManager.GetTurn() == 1) {
+                    gameManager.SetMoveGrid(tile, isMove);
+                }
+                else {
+                    pos = Vector3.zero;
+                    Move();
+                }
+            }
         }
     }
-
-    void selectedSpider()
+    public void selectedSpider()
     {
-        if (isPlaying && spiderCount > 0 && canPlace)
-        {
-            tile = Tiles[4];
-            isMove = false;
-            isTileSelected = true;
-            spiderCount--;
+        if (gameManager.GetRound() < 4 || isQueenPlaced) {
+            if (spiderCount > 0 && isTurn) {
+                tile = Tiles[4];
+                isMove = false;
+                spiderCount--;
+
+                if (!isFirstMove || gameManager.GetTurn() == 1) {
+                    gameManager.SetMoveGrid(tile, isMove);
+                }
+                else {
+                    pos = Vector3.zero;
+                    Move();
+                }
+            }
         }
     }
 
-    public IEnumerator Move(bool isPlaying) {
-
-        this.isPlaying = isPlaying;
-        //gameManager.isPlaying = isPlaying;
-
-        Debug.Log("Waiting For Tile Select");
-        yield return new WaitWhile(IsTileSelected);
-        Debug.Log("Tile Selected");
-
-        if (!isFirstMove || gameManager.GetTurn() == 1) {
-            gameManager.SetMoveGrid(tile, isMove);
-        }
-        else {
-            isPosSelected = true;
-            isFirstMove = false;
-        }
-
-        Debug.Log("Waiting for Pos Select");
-        yield return new WaitWhile(IsPosSelected);
-        Debug.Log("Pos Selected");
-
-        //gameManager.NetWorkMakeMove(tile, pos, isMove);
+    public void Move() {
         gameManager.MakeMove(tile, pos, isMove);
-        isTileSelected = false;
-        isPosSelected = false;
-        this.isPlaying = false;
-        //gameManager.isPlaying = isPlaying;
-    }
-
-    [PunRPC]
-    private void MakeMove(GameObject tile, Vector3 pos, bool isMove) {
-        gameManager.MakeMove(tile, pos, isMove);
-    }
-
-    bool IsTileSelected() {
-        return !isTileSelected;
-    }
-
-    bool IsPosSelected() {
-        return !isPosSelected;
-    }
-
-    public void SetTile(GameObject newTile) {
-        isMove = true;
-        tile = newTile;
-        isTileSelected = true;
-        
-        StartCoroutine(Move(true));
     }
 
     public void SetPos(Vector3 newPos) {
         pos = newPos;
-        isPosSelected = true;
+        Move();
+    }
+
+    public void SetTile(GameObject newTile) {
+        tile = newTile;
+    }
+
+    public void QueenPlaced() {
+        isQueenPlaced = true;
     }
 }

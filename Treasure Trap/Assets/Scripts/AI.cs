@@ -32,6 +32,8 @@ public class AI : MonoBehaviour {
     public int beetleCount = 2;
     public int spiderCount = 2;
 
+    public bool isTurn;
+
     GameObject tile = null;
     Vector3 pos = Vector3.zero;
 

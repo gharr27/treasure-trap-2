@@ -74,7 +74,6 @@ public class GameManager : MonoBehaviour {
     public PlayerScript p2;
     public AI ai;
 
-    PlayerScript activePlayer;
     GameObject playerObject1;
     GameObject playerObject2;
 
@@ -115,7 +114,6 @@ public class GameManager : MonoBehaviour {
             else {
                 isP1 = false;
                 Debug.Log("P2");
-
             }
 
             p1 = playerObject1.GetComponent(typeof(PlayerScript)) as PlayerScript;
@@ -124,7 +122,6 @@ public class GameManager : MonoBehaviour {
             p2 = playerObject2.GetComponent(typeof(PlayerScript)) as PlayerScript;
             p2.color = "black";
 
-            activePlayer = p1;
             p1.isTurn = true;
             p2.isTurn = false;
         }
@@ -136,6 +133,7 @@ public class GameManager : MonoBehaviour {
             p1 = playerObject1.GetComponent(typeof(PlayerScript)) as PlayerScript;
             ai = playerObject2.GetComponent(typeof(AI)) as AI;
             p1.isTurn = true;
+            ai.isTurn = false;
         }
         else {  //One Machine PVP Game
             Debug.Log("PVP Game");
@@ -146,114 +144,12 @@ public class GameManager : MonoBehaviour {
             p1 = playerObject1.GetComponent(typeof(PlayerScript)) as PlayerScript;
             p2 = playerObject2.GetComponent(typeof(PlayerScript)) as PlayerScript;
 
-            activePlayer = p1;
-        }
-    }
-
-    public void UpdateActivePlayer() {
-        activePlayer = activePlayer == p1 ? p2 : p1;
-
-        if (activePlayer.color == "white") {
             p1.isTurn = true;
             p2.isTurn = false;
         }
-        else {
-            p1.isTurn = false;
-            p2.isTurn = true;
-        }
-
-        UpdateTurn();
     }
 
-    private void UpdateTurn() {
-        if (turn == 0) {
-            turn = 1;
-        }
-        else {
-            turn = 0;
-            round++;
-        }
-    }
-
-    // Update is called once per frame
-    void Update() {
-        //Network Game
-        if (isNetworkGame) {
-            if (!isWin) {
-                if (!isPlaying) {
-                    if (activePlayer.color == "white" && isP1) {
-                        isPlaying = true;
-                        //White Move
-                        Debug.Log("White Move");
-                        StartCoroutine(p1.Move(true));
-                    }
-                    else if (activePlayer.color == "black" && !isP1) {
-                        isPlaying = true;
-                        //Black Move
-                        Debug.Log("Black Move");
-                        StartCoroutine(p2.Move(true));
-                    }
-                }
-            }
-            else {
-                if (isWhiteWin) {
-                    Debug.Log("White Wins!");
-                    menuManager.GoToWinnerScreen();
-
-                }
-                else {
-                    Debug.Log("Black Wins!");
-                    menuManager.GoToLoserScreen();
-                }
-            }
-
-            if (Input.GetKeyDown(KeyCode.Space)) {
-                Debug.Log(gameGrid.Count);
-            }
-
-            if (Input.GetKeyDown(KeyCode.Escape)) {
-                menuManager.GoToMainMenu();
-            }
-        }
-
-        //Single Player Game
-        else if (isAIGame) {
-            if (!isWin) {
-                if (!isPlaying) {
-                    isPlaying = true;
-                    if (turn == 0) {
-                        //White Move
-                        Debug.Log("White Move");
-                        StartCoroutine(p1.Move(true));
-                    }
-                    else {
-                        //Black Move
-                        Debug.Log("Black Move");
-                        ai.Move(gameGrid, round, false);
-                    }
-                }
-            }
-            else {
-                if (isWhiteWin) {
-                    Debug.Log("White Wins!");
-                    menuManager.GoToWinnerScreen();
-
-                }
-                else {
-                    Debug.Log("Black Wins!");
-                    menuManager.GoToLoserScreen();
-                }
-            }
-
-            if (Input.GetKeyDown(KeyCode.Space)) {
-                Debug.Log(gameGrid.Count);
-            }
-
-        // if (Input.GetKeyDown(KeyCode.Escape)) {
-        //     //instance of disconnect
-        //     menuManager.GoToMainMenu();
-        // }
-
+    void UpdateGUITileCount() {
         p1QueenCount.text = "Queen" + p1.queenCount.ToString();
         p1AntCount.text = "Ant" + p1.antCount.ToString();
         p1GrasshopperCount.text = "Grass" + p1.grasshopperCount.ToString();
@@ -265,46 +161,6 @@ public class GameManager : MonoBehaviour {
         p2GrasshopperCount.text = "grass" + p2.grasshopperCount.ToString();
         p2BeetleCount.text = "Beetle" + p2.beetleCount.ToString();
         p2SpiderCount.text = "Spider" + p2.spiderCount.ToString();
-    }
-
-        //One Machine PVP Game
-        else {
-            if (!isWin) {
-                if (!isPlaying) {
-                    isPlaying = true;
-                    if (turn == 0) {
-                        //White Move
-                        Debug.Log("White Move");
-                        StartCoroutine(p1.Move(true));
-                    }
-                    else {
-                        //Black Move
-                        Debug.Log("Black Move");
-                        StartCoroutine(p2.Move(true));
-                    }
-                }
-            }
-            else {
-                if (isWhiteWin) {
-                    Debug.Log("White Wins!");
-                    menuManager.GoToWinnerScreen();
-
-                }
-                else {
-                    Debug.Log("Black Wins!");
-                    menuManager.GoToLoserScreen();
-                }
-            }
-
-
-            if (Input.GetKeyDown(KeyCode.Space)) {
-                Debug.Log(gameGrid.Count);
-            }
-
-            if (Input.GetKeyDown(KeyCode.Escape)) {
-                menuManager.GoToMainMenu();
-            }
-        }
     }
 
     public void Move(GameObject tile, Vector3 pos, bool isMove) {
@@ -350,15 +206,6 @@ public class GameManager : MonoBehaviour {
     }
 
     public void MakeMove(GameObject tile, Vector3 pos, bool isMove) {
-
-        if (turn == 0) {
-            turn = 1;
-        }
-        else {
-            turn = 0;
-            round++;
-        }
-
         if (isMove) {
             gameGrid[tile.transform.position] = new GameGridCell();
             tile.transform.position = pos;
@@ -387,11 +234,27 @@ public class GameManager : MonoBehaviour {
         }
 
         UpdateGameGrid(pos);
+        UpdateGUITileCount();
+        UpdateTurn();
 
         ClearMoveGrid();
         CheckForWin();
 
         isPlaying = false;
+    }
+
+    void UpdateTurn() {
+        if (p1.isTurn) {
+            p1.isTurn = false;
+            p2.isTurn = true;
+            turn = 1;
+        }
+        else {
+            p1.isTurn = true;
+            p2.isTurn = false;
+            turn = 0;
+            round++;
+        }
     }
 
 
@@ -1355,30 +1218,6 @@ public class GameManager : MonoBehaviour {
         while (selectionGrids.Count > 0) {
             GameObject temp = selectionGrids.Pop();
             Destroy(temp);
-        }
-    }
-
-    public bool AreQueensOnBoard() {
-        foreach (GameGridCell tile in gameGrid.Values) {
-            if (tile != null) {
-                if (tile.tile != null) {
-                    TileScript tileScript = tile.tile.GetComponent(typeof(TileScript)) as TileScript;
-
-                    if (tileScript.GetId() == "Queen1" && !isQueen1OnBoard) {
-                        isQueen1OnBoard = true;
-                    }
-                    if (tileScript.GetId() == "Queen2" && !isQueen2OnBoard) {
-                        isQueen2OnBoard = true;
-                    }
-                }
-            }
-        }
-
-        if (isQueen1OnBoard && isQueen2OnBoard) {
-            return true;
-        }
-        else {
-            return false;
         }
     }
 }

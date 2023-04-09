@@ -5,7 +5,6 @@ using UnityEngine;
 
 public class TileScript : MonoBehaviour {
 
-    BoxCollider boxCollider;
     bool isMouseOver = false;
     bool isWhite;
 
@@ -33,18 +32,14 @@ public class TileScript : MonoBehaviour {
 
     // Start is called before the first frame update
     void Start() {
-        boxCollider = this.GetComponent(typeof(BoxCollider)) as BoxCollider;
         gameController = GameObject.FindWithTag("GameController");
         gameManager = gameController.GetComponent(typeof(GameManager)) as GameManager;
-
-        gameManager.UpdateActivePlayer();
-
 
         playerWhiteObj = GameObject.FindWithTag("White");
         playerBlackObj = GameObject.FindWithTag("Black");
 
         playerWhite = playerWhiteObj.GetComponent(typeof(PlayerScript)) as PlayerScript;
-        //playerBlack = playerBlackObj.GetComponent(typeof(PlayerScript)) as PlayerScript;
+        playerBlack = playerBlackObj.GetComponent(typeof(PlayerScript)) as PlayerScript;
 
 
         //Weird Logic, check if it is currently blacks turn, if so this piece that has just been created is white
@@ -58,6 +53,12 @@ public class TileScript : MonoBehaviour {
         if (tileName == "Queen") {
             id = tileName + queenId;
             queenId++;
+            if (isWhite) {
+                playerWhite.QueenPlaced();
+            }
+            else {
+                playerBlack.QueenPlaced();
+            }
         }
         else if (tileName == "Ant") {
             id = tileName + antId;
@@ -79,10 +80,10 @@ public class TileScript : MonoBehaviour {
 
     void Update() {
         if (Input.GetMouseButtonDown(0) && isMouseOver && gameManager.GetTurn() == 0 && isWhite) {
-            playerWhite.SetTile(this.gameObject);
+            playerWhite.SetTile(gameObject);
         }
         else if (Input.GetMouseButtonDown(0) && isMouseOver && gameManager.GetTurn() == 1 && !isWhite) {
-            playerBlack.SetTile(this.gameObject);
+            playerBlack.SetTile(gameObject);
         }
     }
 
