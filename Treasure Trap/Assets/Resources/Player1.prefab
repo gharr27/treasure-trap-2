@@ -46,11 +46,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Tiles:
-  - {fileID: 2919950894249432521, guid: fe23d83e2318cc147be67aa9798e138d, type: 3}
-  - {fileID: 1802987814305700106, guid: 92d901b97127820479588e670707c15a, type: 3}
+  - {fileID: 144613323671528279, guid: 786c09aaf89e00f4c92b934ee9fe89bd, type: 3}
+  - {fileID: 2266287429149696184, guid: 1122ae0e43e1cc24289f2379b41656be, type: 3}
   - {fileID: 7362697454282387358, guid: cfeaf3f49a3b2434599fae92f0f60861, type: 3}
-  - {fileID: 1664583615817028300, guid: 4941743aa86fdbc4cad7ccf23c13cdd7, type: 3}
-  - {fileID: 3557289357973259819, guid: 7141e4becd809b04d88bc237f9f90efd, type: 3}
+  - {fileID: 8388596035331099963, guid: 1c94f7e799a357544b8bf0c6ab861c95, type: 3}
+  - {fileID: 2859850552348427938, guid: 8231a310f57375641ab1f270409793f1, type: 3}
   color: 
   isNetworkGame: 0
   isTurn: 0

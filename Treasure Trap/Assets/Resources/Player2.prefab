@@ -46,19 +46,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Tiles:
-<<<<<<< Updated upstream
   - {fileID: 144613323671528279, guid: 786c09aaf89e00f4c92b934ee9fe89bd, type: 3}
   - {fileID: 2266287429149696184, guid: 1122ae0e43e1cc24289f2379b41656be, type: 3}
   - {fileID: 7362697454282387358, guid: cfeaf3f49a3b2434599fae92f0f60861, type: 3}
   - {fileID: 8388596035331099963, guid: 1c94f7e799a357544b8bf0c6ab861c95, type: 3}
   - {fileID: 2859850552348427938, guid: 8231a310f57375641ab1f270409793f1, type: 3}
-=======
-  - {fileID: 7132219271740159866, guid: 69f5f2916d8dc42418266ae14777dc45, type: 3}
-  - {fileID: 5653068179477433065, guid: 4d74686823b10834e8b34b6701d9f865, type: 3}
-  - {fileID: 2175466403812836874, guid: f5355420191f0c247a9d2db78f7313f9, type: 3}
-  - {fileID: 3306718718830857062, guid: f226609cdb7e0f34984f8a7bb7fc92b0, type: 3}
-  - {fileID: 6239666045936958478, guid: b502f7a46733ef14d8f53aab502e991d, type: 3}
->>>>>>> Stashed changes
   color: 
   isNetworkGame: 0
   isTurn: 0

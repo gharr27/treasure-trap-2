@@ -1846,8 +1846,6 @@ MonoBehaviour:
   - {fileID: 1927028709609692793, guid: 8d3205e69e1becb43aa76a2e79c42d21, type: 3}
   - {fileID: 1451428673288182921, guid: a6da469ad0745c140bce5e92bc785f45, type: 3}
   tilesPlaced: 0
-  turn: 0
-  round: 1
   isPlaying: 0
 --- !u!114 &4762478688846900888
 MonoBehaviour:
