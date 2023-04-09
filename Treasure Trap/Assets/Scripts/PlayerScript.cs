@@ -49,42 +49,97 @@ public class PlayerScript : MonoBehaviour {
             canPlace = true;
         }
 
-        if (isPlaying) {
-            //Selected Queen
-            if (Input.GetKeyDown(KeyCode.Alpha1) && queenCount > 0 && gameManager.GetRound() != 1) {
-                tile = Tiles[0];
-                isMove = false;
-                isTileSelected = true;
-                queenCount--;
-            }
-            //Selected Ant
-            else if (Input.GetKeyDown(KeyCode.Alpha2) && antCount > 0 && canPlace) {
-                tile = Tiles[1];
-                isMove = false;
-                isTileSelected = true;
-                antCount--;
-            }
-            //Selected Grasshopper
-            else if (Input.GetKeyDown(KeyCode.Alpha3) && grasshopperCount > 0 && canPlace) {
-                tile = Tiles[2];
-                isMove = false;
-                isTileSelected = true;
-                grasshopperCount--;
-            }
-            //Selected Beetle
-            else if (Input.GetKeyDown(KeyCode.Alpha4) && beetleCount > 0 && canPlace) {
-                tile = Tiles[3];
-                isMove = false;
-                isTileSelected = true;
-                beetleCount--;
-            }
-            //Selected Spider
-            else if (Input.GetKeyDown(KeyCode.Alpha5) && spiderCount > 0 && canPlace) {
-                tile = Tiles[4];
-                isMove = false;
-                isTileSelected = true;
-                spiderCount--;
-            }
+        //if (isPlaying) {
+        //    //Selected Queen
+        //    if (Input.GetKeyDown(KeyCode.Alpha1) && queenCount > 0 && gameManager.GetRound() != 1) {
+        //        tile = Tiles[0];
+        //        isMove = false;
+        //        isTileSelected = true;
+        //        queenCount--;
+        //    }
+        //    //Selected Ant
+        //    else if (Input.GetKeyDown(KeyCode.Alpha2) && antCount > 0 && canPlace) {
+        //        tile = Tiles[1];
+        //        isMove = false;
+        //        isTileSelected = true;
+        //        antCount--;
+        //    }
+        //    //Selected Grasshopper
+        //    else if (Input.GetKeyDown(KeyCode.Alpha3) && grasshopperCount > 0 && canPlace) {
+        //        tile = Tiles[2];
+        //        isMove = false;
+        //        isTileSelected = true;
+        //        grasshopperCount--;
+        //    }
+        //    //Selected Beetle
+        //    else if (Input.GetKeyDown(KeyCode.Alpha4) && beetleCount > 0 && canPlace) {
+        //        tile = Tiles[3];
+        //        isMove = false;
+        //        isTileSelected = true;
+        //        beetleCount--;
+        //    }
+        //    //Selected Spider
+        //    else if (Input.GetKeyDown(KeyCode.Alpha5) && spiderCount > 0 && canPlace) {
+        //        tile = Tiles[4];
+        //        isMove = false;
+        //        isTileSelected = true;
+        //        spiderCount--;
+        //    }
+        //}
+    }
+
+    public void selectedQueen()
+    {
+        if (isPlaying && queenCount > 0 && gameManager.GetRound() != 1)
+        {
+            tile = Tiles[0];
+            isMove = false;
+            isTileSelected = true;
+            queenCount--;
+        }
+    }
+
+    public void selectedAnt()
+    {
+        if (isPlaying && antCount > 0 && canPlace)
+        {
+            tile = Tiles[1];
+            isMove = false;
+            isTileSelected = true;
+            antCount--;
+        }
+    }
+
+    public void selectedGrasshopper()
+    {
+        if (isPlaying && grasshopperCount > 0 && canPlace)
+        {
+            tile = Tiles[2];
+            isMove = false;
+            isTileSelected = true;
+            grasshopperCount--;
+        }
+    }
+
+    void selectedBeetle()
+    {
+        if (isPlaying && beetleCount > 0 && canPlace)
+        {
+            tile = Tiles[3];
+            isMove = false;
+            isTileSelected = true;
+            beetleCount--;
+        }
+    }
+
+    void selectedSpider()
+    {
+        if (isPlaying && spiderCount > 0 && canPlace)
+        {
+            tile = Tiles[4];
+            isMove = false;
+            isTileSelected = true;
+            spiderCount--;
         }
     }
 
