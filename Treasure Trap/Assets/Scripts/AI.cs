@@ -6,11 +6,13 @@ public class Move {
     public GameObject tile;
     public Vector3 pos;
     public bool isMove;
+    public string tileName;
 
     public Move() {
         tile = null;
         pos = Vector3.zero;
         isMove = false;
+        tileName = null;
     }
 
     public Move(GameObject tile, Vector3 pos, bool isMove) {
@@ -37,7 +39,7 @@ public class AI : MonoBehaviour {
     GameObject tile = null;
     Vector3 pos = Vector3.zero;
 
-    GameObject gameManagerObj;
+    public GameObject gameManagerObj;
     GameManager gameManager;
 
     bool isQueenPlaced = false;
@@ -47,15 +49,16 @@ public class AI : MonoBehaviour {
     private const int INT_MIN = -1000000000;
 
     private void Start() {
-        GameObject gameManagerObj = GameObject.FindWithTag("GameController");
-        GameManager gameManager = gameManagerObj.GetComponent(typeof(GameManager)) as GameManager;
+        gameManager = gameManagerObj.GetComponent(typeof(GameManager)) as GameManager;
     }
 
     private void CheckQueenPlaced(Dictionary<Vector3, GameManager.GameGridCell> gameGrid) {
         bool isQueenFound = false;
         foreach (GameManager.GameGridCell tile in gameGrid.Values) {
-            if (tile.tile.name == "Queen-Black") {
-                isQueenFound = true;
+            if (tile.isFilled) {
+                if (tile.tile.name == "Queen-Black") {
+                    isQueenFound = true;
+                }
             }
         }
 
@@ -74,12 +77,12 @@ public class AI : MonoBehaviour {
         Move move = MiniMax(gameGrid, isWhite, maxDepth, 0 - INT_MAX, INT_MAX, round).Value;
         Debug.Log("End Move");
 
-        gameManager.MakeMove(move.tile, move.pos, move.isMove);
+        gameManager.AIMove(move.tile, move.pos, move.isMove);
     }
 
     Stack<Move> GenerateMoves(Dictionary<Vector3, GameManager.GameGridCell> gameGrid, bool isWhite) {
         Stack<Move> moves = new Stack<Move>();
-
+        Debug.Log(gameManager);
         Stack<Vector3> placePosition = gameManager.GetPlacePositions(isWhite);
 
         while (placePosition.Count > 0) {
@@ -137,7 +140,7 @@ public class AI : MonoBehaviour {
         return moves;
     }
     KeyValuePair<int, Move> MiniMax(Dictionary<Vector3, GameManager.GameGridCell> gameGrid, bool isAI, int depth, int alpha, int beta, int round) {
-        Stack<Move> moves = GenerateMoves(gameGrid, !isAI);
+        Stack<Move> moves = GenerateMoves(gameGrid, isAI);
 
         if (depth == 0 || depth >= moves.Count) {
             return new KeyValuePair<int, Move>(ScoreGame(gameGrid, isAI), new Move());

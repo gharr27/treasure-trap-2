@@ -60,13 +60,6 @@ public class GameManager : MonoBehaviour {
     private GameObject[] gamePieces;
     private Stack<GameObject> selectionGrids;
 
-    public bool isPlaying = false;
-    bool isWin = false;
-    bool isWhiteWin;
-    bool isQueen1OnBoard = false;
-    bool isQueen2OnBoard = false;
-    bool isP1;
-
     public bool isNetworkGame = false;
     public bool isAIGame;
 
@@ -108,11 +101,9 @@ public class GameManager : MonoBehaviour {
 
             //Is Host
             if (PhotonNetwork.IsMasterClient) {
-                isP1 = true;
                 Debug.Log("P1");
             }
             else {
-                isP1 = false;
                 Debug.Log("P2");
             }
 
@@ -127,8 +118,8 @@ public class GameManager : MonoBehaviour {
         }
         else if (isAIGame) { //Single Player Game
             Debug.Log("AI Game");
-            playerObject1 = Instantiate(Players[0], Vector3.zero, Quaternion.identity);
-            playerObject2 = Instantiate(AI, Vector3.zero, Quaternion.identity);
+            playerObject1 = Players[0];
+            playerObject2 = AI;
 
             p1 = playerObject1.GetComponent(typeof(PlayerScript)) as PlayerScript;
             ai = playerObject2.GetComponent(typeof(AI)) as AI;
@@ -147,20 +138,40 @@ public class GameManager : MonoBehaviour {
             p1.isTurn = true;
             p2.isTurn = false;
         }
+
+        UpdateGUITileCount();
     }
 
     void UpdateGUITileCount() {
-        p1QueenCount.text = "Queen" + p1.queenCount.ToString();
-        p1AntCount.text = "Ant" + p1.antCount.ToString();
-        p1GrasshopperCount.text = "Grass" + p1.grasshopperCount.ToString();
-        p1BeetleCount.text = "Beetle" + p1.beetleCount.ToString();
-        p1SpiderCount.text = "Spider" + p1.spiderCount.ToString();
+        if (isNetworkGame) {
+            p1QueenCount.text = "Queen" + p1.queenCount.ToString();
+            p1AntCount.text = "Ant" + p1.antCount.ToString();
+            p1GrasshopperCount.text = "Grass" + p1.grasshopperCount.ToString();
+            p1BeetleCount.text = "Beetle" + p1.beetleCount.ToString();
+            p1SpiderCount.text = "Spider" + p1.spiderCount.ToString();
 
-        p2QueenCount.text = "Queen" + p2.queenCount.ToString();
-        p2AntCount.text = "Ant" + p2.antCount.ToString();
-        p2GrasshopperCount.text = "grass" + p2.grasshopperCount.ToString();
-        p2BeetleCount.text = "Beetle" + p2.beetleCount.ToString();
-        p2SpiderCount.text = "Spider" + p2.spiderCount.ToString();
+            p2QueenCount.text = "Queen" + p2.queenCount.ToString();
+            p2AntCount.text = "Ant" + p2.antCount.ToString();
+            p2GrasshopperCount.text = "grass" + p2.grasshopperCount.ToString();
+            p2BeetleCount.text = "Beetle" + p2.beetleCount.ToString();
+            p2SpiderCount.text = "Spider" + p2.spiderCount.ToString();
+        }
+        else if (isAIGame) {
+            p1QueenCount.text = "Queen" + p1.queenCount.ToString();
+            p1AntCount.text = "Ant" + p1.antCount.ToString();
+            p1GrasshopperCount.text = "Grass" + p1.grasshopperCount.ToString();
+            p1BeetleCount.text = "Beetle" + p1.beetleCount.ToString();
+            p1SpiderCount.text = "Spider" + p1.spiderCount.ToString();
+
+            p2QueenCount.text = "Queen" + ai.queenCount.ToString();
+            p2AntCount.text = "Ant" + ai.antCount.ToString();
+            p2GrasshopperCount.text = "grass" + ai.grasshopperCount.ToString();
+            p2BeetleCount.text = "Beetle" + ai.beetleCount.ToString();
+            p2SpiderCount.text = "Spider" + ai.spiderCount.ToString();
+        }
+        else {
+
+        }
     }
 
     public void Move(GameObject tile, Vector3 pos, bool isMove) {
@@ -201,7 +212,7 @@ public class GameManager : MonoBehaviour {
         UpdateGameGrid(pos);
 
         ClearMoveGrid();
-        CheckForWin();
+        //CheckForWin();
 
     }
 
@@ -238,22 +249,80 @@ public class GameManager : MonoBehaviour {
         UpdateTurn();
 
         ClearMoveGrid();
-        CheckForWin();
+        CheckForWin(true);
 
-        isPlaying = false;
+        if (isAIGame) {
+            ai.Move(gameGrid, round, false);
+        }
+    }
+
+    public void AIMove(GameObject tile, Vector3 pos, bool isMove) {
+        if (isMove) {
+            gameGrid[tile.transform.position] = new GameGridCell();
+            tile.transform.position = pos;
+
+            GameGridCell gridCell = new GameGridCell(true, tile);
+
+            if (!gameGrid.ContainsKey(pos)) {
+                gameGrid.Add(pos, gridCell);
+            }
+            else {
+                gameGrid[pos] = gridCell;
+            }
+        }
+        else {
+            GameObject tilePiece = Instantiate(tile, pos, Quaternion.identity) as GameObject;
+            gamePieces[tilesPlaced] = tilePiece;
+            GameGridCell gridCell = new GameGridCell(true, tilePiece);
+
+            if (gameGrid.ContainsKey(pos)) {
+                gameGrid[pos] = gridCell;
+            }
+            else {
+                gameGrid.Add(pos, gridCell);
+            }
+            tilesPlaced++;
+        }
+
+        UpdateGameGrid(pos);
+        UpdateGUITileCount();
+        UpdateTurn();
+
+        ClearMoveGrid();
+        CheckForWin(false);
+
+        p1.isTurn = true;
     }
 
     void UpdateTurn() {
-        if (p1.isTurn) {
-            p1.isTurn = false;
-            p2.isTurn = true;
-            turn = 1;
+        if (isNetworkGame) {
+            if (p1.isTurn) {
+                p1.isTurn = false;
+                p2.isTurn = true;
+                turn = 1;
+            }
+            else {
+                p1.isTurn = true;
+                p2.isTurn = false;
+                turn = 0;
+                round++;
+            }
+        }
+        else if (isAIGame) {
+            if (p1.isTurn) {
+                p1.isTurn = false;
+                ai.isTurn = true;
+                turn = 1;
+            }
+            else {
+                p1.isTurn = true;
+                ai.isTurn = false;
+                turn = 0;
+                round++;
+            }
         }
         else {
-            p1.isTurn = true;
-            p2.isTurn = false;
-            turn = 0;
-            round++;
+
         }
     }
 
@@ -978,7 +1047,7 @@ public class GameManager : MonoBehaviour {
         return validPos;
     }
 
-    void CheckForWin() {
+    void CheckForWin(bool isWhite) {
 
         foreach (GameGridCell tile in gameGrid.Values) {
             if (tile.isFilled) {
@@ -987,21 +1056,30 @@ public class GameManager : MonoBehaviour {
                 TileScript tileScript = tile.tile.GetComponent(typeof(TileScript)) as TileScript;
 
                 //Check if Queen is surrounded
-                if (tileScript.GetId() == "Queen1" || tileScript.GetId() == "Queen2") {
-
+                if (tileScript.GetTileColor()) {
+                    //White Lose
                     if (IsSurrounded(pos)) {
-                        isWin = true;
-
-                        if (tileScript.GetTileColor()) {
-                            isWhiteWin = false;
-                        }
-                        else {
-                            isWhiteWin = true;
-                        }
-                        
+                        GameOver(isWhite);
+                    }
+                }
+                else {
+                    //Black Lose
+                    if (IsSurrounded(pos)) {
+                        GameOver(!isWhite);
                     }
                 }
             }
+        }
+    }
+
+    void GameOver(bool isWhite) {
+        if (isWhite) {
+            //White Lose
+            menuManager.GoToLoserScreen();
+        }
+        else {
+            //Black Lose
+            menuManager.GoToWinnerScreen();
         }
     }
 
@@ -1063,6 +1141,7 @@ public class GameManager : MonoBehaviour {
 
     //Returns a vector of all the valid movement/placement positions
     public Stack<Vector3> GetPlacePositions(bool isWhite) {
+        Debug.Log("test 2");
         Stack<Vector3> positions = new Stack<Vector3>();
         Stack<Vector3> ret = new Stack<Vector3>();
         Dictionary<Vector3, int> invalidMove = new Dictionary<Vector3, int>();

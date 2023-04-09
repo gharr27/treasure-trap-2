@@ -56,6 +56,7 @@ public class PlayerScript : MonoBehaviour {
     }
     public void selectedAnt()
     {
+        Debug.Log("Selected Ant");
         if (gameManager.GetRound() < 4 || isQueenPlaced) {
             if (antCount > 0 && isTurn) {
                 tile = Tiles[1];

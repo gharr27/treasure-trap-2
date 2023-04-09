@@ -13,6 +13,7 @@ public class TileScript : MonoBehaviour {
 
     PlayerScript playerWhite;
     PlayerScript playerBlack;
+    AI ai;
     GameObject playerWhiteObj;
     GameObject playerBlackObj;
 
@@ -35,11 +36,11 @@ public class TileScript : MonoBehaviour {
         gameController = GameObject.FindWithTag("GameController");
         gameManager = gameController.GetComponent(typeof(GameManager)) as GameManager;
 
-        playerWhiteObj = GameObject.FindWithTag("White");
-        playerBlackObj = GameObject.FindWithTag("Black");
+        playerWhiteObj = gameManager.Players[0];
+        playerBlackObj = gameManager.AI;
 
         playerWhite = playerWhiteObj.GetComponent(typeof(PlayerScript)) as PlayerScript;
-        playerBlack = playerBlackObj.GetComponent(typeof(PlayerScript)) as PlayerScript;
+        ai = playerBlackObj.GetComponent(typeof(AI)) as AI;
 
 
         //Weird Logic, check if it is currently blacks turn, if so this piece that has just been created is white
