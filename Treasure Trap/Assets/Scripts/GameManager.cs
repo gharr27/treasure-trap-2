@@ -41,8 +41,8 @@ public class GameManager : MonoBehaviour {
     const int PIECE_COUNT = 22;
 
     public int tilesPlaced = 0;
-    private int turn = 0;
-    private int round = 1;
+    public int turn = 0;
+    public int round = 1;
 
     private GameObject[] gamePieces;
     private Stack<GameObject> selectionGrids;
@@ -151,6 +151,7 @@ public class GameManager : MonoBehaviour {
             round++;
         }
     }
+
     // Update is called once per frame
     void Update() {
         //Network Game
@@ -312,19 +313,16 @@ public class GameManager : MonoBehaviour {
 
     }
 
-    [PunRPC]
-    void AddToGamePieces(GameObject tilePiece) {
-        gamePieces[tilesPlaced] = tilePiece;
-        Debug.Log(gamePieces.Length);
-    }
-
-    [PunRPC]
-    void IncrementTilesPlaced(int i) {
-        tilesPlaced += i;
-    }
-
     public void MakeMove(GameObject tile, Vector3 pos, bool isMove) {
-        
+
+        if (turn == 0) {
+            turn = 1;
+        }
+        else {
+            turn = 0;
+            round++;
+        }
+
         if (isMove) {
             gameGrid[tile.transform.position] = new GameGridCell();
             tile.transform.position = pos;
@@ -356,15 +354,6 @@ public class GameManager : MonoBehaviour {
 
         ClearMoveGrid();
         CheckForWin();
-
-        if (p1.isTurn) {
-            p1.isTurn = false;
-            turn = 1;
-        }
-        else {
-            p1.isTurn = true;
-            turn = 0;
-        }
 
         isPlaying = false;
     }
