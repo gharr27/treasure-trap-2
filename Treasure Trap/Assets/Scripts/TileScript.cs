@@ -44,7 +44,7 @@ public class TileScript : MonoBehaviour {
         playerBlackObj = GameObject.FindWithTag("Black");
 
         playerWhite = playerWhiteObj.GetComponent(typeof(PlayerScript)) as PlayerScript;
-        playerBlack = playerBlackObj.GetComponent(typeof(PlayerScript)) as PlayerScript;
+        //playerBlack = playerBlackObj.GetComponent(typeof(PlayerScript)) as PlayerScript;
 
 
         //Weird Logic, check if it is currently blacks turn, if so this piece that has just been created is white
