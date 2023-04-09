@@ -139,6 +139,16 @@ public class GameManager : MonoBehaviour {
 
     public void UpdateActivePlayer() {
         activePlayer = activePlayer == p1 ? p2 : p1;
+
+        if (activePlayer.color == "white") {
+            p1.isTurn = true;
+            p2.isTurn = false;
+        }
+        else {
+            p1.isTurn = false;
+            p2.isTurn = true;
+        }
+
         UpdateTurn();
     }
 
