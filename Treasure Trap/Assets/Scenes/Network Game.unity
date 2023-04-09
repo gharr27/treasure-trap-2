@@ -3348,8 +3348,14 @@ MonoBehaviour:
   Players:
   - {fileID: 1927028709609692793, guid: 8d3205e69e1becb43aa76a2e79c42d21, type: 3}
   - {fileID: 1451428673288182921, guid: a6da469ad0745c140bce5e92bc785f45, type: 3}
+  AI: {fileID: 0}
   tilesPlaced: 0
   isPlaying: 0
+  isNetworkGame: 1
+  isAIGame: 0
+  p1: {fileID: 0}
+  p2: {fileID: 0}
+  ai: {fileID: 0}
 --- !u!114 &4762478688846900888
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3369,6 +3375,6 @@ MonoBehaviour:
   OwnershipTransfer: 0
   observableSearch: 2
   ObservedComponents: []
-  sceneViewId: 4
+  sceneViewId: 1
   InstantiationId: 0
   isRuntimeInstantiated: 0
