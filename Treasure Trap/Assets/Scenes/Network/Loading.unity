@@ -3600,6 +3600,7 @@ GameObject:
   - component: {fileID: 1146425488}
   - component: {fileID: 1146425487}
   - component: {fileID: 1146425486}
+  - component: {fileID: 1146425489}
   m_Layer: 0
   m_Name: userNameInput
   m_TagString: Untagged
@@ -3764,6 +3765,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1146425484}
   m_CullTransparentMesh: 1
+--- !u!114 &1146425489
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1146425484}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e01d1c24cec3546ad9a8fde4b5acbde9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1169825723
 GameObject:
   m_ObjectHideFlags: 0
@@ -5087,6 +5100,7 @@ GameObject:
   - component: {fileID: 1492413827}
   - component: {fileID: 1492413826}
   - component: {fileID: 1492413825}
+  - component: {fileID: 1492413828}
   m_Layer: 0
   m_Name: Create Room Text
   m_TagString: Untagged
@@ -5251,6 +5265,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1492413823}
   m_CullTransparentMesh: 1
+--- !u!114 &1492413828
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1492413823}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e01d1c24cec3546ad9a8fde4b5acbde9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1522019631
 GameObject:
   m_ObjectHideFlags: 0

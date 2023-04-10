@@ -36,9 +36,12 @@ public class ChatManager : MonoBehaviour, IChatClientListener
         }
         msgInput.onEndEdit.AddListener((string text) =>
         {
+            Debug.Log("Input text: " + msgInput.text);
             if (Input.GetKey(KeyCode.Return) || Input.GetKey(KeyCode.KeypadEnter))
             {
+                if(!string.IsNullOrWhiteSpace(msgInput.text)){
                 SendMsg();
+                }
             }
         });
 
@@ -78,21 +81,22 @@ public class ChatManager : MonoBehaviour, IChatClientListener
 
     public void OnGetMessages(string channelName, string[] senders, object[] messages)
     {
-        for (int i = 0; i < senders.Length; i++)
-        {
-            Debug.Log(senders[i]);
-            if (string.IsNullOrEmpty(msgArea.text))
+            for (int i = 0; i < senders.Length; i++)
             {
-                msgArea.text += messages[i] + " ";
+                Debug.Log(senders[i] + ": what I get");
+                if (string.IsNullOrEmpty(msgArea.text))
+                {
+                    msgArea.text += messages[i] + " ";
+                }
+                else
+                {
+                    msgArea.text += "\r\n" + messages[i] + " ";
+                }
             }
-            else
-            {
-                msgArea.text += "\r\n" + messages[i] + " ";
-            }
-        }
+
     }
 
-     public void ConnectToServer()
+    public void ConnectToServer()
     {
 
     }
@@ -110,7 +114,11 @@ public class ChatManager : MonoBehaviour, IChatClientListener
 
     public void SendMsg()
     {
+        Debug.Log("Message input before sending: " + msgInput.text);
+        // if(string.IsNullOrWhiteSpace(msgInput.text)){
+            // Debug.Log("sending: " + msgInput.text);
         chatClient.PublishMessage(PhotonNetwork.CurrentRoom.Name, PhotonNetwork.NickName + ": " + msgInput.text);
+         
         msgInput.text = "";
     }
 

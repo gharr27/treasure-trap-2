@@ -114,7 +114,7 @@ public class ConnectServer : MonoBehaviourPunCallbacks
         playerLeftRoom = false;
         Debug.Log("set button to false");
         Debug.Log("User name input: " + userNameInput.text);
-        PhotonNetwork.NickName = userNameInput.text + " " + Random.Range(0, 10).ToString("00");
+        PhotonNetwork.NickName = userNameInput.text + Random.Range(0, 90).ToString("00");
         
         Photon.Realtime.Player[] photonPlayers = PhotonNetwork.PlayerList;
 
