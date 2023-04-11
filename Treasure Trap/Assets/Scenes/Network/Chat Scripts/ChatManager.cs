@@ -232,4 +232,8 @@ public class ChatManager : MonoBehaviour, IChatClientListener
         Debug.Log("ON unsubscribed room");
 
     }
+
+    public void onExitChat(){
+        notificationImage.SetActive(false);
+    }
 }
