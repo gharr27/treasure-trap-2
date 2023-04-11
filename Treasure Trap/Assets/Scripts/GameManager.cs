@@ -229,7 +229,11 @@ public class GameManager : MonoBehaviour {
                 }
             }
             else {
-                GameObject tilePiece = Instantiate(tile, pos, Quaternion.identity) as GameObject;
+                GameObject tilePiece = Instantiate(tile, pos, Quaternion.identity);
+                TileScript tileScript = tilePiece.GetComponent(typeof(TileScript)) as TileScript;
+
+                p1.DecrementTile(tileScript.tileName);
+
                 gamePieces[tilesPlaced] = tilePiece;
                 GameGridCell gridCell = new GameGridCell(true, tilePiece);
 
@@ -496,10 +500,6 @@ public class GameManager : MonoBehaviour {
                 emptySpaces.Push(newPos);
             }
         }
-        else {
-            gameGrid[newPos] = new GameGridCell();
-            emptySpaces.Push(newPos);
-        }
 
         //Below
         newPos = new Vector3(x - 1, y, z);
@@ -507,10 +507,6 @@ public class GameManager : MonoBehaviour {
             if (!gameGrid[newPos].isFilled) {
                 emptySpaces.Push(newPos);
             }
-        }
-        else {
-            gameGrid[newPos] = new GameGridCell();
-            emptySpaces.Push(newPos);
         }
 
 
@@ -521,10 +517,6 @@ public class GameManager : MonoBehaviour {
                 emptySpaces.Push(newPos);
             }
         }
-        else {
-            gameGrid[newPos] = new GameGridCell();
-            emptySpaces.Push(newPos);
-        }
 
 
         //Bottom Left
@@ -533,10 +525,6 @@ public class GameManager : MonoBehaviour {
             if (!gameGrid[newPos].isFilled) {
                 emptySpaces.Push(newPos);
             }
-        }
-        else {
-            gameGrid[newPos] = new GameGridCell();
-            emptySpaces.Push(newPos);
         }
 
 
@@ -547,10 +535,6 @@ public class GameManager : MonoBehaviour {
                 emptySpaces.Push(newPos);
             }
         }
-        else {
-            gameGrid[newPos] = new GameGridCell();
-            emptySpaces.Push(newPos);
-        }
 
 
         //Bottom Right
@@ -559,10 +543,6 @@ public class GameManager : MonoBehaviour {
             if (!gameGrid[newPos].isFilled) {
                 emptySpaces.Push(newPos);
             }
-        }
-        else {
-            gameGrid[newPos] = new GameGridCell();
-            emptySpaces.Push(newPos);
         }
 
         return emptySpaces;
@@ -695,9 +675,6 @@ public class GameManager : MonoBehaviour {
                 ret.Add(newPos, 69);
             }
         }
-        else {
-            gameGrid.Add(newPos, new GameGridCell());
-        }
 
         //Below
         newPos = new Vector3(x - 1, y, z);
@@ -705,9 +682,6 @@ public class GameManager : MonoBehaviour {
             if (gameGrid[newPos].isFilled) {
                 ret.Add(newPos, 69);
             }
-        }
-        else {
-            gameGrid.Add(newPos, new GameGridCell());
         }
 
 
@@ -718,9 +692,6 @@ public class GameManager : MonoBehaviour {
                 ret.Add(newPos, 69);
             }
         }
-        else {
-            gameGrid.Add(newPos, new GameGridCell());
-        }
 
 
         //Bottom Left
@@ -729,9 +700,6 @@ public class GameManager : MonoBehaviour {
             if (gameGrid[newPos].isFilled) {
                 ret.Add(newPos, 69);
             }
-        }
-        else {
-            gameGrid.Add(newPos, new GameGridCell());
         }
 
 
@@ -742,9 +710,6 @@ public class GameManager : MonoBehaviour {
                 ret.Add(newPos, 69);
             }
         }
-        else {
-            gameGrid.Add(newPos, new GameGridCell());
-        }
 
 
         //Bottom Right
@@ -753,9 +718,6 @@ public class GameManager : MonoBehaviour {
             if (gameGrid[newPos].isFilled) {
                 ret.Add(newPos, 69);
             }
-        }
-        else {
-            gameGrid.Add(newPos, new GameGridCell());
         }
 
         return ret;

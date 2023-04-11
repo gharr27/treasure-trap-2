@@ -74,9 +74,7 @@ public class AI : MonoBehaviour {
 
     public void Move(Dictionary<Vector3, GameManager.GameGridCell> gameGrid, int round, bool isWhite) {
 
-        Debug.Log("Generating Moves");
         Stack<Move> moves = GenerateMoves(gameGrid, round, isWhite);
-        Debug.Log("Test");
 
         int randIndex = Random.Range(0, moves.Count);
 
@@ -133,8 +131,10 @@ public class AI : MonoBehaviour {
                 }
             }
 
+            Dictionary<Vector3, GameManager.GameGridCell> tempGameGrid = gameGrid;
+
             if (isQueenPlaced) {
-                foreach (GameManager.GameGridCell gridTile in gameGrid.Values) {
+                foreach (GameManager.GameGridCell gridTile in tempGameGrid.Values) {
                     if (gridTile.isFilled) {
                         Stack<Vector3> movePositions = gameManager.ValidateMoves(gridTile.tile);
 
@@ -154,7 +154,6 @@ public class AI : MonoBehaviour {
             }
         }
 
-        Debug.Log("done Generating Moves");
         return moves;
     }
 }
