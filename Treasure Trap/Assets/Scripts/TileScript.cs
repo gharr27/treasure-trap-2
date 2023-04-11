@@ -11,8 +11,8 @@ public class TileScript : MonoBehaviour {
     GameManager gameManager;
     GameObject gameController;
 
-    PlayerScript playerWhite;
-    PlayerScript playerBlack;
+    PlayerScript p1;
+    PlayerScript p2;
     AI ai;
     GameObject playerWhiteObj;
     GameObject playerBlackObj;
@@ -27,8 +27,19 @@ public class TileScript : MonoBehaviour {
 
     string id;
 
-    public bool GetTileColor() {
-        return isWhite;
+    float x;
+    float y;
+    float z;
+
+    Vector3 top;
+
+    public string GetTileColor() {
+        if (isWhite) {
+            return "white";
+        }
+        else {
+            return "black";
+        }
     }
 
     // Start is called before the first frame update
@@ -39,15 +50,16 @@ public class TileScript : MonoBehaviour {
         playerWhiteObj = gameManager.Players[0];
         playerBlackObj = gameManager.AI;
 
-        playerWhite = playerWhiteObj.GetComponent(typeof(PlayerScript)) as PlayerScript;
+        p1 = playerWhiteObj.GetComponent(typeof(PlayerScript)) as PlayerScript;
         ai = playerBlackObj.GetComponent(typeof(AI)) as AI;
 
 
-        //Weird Logic, check if it is currently blacks turn, if so this piece that has just been created is white
-        if (gameManager.GetTurn() == 1) {
+        //Checks which turn it is to assign tile color
+
+        if (CompareTag("White")) {
             isWhite = true;
         }
-        else {
+        else if (CompareTag("Black")) {
             isWhite = false;
         }
 
@@ -55,10 +67,7 @@ public class TileScript : MonoBehaviour {
             id = tileName + queenId;
             queenId++;
             if (isWhite) {
-                playerWhite.QueenPlaced();
-            }
-            else {
-                playerBlack.QueenPlaced();
+                p1.QueenPlaced();
             }
         }
         else if (tileName == "Ant") {
@@ -77,14 +86,31 @@ public class TileScript : MonoBehaviour {
             id = tileName + spiderId;
             spiderId++;
         }
+
+        x = transform.position.x;
+        y = transform.position.y + 1;
+        z = transform.position.z;
+
+        top = new Vector3(x, y, z);
     }
 
-    void Update() {
-        if (Input.GetMouseButtonDown(0) && isMouseOver && gameManager.GetTurn() == 0 && isWhite) {
-            playerWhite.SetTile(gameObject);
+    private void Update() {
+        if (gameManager.isAIGame) {
+            if (!gameManager.gameGrid[top].isFilled) {
+                if (Input.GetMouseButtonDown(0) && isMouseOver && gameManager.turn == 0 && isWhite) {
+                    p1.SetTile(gameObject);
+                }
+            }
         }
-        else if (Input.GetMouseButtonDown(0) && isMouseOver && gameManager.GetTurn() == 1 && !isWhite) {
-            playerBlack.SetTile(gameObject);
+        else {
+            if (!gameManager.gameGrid[top].isFilled) {
+                if (Input.GetMouseButtonDown(0) && isMouseOver && gameManager.turn == 0 && isWhite) {
+                    p1.SetTile(gameObject);
+                }
+                else if (Input.GetMouseButtonDown(0) && isMouseOver && gameManager.turn == 1 && !isWhite) {
+                    p2.SetTile(gameObject);
+                }
+            }
         }
     }
 

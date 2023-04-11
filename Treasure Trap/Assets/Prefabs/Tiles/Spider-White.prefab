@@ -861,7 +861,7 @@ GameObject:
   - component: {fileID: 7960133106366352510}
   m_Layer: 0
   m_Name: Spider-White
-  m_TagString: Tile
+  m_TagString: White
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
