@@ -3461,8 +3461,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-<<<<<<< Updated upstream
-=======
+
 --- !u!4 &397340042899993233
 Transform:
   m_ObjectHideFlags: 0
@@ -3544,7 +3543,7 @@ MonoBehaviour:
   sceneViewId: 2
   InstantiationId: 0
   isRuntimeInstantiated: 0
->>>>>>> Stashed changes
+
 --- !u!1 &4762478688846900880
 GameObject:
   m_ObjectHideFlags: 0
@@ -3716,8 +3715,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f3a72ad2300e48c44b75b8b21201fde0, type: 3}
-<<<<<<< Updated upstream
-=======
+
 --- !u!114 &7836512003455964444
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3799,4 +3797,3 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
->>>>>>> Stashed changes
