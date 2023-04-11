@@ -74,6 +74,11 @@ public class MenusManager : MonoBehaviour
         SceneManager.LoadScene("Loading");
     }
 
+    public void GoToWavesScreen()
+    {
+        SceneManager.LoadScene("LoadingScreenWaves");
+    } 
+
     public void GoToAIGame()
     {
         SceneManager.LoadScene("AIGame");
