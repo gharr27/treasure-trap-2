@@ -19,7 +19,6 @@ public class PlayerScript : MonoBehaviour {
     Vector3 pos = Vector3.zero;
     bool isMove = false;
     bool isFirstMove = true;
-    bool isWhite;
     bool isQueenPlaced = false;
 
     public int queenCount = 1;
@@ -39,34 +38,35 @@ public class PlayerScript : MonoBehaviour {
 
     public void selectedQueen()
     {
-        if (queenCount > 0 && gameManager.GetRound() != 1 && isTurn)
-        {
-            tile = Tiles[0];
-            isMove = false;
-            queenCount--;
+        if (gameManager.round > 1) {
+            if (queenCount > 0 && gameManager.GetRound() != 1 && isTurn) {
+                tile = Tiles[0];
+                isMove = false;
+                queenCount--;
 
-            if (!isFirstMove || gameManager.GetTurn() == 1) {
-                gameManager.SetMoveGrid(tile, isMove);
-            }
-            else {
-                pos = Vector3.zero;
-                Move();
+                if (!isFirstMove || gameManager.turn == 1) {
+                    gameManager.SetMoveGrid(tile, isMove);
+                }
+                else {
+                    pos = Vector3.zero;
+                    Move();
+                }
             }
         }
     }
-    public void selectedAnt()
-    {
-        Debug.Log("Selected Ant");
+    public void selectedAnt() {
         if (gameManager.GetRound() < 4 || isQueenPlaced) {
+           
             if (antCount > 0 && isTurn) {
                 tile = Tiles[1];
                 isMove = false;
                 antCount--;
 
-                if (!isFirstMove || gameManager.GetTurn() == 1) {
+                if (!isFirstMove || gameManager.turn == 1) {
                     gameManager.SetMoveGrid(tile, isMove);
                 }
                 else {
+                    isFirstMove = false;
                     pos = Vector3.zero;
                     Move();
                 }
@@ -81,10 +81,11 @@ public class PlayerScript : MonoBehaviour {
                 isMove = false;
                 grasshopperCount--;
 
-                if (!isFirstMove || gameManager.GetTurn() == 1) {
+                if (!isFirstMove || gameManager.turn == 1) {
                     gameManager.SetMoveGrid(tile, isMove);
                 }
                 else {
+                    isFirstMove = false;
                     pos = Vector3.zero;
                     Move();
                 }
@@ -99,10 +100,11 @@ public class PlayerScript : MonoBehaviour {
                 isMove = false;
                 beetleCount--;
 
-                if (!isFirstMove || gameManager.GetTurn() == 1) {
+                if (!isFirstMove || gameManager.turn == 1) {
                     gameManager.SetMoveGrid(tile, isMove);
                 }
                 else {
+                    isFirstMove = false;
                     pos = Vector3.zero;
                     Move();
                 }
@@ -117,10 +119,11 @@ public class PlayerScript : MonoBehaviour {
                 isMove = false;
                 spiderCount--;
 
-                if (!isFirstMove || gameManager.GetTurn() == 1) {
+                if (!isFirstMove || gameManager.turn == 1) {
                     gameManager.SetMoveGrid(tile, isMove);
                 }
                 else {
+                    isFirstMove = false;
                     pos = Vector3.zero;
                     Move();
                 }

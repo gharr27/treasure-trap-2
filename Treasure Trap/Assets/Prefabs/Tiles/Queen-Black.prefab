@@ -488,7 +488,7 @@ GameObject:
   - component: {fileID: 7441657191125751890}
   m_Layer: 0
   m_Name: Queen-Black
-  m_TagString: Tile
+  m_TagString: Black
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

@@ -10,10 +10,11 @@ public class SelectionGridScript : MonoBehaviour
     GameManager gameManager;
     GameObject gameController;
 
-    PlayerScript playerWhite;
-    PlayerScript playerBlack;
-    GameObject playerWhiteObj;
-    GameObject playerBlackObj;
+    PlayerScript p1;
+    PlayerScript p2;
+    AI ai;
+    GameObject p1Obj;
+    GameObject p2Obj;
 
     // Start is called before the first frame update
     void Start()
@@ -23,20 +24,27 @@ public class SelectionGridScript : MonoBehaviour
         gameManager = gameController.GetComponent(typeof(GameManager)) as GameManager;
 
 
-        playerWhiteObj = GameObject.FindWithTag("White");
-        playerBlackObj = GameObject.FindWithTag("Black");
+        p1Obj = gameManager.Players[0];
+        p2Obj = gameManager.AI;
 
-        playerWhite = playerWhiteObj.GetComponent(typeof(PlayerScript)) as PlayerScript;
-        playerBlack = playerBlackObj.GetComponent(typeof(PlayerScript)) as PlayerScript;
+        p1 = p1Obj.GetComponent(typeof(PlayerScript)) as PlayerScript;
+        ai = p2Obj.GetComponent(typeof(AI)) as AI;
     }
 
     // Update is called once per frame
     void Update() {
-        if (Input.GetMouseButtonDown(0) && isMouseOver && gameManager.GetTurn() == 0) {
-            playerWhite.SetPos(transform.position);
+        if (gameManager.isAIGame) {
+            if (Input.GetMouseButtonDown(0) && isMouseOver && gameManager.turn == 0) {
+                p1.SetPos(transform.position);
+            }
         }
-        else if (Input.GetMouseButtonDown(0) && isMouseOver && gameManager.GetTurn() == 1) {
-            playerBlack.SetPos(transform.position);
+        else {
+            if (Input.GetMouseButtonDown(0) && isMouseOver && gameManager.turn == 0) {
+                p1.SetPos(transform.position);
+            }
+            else if (Input.GetMouseButtonDown(0) && isMouseOver && gameManager.turn == 1) {
+                p2.SetPos(transform.position);
+            }
         }
     }
 

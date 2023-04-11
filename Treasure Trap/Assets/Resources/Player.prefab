@@ -54,6 +54,11 @@ MonoBehaviour:
   color: 
   isNetworkGame: 0
   isTurn: 0
+  queenCount: 1
+  antCount: 3
+  grasshopperCount: 3
+  beetleCount: 2
+  spiderCount: 2
 --- !u!114 &5466223323204370725
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -3376,7 +3376,7 @@ GameObject:
   - component: {fileID: 648168478610505263}
   m_Layer: 0
   m_Name: Beetle-Black
-  m_TagString: Tile
+  m_TagString: Black
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
