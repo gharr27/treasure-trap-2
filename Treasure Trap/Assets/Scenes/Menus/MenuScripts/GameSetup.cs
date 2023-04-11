@@ -7,8 +7,8 @@ using TMPro;
 public class GameSetup : MonoBehaviour
 {
     public TextMeshProUGUI username;
-    public TextMeshProUGUI difficulty;
-    public TextMeshProUGUI whoStarts;
+    // public TextMeshProUGUI difficulty;
+    // public TextMeshProUGUI whoStarts;
     public Image ghostChar;
     public Image cowChar;
     public Image kidChar;
@@ -18,8 +18,8 @@ public class GameSetup : MonoBehaviour
     void Start()
     {
         username.text = PlayerPrefs.GetString("Username");
-        difficulty.text = PlayerPrefs.GetString("Difficulty");
-        whoStarts.text = PlayerPrefs.GetString("WhoStarts");
+        // difficulty.text = PlayerPrefs.GetString("Difficulty");
+        // whoStarts.text = PlayerPrefs.GetString("WhoStarts");
 
         if (PlayerPrefs.GetString("Character") == "Option1 _ Ghost") {
             ghostChar.enabled = true;
