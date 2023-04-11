@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028334, g: 0.22571328, b: 0.3069217, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1045,7 +1045,7 @@ PrefabInstance:
       objectReference: {fileID: 1150819591}
     - target: {fileID: 7966060023010933483, guid: 05e8fad234f638f4a9802038436d797e, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: GoToAIGame
+      value: GoToWavesScreen
       objectReference: {fileID: 0}
     - target: {fileID: 7966060023337992591, guid: 05e8fad234f638f4a9802038436d797e, type: 3}
       propertyPath: m_Name
@@ -5842,7 +5842,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 27ef5c25ef5846649b72d6b064620dc2, type: 3}
+  m_audioClip: {fileID: 8300000, guid: ec491b1cf348e794a908bca2d8d439ed, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 0.25
   m_Pitch: 1
