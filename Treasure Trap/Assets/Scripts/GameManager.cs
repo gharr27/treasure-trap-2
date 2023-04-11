@@ -143,30 +143,30 @@ public class GameManager : MonoBehaviour {
 
     void UpdateGUITileCount() {
         if (isNetworkGame) {
-            p1QueenCount.text = "Queen" + p1.queenCount.ToString();
-            p1AntCount.text = "Ant" + p1.antCount.ToString();
-            p1GrasshopperCount.text = "Grass" + p1.grasshopperCount.ToString();
-            p1BeetleCount.text = "Beetle" + p1.beetleCount.ToString();
-            p1SpiderCount.text = "Spider" + p1.spiderCount.ToString();
+            p1QueenCount.text = "x" + p1.queenCount.ToString();
+            p1AntCount.text = "x" + p1.antCount.ToString();
+            p1GrasshopperCount.text = "x" + p1.grasshopperCount.ToString();
+            p1BeetleCount.text = "x" + p1.beetleCount.ToString();
+            p1SpiderCount.text = "x" + p1.spiderCount.ToString();
 
-            p2QueenCount.text = "Queen" + p2.queenCount.ToString();
-            p2AntCount.text = "Ant" + p2.antCount.ToString();
-            p2GrasshopperCount.text = "grass" + p2.grasshopperCount.ToString();
-            p2BeetleCount.text = "Beetle" + p2.beetleCount.ToString();
-            p2SpiderCount.text = "Spider" + p2.spiderCount.ToString();
+            p2QueenCount.text = "x" + p2.queenCount.ToString();
+            p2AntCount.text = "x" + p2.antCount.ToString();
+            p2GrasshopperCount.text = "x" + p2.grasshopperCount.ToString();
+            p2BeetleCount.text = "x" + p2.beetleCount.ToString();
+            p2SpiderCount.text = "x" + p2.spiderCount.ToString();
         }
         else if (isAIGame) {
-            p1QueenCount.text = "Queen" + p1.queenCount.ToString();
-            p1AntCount.text = "Ant" + p1.antCount.ToString();
-            p1GrasshopperCount.text = "Grass" + p1.grasshopperCount.ToString();
-            p1BeetleCount.text = "Beetle" + p1.beetleCount.ToString();
-            p1SpiderCount.text = "Spider" + p1.spiderCount.ToString();
+            p1QueenCount.text = "x" + p1.queenCount.ToString();
+            p1AntCount.text = "x" + p1.antCount.ToString();
+            p1GrasshopperCount.text = "x" + p1.grasshopperCount.ToString();
+            p1BeetleCount.text = "x" + p1.beetleCount.ToString();
+            p1SpiderCount.text = "x" + p1.spiderCount.ToString();
 
-            p2QueenCount.text = "Queen" + ai.queenCount.ToString();
-            p2AntCount.text = "Ant" + ai.antCount.ToString();
-            p2GrasshopperCount.text = "grass" + ai.grasshopperCount.ToString();
-            p2BeetleCount.text = "Beetle" + ai.beetleCount.ToString();
-            p2SpiderCount.text = "Spider" + ai.spiderCount.ToString();
+            p2QueenCount.text = "x" + ai.queenCount.ToString();
+            p2AntCount.text = "x" + ai.antCount.ToString();
+            p2GrasshopperCount.text = "x" + ai.grasshopperCount.ToString();
+            p2BeetleCount.text = "x" + ai.beetleCount.ToString();
+            p2SpiderCount.text = "x" + ai.spiderCount.ToString();
         }
         else {
 

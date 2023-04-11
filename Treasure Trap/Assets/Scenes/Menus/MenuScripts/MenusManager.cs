@@ -36,7 +36,7 @@ public class MenusManager : MonoBehaviour
 
     public void GoToTutorial()
     {
-        SceneManager.LoadScene("Rules(1)");
+        SceneManager.LoadScene("TutorialRules");
     }
 
     public void GoToStoryStrip1()
