@@ -6787,9 +6787,21 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 650905560}
     m_Modifications:
+    - target: {fileID: 3755767681359860867, guid: 910cb743c1bf3bd4f95a91c06bd300d8, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3755767681694728651, guid: 910cb743c1bf3bd4f95a91c06bd300d8, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3755767681758987609, guid: 910cb743c1bf3bd4f95a91c06bd300d8, type: 3}
       propertyPath: m_Name
       value: SettingsMenu
+      objectReference: {fileID: 0}
+    - target: {fileID: 3755767681758987609, guid: 910cb743c1bf3bd4f95a91c06bd300d8, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3755767681758987614, guid: 910cb743c1bf3bd4f95a91c06bd300d8, type: 3}
       propertyPath: m_Pivot.x
