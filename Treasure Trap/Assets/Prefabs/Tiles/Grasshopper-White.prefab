@@ -3993,7 +3993,7 @@ GameObject:
   - component: {fileID: 2823262828083296447}
   m_Layer: 0
   m_Name: Grasshopper-White
-  m_TagString: Tile
+  m_TagString: White
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
