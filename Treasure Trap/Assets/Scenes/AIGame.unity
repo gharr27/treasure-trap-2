@@ -561,9 +561,9 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1799851695}
-  m_LocalRotation: {x: 0, y: -0.70710677, z: 0.70710677, w: 0}
+  m_LocalRotation: {x: -0, y: -0.7071068, z: 0.7071068, w: 0}
   m_LocalPosition: {x: 0, y: 0, z: 909}
-  m_LocalScale: {x: 190.00003, y: 1, z: 106.000015}
+  m_LocalScale: {x: 189.99997, y: 1, z: 106}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 963194228}
@@ -641,11 +641,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Tiles:
-  - {fileID: 144613323671528279, guid: 786c09aaf89e00f4c92b934ee9fe89bd, type: 3}
-  - {fileID: 2266287429149696184, guid: 1122ae0e43e1cc24289f2379b41656be, type: 3}
-  - {fileID: 7362697454282387358, guid: cfeaf3f49a3b2434599fae92f0f60861, type: 3}
-  - {fileID: 8388596035331099963, guid: 1c94f7e799a357544b8bf0c6ab861c95, type: 3}
-  - {fileID: 2859850552348427938, guid: 8231a310f57375641ab1f270409793f1, type: 3}
+  - {fileID: 7204016214896459053, guid: 71475465444b7754faf77674fe8e53bb, type: 3}
+  - {fileID: 4479221053784291670, guid: ec32c13d7b9eeb44f9a817fbee6356d7, type: 3}
+  - {fileID: 4107965070114143368, guid: 012d0fa115c01f9479dbc7cf6a9476d6, type: 3}
+  - {fileID: 6726080845171572285, guid: e31aa067b2f6b904198f816823badca8, type: 3}
+  - {fileID: 6499795646721306763, guid: 6604163489553b14bbf440df327c0c11, type: 3}
   color: 
   isNetworkGame: 0
   isTurn: 0
@@ -735,6 +735,10 @@ MonoBehaviour:
   turn: 0
   round: 1
   isPlaying: 0
+<<<<<<< Updated upstream
+=======
+  isAIPlaying: 0
+>>>>>>> Stashed changes
   isNetworkGame: 0
   isAIGame: 1
   p1: {fileID: 0}
@@ -6323,18 +6327,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tiles:
-  - {fileID: 8449723533655742188, guid: 8e883303e126ff9478881e02e30c1c6f, type: 3}
-  - {fileID: 1680997667197133304, guid: 5bbaa438554fd204abefb8ec35bfdda3, type: 3}
-  - {fileID: 2175466403812836874, guid: 396eb58f20568314db7984ad80939749, type: 3}
-  - {fileID: 5750900686715244409, guid: 0e3acac27e105774dae66de2dedafd1a, type: 3}
-  - {fileID: 4782476565982883196, guid: a6ddd26765ed9434d988a4dc1896e344, type: 3}
+  - {fileID: 468896291650059172, guid: c7afb347fdfdf5e4a8def83d4d54f7ae, type: 3}
+  - {fileID: 8434464204342193365, guid: ac109c6324429aa4c8376ba9caa66465, type: 3}
+  - {fileID: 5223970093706145572, guid: 48283a174b6c9c34db6f9d64b0079885, type: 3}
+  - {fileID: 4546084532378572106, guid: 692fbf74a50698a45aa5454eed4ff065, type: 3}
+  - {fileID: 5296058697384246641, guid: 34bb6f28b075ed340bece794270dfdd8, type: 3}
   queenCount: 1
   antCount: 3
   grasshopperCount: 3
   beetleCount: 2
   spiderCount: 2
   isTurn: 0
+<<<<<<< Updated upstream
   maxDepth: 5
+=======
+  gameManagerObj: {fileID: 4762478688846900880}
+  isQueenPlaced: 0
+>>>>>>> Stashed changes
 --- !u!114 &9110934989441233348
 MonoBehaviour:
   m_ObjectHideFlags: 0
