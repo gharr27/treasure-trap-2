@@ -3779,9 +3779,21 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 467683554}
     m_Modifications:
+    - target: {fileID: 475660546855666119, guid: f3a72ad2300e48c44b75b8b21201fde0, type: 3}
+      propertyPath: m_text
+      value: Are you sure you want to exit to the Main Menu?
+      objectReference: {fileID: 0}
+    - target: {fileID: 7499834637684426949, guid: f3a72ad2300e48c44b75b8b21201fde0, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1842098034}
+    - target: {fileID: 7499834637684426949, guid: f3a72ad2300e48c44b75b8b21201fde0, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: GoToMainMenu
+      objectReference: {fileID: 0}
     - target: {fileID: 7738052203001688308, guid: f3a72ad2300e48c44b75b8b21201fde0, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7738052203671328755, guid: f3a72ad2300e48c44b75b8b21201fde0, type: 3}
       propertyPath: m_overflowMode
