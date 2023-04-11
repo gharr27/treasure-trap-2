@@ -49,7 +49,10 @@ public class GameManager : MonoBehaviour {
 
     public GameObject GridTile;
     public GameObject[] Players;
+    public GameObject[] P1Buttons;
+    public GameObject[] P2Buttons;
     public GameObject AI;
+    public GameObject NetworkManager;
 
     const int PIECE_COUNT = 22;
 
@@ -76,6 +79,9 @@ public class GameManager : MonoBehaviour {
 
     MenusManager menuManager;
     GameObject menuManagerObject;
+    NetworkManager network;
+
+    bool isP1;
 
     public Dictionary<Vector3, GameGridCell> gameGrid = new Dictionary<Vector3, GameGridCell>();
 
@@ -94,26 +100,32 @@ public class GameManager : MonoBehaviour {
         //Network Game
         if (isNetworkGame) {
             Debug.Log("Network Game");
-            playerObject1 = PhotonNetwork.Instantiate(Players[0].name, Vector3.zero, Quaternion.identity);
-            playerObject2 = PhotonNetwork.Instantiate(Players[1].name, Vector3.zero, Quaternion.identity);
-            photonView = GetComponent<PhotonView>();
+            photonView = GetComponent(typeof(PhotonView)) as PhotonView;
+            network = NetworkManager.GetComponent(typeof(NetworkManager)) as NetworkManager;
+
+            p1 = Players[0].GetComponent(typeof(PlayerScript)) as PlayerScript;
+            p2 = Players[1].GetComponent(typeof(PlayerScript)) as PlayerScript;
 
             //Is Host
             if (PhotonNetwork.IsMasterClient) {
                 Debug.Log("P1");
+                p1.color = "white";
+                p2.color = "black";
+                p1.isTurn = true;
+                p2.isTurn = false;
             }
             else {
                 Debug.Log("P2");
+                p1.color = "black";
+                p2.color = "white";
+                p1.isTurn = false;
+                p2.isTurn = true;
             }
 
-            p1 = playerObject1.GetComponent(typeof(PlayerScript)) as PlayerScript;
-            p1.color = "white";
 
-            p2 = playerObject2.GetComponent(typeof(PlayerScript)) as PlayerScript;
-            p2.color = "black";
 
-            p1.isTurn = true;
-            p2.isTurn = false;
+            Debug.Log(p1.isTurn);
+            Debug.Log(p2.isTurn);
         }
         else if (isAIGame) { //Single Player Game
             Debug.Log("AI Game");
@@ -173,85 +185,53 @@ public class GameManager : MonoBehaviour {
         }
     }
 
-    public void Move(GameObject tile, Vector3 pos, bool isMove) {
-        photonView.RPC("NetworkMakeMove", RpcTarget.All, tile, pos, isMove);
-    }
+    public void MakeMove(GameObject tile, Vector3 pos, bool isMove) {
+        Debug.Log("Making Move");
+        if (!isNetworkGame) {
+            if (p1.isTurn) {
+                if (isMove) {
+                    gameGrid[tile.transform.position] = new GameGridCell();
+                    tile.transform.position = pos;
 
-    [PunRPC]
-    public void NetworkMakeMove(GameObject tile, Vector3 pos, bool isMove) {
-        if (isMove) {
-            gameGrid[tile.transform.position] = new GameGridCell();
-            tile.transform.position = pos;
+                    GameGridCell gridCell = new GameGridCell(true, tile);
 
-            GameGridCell gridCell = new GameGridCell(true, tile);
+                    if (!gameGrid.ContainsKey(pos)) {
+                        gameGrid.Add(pos, gridCell);
+                    }
+                    else {
+                        gameGrid[pos] = gridCell;
+                    }
+                }
+                else {
+                    GameObject tilePiece = Instantiate(tile, pos, Quaternion.identity) as GameObject;
+                    gamePieces[tilesPlaced] = tilePiece;
+                    GameGridCell gridCell = new GameGridCell(true, tilePiece);
 
-            if (!gameGrid.ContainsKey(pos)) {
-                gameGrid.Add(pos, gridCell);
-            }
-            else {
-                gameGrid[pos] = gridCell;
+                    if (gameGrid.ContainsKey(pos)) {
+                        gameGrid[pos] = gridCell;
+                    }
+                    else {
+                        gameGrid.Add(pos, gridCell);
+                    }
+                    tilesPlaced++;
+                }
+
+                UpdateGameGrid(pos);
+                UpdateGUITileCount();
+                UpdateTurn();
+
+                ClearMoveGrid();
+                CheckForWin(true);
+
+                if (isAIGame) {
+                    ai.Move(gameGrid, round, false);
+                }
             }
         }
         else {
-            GameObject tilePiece = PhotonNetwork.Instantiate(tile.name, pos, Quaternion.identity);
-            photonView.RPC("AddToGamePieces", RpcTarget.All, tilePiece);
-            GameGridCell gridCell = new GameGridCell(true, tilePiece);
-
-            if (gameGrid.ContainsKey(pos)) {
-                gameGrid[pos] = gridCell;
-            }
-            else {
-                gameGrid.Add(pos, gridCell);
-            }
-            photonView.RPC("IncrementTilesPlaced", RpcTarget.All, 1);
-        }
-
-        UpdateGameGrid(pos);
-
-        ClearMoveGrid();
-        //CheckForWin();
-
-    }
-
-    public void MakeMove(GameObject tile, Vector3 pos, bool isMove) {
-        if (p1.isTurn) {
-            if (isMove) {
-                gameGrid[tile.transform.position] = new GameGridCell();
-                tile.transform.position = pos;
-
-                GameGridCell gridCell = new GameGridCell(true, tile);
-
-                if (!gameGrid.ContainsKey(pos)) {
-                    gameGrid.Add(pos, gridCell);
-                }
-                else {
-                    gameGrid[pos] = gridCell;
-                }
-            }
-            else {
-                GameObject tilePiece = Instantiate(tile, pos, Quaternion.identity) as GameObject;
-                gamePieces[tilesPlaced] = tilePiece;
-                GameGridCell gridCell = new GameGridCell(true, tilePiece);
-
-                if (gameGrid.ContainsKey(pos)) {
-                    gameGrid[pos] = gridCell;
-                }
-                else {
-                    gameGrid.Add(pos, gridCell);
-                }
-                tilesPlaced++;
-            }
-
-            UpdateGameGrid(pos);
-            UpdateGUITileCount();
-            UpdateTurn();
-
-            ClearMoveGrid();
-            CheckForWin(true);
-
-            if (isAIGame) {
-                ai.Move(gameGrid, round, false);
-            }
+            Debug.Log("Did the thang");
+            //Convert move to string vars
+            network.ReceiveMoveString("test", "phrase");
         }
     }
 
@@ -304,12 +284,14 @@ public class GameManager : MonoBehaviour {
                 p1.isTurn = false;
                 p2.isTurn = true;
                 turn = 1;
+                Debug.Log(p1.isTurn);
             }
             else {
                 p1.isTurn = true;
                 p2.isTurn = false;
                 turn = 0;
                 round++;
+                Debug.Log(p1.isTurn);
             }
         }
         else if (isAIGame) {
@@ -324,9 +306,6 @@ public class GameManager : MonoBehaviour {
                 turn = 0;
                 round++;
             }
-        }
-        else {
-
         }
     }
 
@@ -1350,6 +1329,10 @@ public class GameManager : MonoBehaviour {
     //Creates the selection grid at valid move positions
     public void SetMoveGrid(GameObject tile, bool isMove) {
 
+        if (isNetworkGame) {
+            Debug.Log("test3");
+        }
+
         bool isWhite;
 
         if (turn == 0) {
@@ -1395,5 +1378,11 @@ public class GameManager : MonoBehaviour {
             GameObject temp = selectionGrids.Pop();
             Destroy(temp);
         }
+    }
+
+    public void ReceiveMoveString(string tileName, string tilePos) {
+        Debug.Log("Received message " + tileName + " " + tilePos + " from Network");
+
+        UpdateTurn();
     }
 }
