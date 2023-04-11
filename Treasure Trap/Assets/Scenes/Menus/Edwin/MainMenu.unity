@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028305, g: 0.22571313, b: 0.3069213, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028334, g: 0.22571328, b: 0.3069217, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -731,11 +731,11 @@ RectTransform:
   m_Children:
   - {fileID: 329252754}
   m_Father: {fileID: 1267897419}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 2.616}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -546, y: -551.6}
+  m_AnchoredPosition: {x: -546, y: -279.3}
   m_SizeDelta: {x: 328.5626, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &133389615
@@ -1024,7 +1024,7 @@ RectTransform:
   m_Children:
   - {fileID: 754434650}
   m_Father: {fileID: 1267897419}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: -2.424}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -3881,7 +3881,7 @@ GameObject:
   - component: {fileID: 926131409}
   - component: {fileID: 926131408}
   m_Layer: 5
-  m_Name: StoryText
+  m_Name: CreditsText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3927,7 +3927,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: STORY
+  m_text: CREDITS
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 7dc89cc711a1add4fba70f97a20bdfdc, type: 2}
   m_sharedMaterial: {fileID: 3749300176243364882, guid: 7dc89cc711a1add4fba70f97a20bdfdc, type: 2}
@@ -3936,8 +3936,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+    rgba: 4288190616
+  m_fontColor: {r: 0.5943396, g: 0.5943396, b: 0.5943396, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -4855,9 +4855,9 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 214938015}
-  - {fileID: 1569664794}
   - {fileID: 141569585}
   - {fileID: 133389614}
+  - {fileID: 1569664794}
   - {fileID: 1798626969}
   - {fileID: 1141985492}
   - {fileID: 1883062223}
@@ -5123,7 +5123,7 @@ GameObject:
   - component: {fileID: 1569664799}
   - component: {fileID: 1569664798}
   m_Layer: 5
-  m_Name: StoryButton
+  m_Name: CreditsButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5143,11 +5143,11 @@ RectTransform:
   m_Children:
   - {fileID: 926131407}
   m_Father: {fileID: 1267897419}
-  m_RootOrder: 1
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 1.214}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -546, y: -279.3}
+  m_AnchoredPosition: {x: -546, y: -551.6}
   m_SizeDelta: {x: 328.5626, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1569664795
@@ -5157,7 +5157,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1569664793}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
   m_Name: 
