@@ -16,7 +16,8 @@ public class ChatManager : MonoBehaviour, IChatClientListener
     public TMP_Text userName2;
     MenusManager menuManager;
     GameObject menuManagerObject;
-    // public TMP_Text notificationText;
+    public TMP_Text counterText;
+    public int counter = 0;
     public GameObject notificationImage;
 
 
@@ -83,6 +84,8 @@ public class ChatManager : MonoBehaviour, IChatClientListener
 
     public void OnGetMessages(string channelName, string[] senders, object[] messages)
     {
+            counter++;
+            counterText.text = counter.ToString();
             for (int i = 0; i < senders.Length; i++)
             {
                 // if (senders[i] != PhotonNetwork.NickName) // check if sender is not local player
@@ -234,6 +237,8 @@ public class ChatManager : MonoBehaviour, IChatClientListener
     }
 
     public void onExitChat(){
+        counter = 0;
+        counterText.text = counter.ToString();
         notificationImage.SetActive(false);
     }
 }
