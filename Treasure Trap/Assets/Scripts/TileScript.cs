@@ -8,6 +8,8 @@ public class TileScript : MonoBehaviour {
     bool isMouseOver = false;
     bool isWhite;
 
+    BoxCollider boxCollider;
+
     GameManager gameManager;
     GameObject gameController;
 
@@ -44,6 +46,7 @@ public class TileScript : MonoBehaviour {
 
     // Start is called before the first frame update
     void Start() {
+        boxCollider = this.GetComponent(typeof(BoxCollider)) as BoxCollider;
         gameController = GameObject.FindWithTag("GameController");
         gameManager = gameController.GetComponent(typeof(GameManager)) as GameManager;
 
@@ -66,9 +69,6 @@ public class TileScript : MonoBehaviour {
         if (tileName == "Queen") {
             id = tileName + queenId;
             queenId++;
-            if (isWhite) {
-                p1.QueenPlaced();
-            }
         }
         else if (tileName == "Ant") {
             id = tileName + antId;
@@ -96,9 +96,9 @@ public class TileScript : MonoBehaviour {
 
     private void Update() {
         if (gameManager.isAIGame) {
-            if (!gameManager.gameGrid[top].isFilled) {
-                if (Input.GetMouseButtonDown(0) && isMouseOver && gameManager.turn == 0 && isWhite) {
-                    p1.SetTile(gameObject);
+            if (Input.GetMouseButtonDown(0) && isMouseOver && p1.isTurn && p1.isQueenPlaced) {
+                if (!gameManager.gameGrid[top].isFilled) {
+                    gameManager.SetMoveGrid(gameObject, true);
                 }
             }
         }
