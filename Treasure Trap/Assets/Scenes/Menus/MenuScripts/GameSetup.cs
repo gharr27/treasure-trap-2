@@ -4,15 +4,15 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-
 public class GameSetup : MonoBehaviour
 {
     public TextMeshProUGUI username;
     public TextMeshProUGUI difficulty;
     public TextMeshProUGUI whoStarts;
-    public Image charRed;
-    public Image charGreen;
-    public Image charBlue;
+    public Image ghostChar;
+    public Image cowChar;
+    public Image kidChar;
+    public Image queenChar;
 
     // Start is called before the first frame update
     void Start()
@@ -21,17 +21,29 @@ public class GameSetup : MonoBehaviour
         difficulty.text = PlayerPrefs.GetString("Difficulty");
         whoStarts.text = PlayerPrefs.GetString("WhoStarts");
 
-        if (PlayerPrefs.GetString("Character") == "Option1 _ Red") {
-            charGreen.enabled = false;
-            charBlue.enabled = false;
+        if (PlayerPrefs.GetString("Character") == "Option1 _ Ghost") {
+            ghostChar.enabled = true;
+            cowChar.enabled = false;
+            kidChar.enabled = false;
+            queenChar.enabled = false;
         }
-        else if (PlayerPrefs.GetString("Character") == "Option2 _ Green") {
-            charRed.enabled = false;
-            charBlue.enabled = false;
+        else if (PlayerPrefs.GetString("Character") == "Option2 _ Cow") {
+            ghostChar.enabled = false;
+            cowChar.enabled = true;
+            kidChar.enabled = false;
+            queenChar.enabled = false;
         }
-        else if (PlayerPrefs.GetString("Character") == "Option3 _ Blue" ){
-            charRed.enabled = false;
-            charGreen.enabled = false;
+        else if (PlayerPrefs.GetString("Character") == "Option3 _ Kid" ){
+            ghostChar.enabled = false;
+            cowChar.enabled = false;
+            kidChar.enabled = true;
+            queenChar.enabled = false;
+        }
+        else if (PlayerPrefs.GetString("Character") == "Option4 _ Queen" ){
+            ghostChar.enabled = false;
+            cowChar.enabled = false;
+            kidChar.enabled = false;
+            queenChar.enabled = true;
         }
     }
 
