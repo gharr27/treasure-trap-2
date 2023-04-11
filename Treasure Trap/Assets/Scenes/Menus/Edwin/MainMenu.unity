@@ -6215,6 +6215,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3051355073563651509, guid: 5a42c38ddf10da947a52c1f1c4bdfa0c, type: 3}
+      propertyPath: m_text
+      value: are you sure you want to quit the game?
+      objectReference: {fileID: 0}
     - target: {fileID: 4960070845369230519, guid: 5a42c38ddf10da947a52c1f1c4bdfa0c, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
