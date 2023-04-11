@@ -16,6 +16,8 @@ public class ChatManager : MonoBehaviour, IChatClientListener
     public TMP_Text userName2;
     MenusManager menuManager;
     GameObject menuManagerObject;
+    // public TMP_Text notificationText;
+    public GameObject notificationImage;
 
 
     void Start()
@@ -83,6 +85,20 @@ public class ChatManager : MonoBehaviour, IChatClientListener
     {
             for (int i = 0; i < senders.Length; i++)
             {
+                // if (senders[i] != PhotonNetwork.NickName) // check if sender is not local player
+                // {
+                //     // display notification on UI text element
+                //     notificationText.text = senders[i] + " sent a message: " + messages[i];
+                //     // hide notification after 3 seconds
+                //     StartCoroutine(HideNotification(5));
+                // }
+
+                if (senders[i] != PhotonNetwork.NickName) // check if sender is not local player
+                {
+                    // display notification image
+                    notificationImage.SetActive(true);
+                }
+
                 Debug.Log(senders[i] + ": what I get");
                 if (string.IsNullOrEmpty(msgArea.text))
                 {
@@ -95,6 +111,12 @@ public class ChatManager : MonoBehaviour, IChatClientListener
             }
 
     }
+
+    // private IEnumerator HideNotification(float delay)
+    // {
+    //     yield return new WaitForSeconds(delay);
+    //     notificationText.text = "";
+    // }
 
     public void ConnectToServer()
     {
@@ -209,5 +231,9 @@ public class ChatManager : MonoBehaviour, IChatClientListener
     {
         Debug.Log("ON unsubscribed room");
 
+    }
+
+    public void onExitChat(){
+        notificationImage.SetActive(false);
     }
 }
