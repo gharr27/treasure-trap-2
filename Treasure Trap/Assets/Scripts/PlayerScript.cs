@@ -18,7 +18,7 @@ public class PlayerScript : MonoBehaviour {
 
     GameObject tile = null;
     Vector3 pos = Vector3.zero;
-    bool isMove = false;
+    public bool isMove = false;
     bool isFirstMove = true;
     public bool isQueenPlaced = false;
 
@@ -145,6 +145,7 @@ public class PlayerScript : MonoBehaviour {
 
     public void Move() {
         if (gameManager.isNetworkGame) {
+            Debug.Log(tile + " " + pos + " " + isMove + " " + color);
             gameManager.SendMove(tile, pos, isMove, color);
         }
         else {

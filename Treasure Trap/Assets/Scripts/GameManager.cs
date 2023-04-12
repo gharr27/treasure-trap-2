@@ -63,6 +63,8 @@ public class GameManager : MonoBehaviour {
     public bool isPlaying = false;
     public bool isAIPlaying = false;
 
+    Vector3 selectedTilePos;
+
     private GameObject[] gamePieces;
     private Stack<GameObject> selectionGrids;
 
@@ -157,6 +159,14 @@ public class GameManager : MonoBehaviour {
         UpdateGUITileCount();
     }
 
+    public void SetSelectedTilePos(Vector3 newPos) {
+        selectedTilePos = newPos;
+    }
+
+    public void SendTilePos(Vector3 newPos) {
+        network.ReceiveTilePos(newPos);
+    }
+
     void UpdateGUITileCount() {
         if (isNetworkGame) {
             p1QueenCount.text = "x" + p1.queenCount.ToString();
@@ -190,8 +200,13 @@ public class GameManager : MonoBehaviour {
     }
 
     public void MakeMove(GameObject tile, Vector3 pos, bool isMove) {
+
         if (isNetworkGame) {
+            Vector3 tilePos = selectedTilePos;
+            selectedTilePos = new Vector3();
+
             if (isMove) {
+                tile = gameGrid[tilePos].tile;
                 gameGrid[tile.transform.position] = new GameGridCell();
                 tile.transform.position = pos;
 
@@ -255,6 +270,9 @@ public class GameManager : MonoBehaviour {
                     gamePieces[tilesPlaced] = tilePiece;
                     GameGridCell gridCell = new GameGridCell(true, tilePiece);
 
+                    TileScript tileScript = tilePiece.GetComponent(typeof(TileScript)) as TileScript;
+                    p1.DecrementTile(tileScript.tileName);
+
                     if (gameGrid.ContainsKey(pos)) {
                         gameGrid[pos] = gridCell;
                     }
@@ -295,12 +313,11 @@ public class GameManager : MonoBehaviour {
             }
             else {
                 GameObject tilePiece = Instantiate(tile, pos, Quaternion.identity) as GameObject;
-                TileScript tileScript = tilePiece.GetComponent(typeof(TileScript)) as TileScript;
-
-                ai.DecrementTile(tileScript.tileName);
-
                 gamePieces[tilesPlaced] = tilePiece;
                 GameGridCell gridCell = new GameGridCell(true, tilePiece);
+
+                TileScript tileScript = tilePiece.GetComponent(typeof(TileScript)) as TileScript;
+                ai.DecrementTile(tileScript.tileName);
 
                 if (gameGrid.ContainsKey(pos)) {
                     gameGrid[pos] = gridCell;
@@ -1131,7 +1148,7 @@ public class GameManager : MonoBehaviour {
         for (int i = 0; gamePieces[i] != null; i++) {
             bool canPlace = true;
             TileScript tileScript = gamePieces[i].GetComponent(typeof(TileScript)) as TileScript;
-
+            Debug.Log(tileScript.GetTileColor());
             if (round != 1) {
                 if (isWhite) {
                     if (tileScript.GetTileColor() == "black") {
@@ -1146,6 +1163,7 @@ public class GameManager : MonoBehaviour {
             }
 
             if (canPlace) {
+                Debug.Log("yes");
 
                 float x = gamePieces[i].transform.position.x;
                 float z = gamePieces[i].transform.position.z;
@@ -1330,8 +1348,6 @@ public class GameManager : MonoBehaviour {
 
         bool isWhite;
 
-
-        Debug.Log(p1.isTurn);
         if (p1.isTurn) {
             isWhite = true;
         }
@@ -1358,6 +1374,7 @@ public class GameManager : MonoBehaviour {
             }
             else {
                 //Place Validation
+                Debug.Log(isWhite);
                 Stack<Vector3> positions = GetPlacePositions(isWhite);
                 Debug.Log(positions.Count);
 

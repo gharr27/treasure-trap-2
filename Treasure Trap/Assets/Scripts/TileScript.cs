@@ -113,11 +113,15 @@ public class TileScript : MonoBehaviour {
         else if (gameManager.isNetworkGame) {
             if (Input.GetMouseButtonDown(0) && isMouseOver && p1.isTurn && p1.isQueenPlaced && gameManager.isP1) {
                 if (!gameManager.gameGrid[top].isFilled) {
+                    p1.isMove = true;
+                    gameManager.SendTilePos(transform.position);
                     gameManager.SetMoveGrid(gameObject, true);
                 }
             }
             else if (Input.GetMouseButtonDown(0) && isMouseOver && p2.isTurn && p2.isQueenPlaced && !gameManager.isP1) {
                 if (!gameManager.gameGrid[top].isFilled) {
+                    p2.isMove = true;
+                    gameManager.SendTilePos(transform.position);
                     gameManager.SetMoveGrid(gameObject, true);
                 }
             }

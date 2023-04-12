@@ -18,6 +18,15 @@ public class NetworkManager : MonoBehaviour {
         photon.RPC("RPC_SendMoveString", RpcTarget.All, tileName, tileColor, tilePosX, tilePosY, tilePosZ, moveType);
     }
 
+    public void ReceiveTilePos(Vector3 selectedTilePos) {
+        photon.RPC("RPC_SendTilePos", RpcTarget.All, selectedTilePos);
+    }
+
+    [PunRPC]
+    void RPC_SendTilePos(Vector3 selectedTilePos) {
+        game.SetSelectedTilePos(selectedTilePos);
+    }
+
 
     [PunRPC]
     void RPC_SendMoveString(string tileName, string tileColor, string tilePosX, string tilePosY, string tilePosZ, string moveType) {
