@@ -50,14 +50,22 @@ public class TileScript : MonoBehaviour {
         gameController = GameObject.FindWithTag("GameController");
         gameManager = gameController.GetComponent(typeof(GameManager)) as GameManager;
 
-        playerWhiteObj = gameManager.Players[0];
-        playerBlackObj = gameManager.AI;
+        
 
-        p1 = playerWhiteObj.GetComponent(typeof(PlayerScript)) as PlayerScript;
-        ai = playerBlackObj.GetComponent(typeof(AI)) as AI;
+        if (gameManager.isAIGame) {
+            playerWhiteObj = gameManager.Players[0];
+            playerBlackObj = gameManager.AI;
 
+            p1 = playerWhiteObj.GetComponent(typeof(PlayerScript)) as PlayerScript;
+            ai = playerBlackObj.GetComponent(typeof(AI)) as AI;
+        }
+        else if (gameManager.isNetworkGame) {
+            playerWhiteObj = gameManager.Players[0];
+            playerBlackObj = gameManager.Players[1];
 
-        //Checks which turn it is to assign tile color
+            p1 = playerWhiteObj.GetComponent(typeof(PlayerScript)) as PlayerScript;
+            p2 = playerBlackObj.GetComponent(typeof(PlayerScript)) as PlayerScript;
+        }
 
         if (CompareTag("White")) {
             isWhite = true;
@@ -98,6 +106,22 @@ public class TileScript : MonoBehaviour {
         if (gameManager.isAIGame) {
             if (Input.GetMouseButtonDown(0) && isMouseOver && p1.isTurn && p1.isQueenPlaced) {
                 if (!gameManager.gameGrid[top].isFilled) {
+                    gameManager.SetMoveGrid(gameObject, true);
+                }
+            }
+        }
+        else if (gameManager.isNetworkGame) {
+            if (Input.GetMouseButtonDown(0) && isMouseOver && p1.isTurn && p1.isQueenPlaced && gameManager.isP1) {
+                if (!gameManager.gameGrid[top].isFilled) {
+                    p1.isMove = true;
+                    gameManager.SendTilePos(transform.position);
+                    gameManager.SetMoveGrid(gameObject, true);
+                }
+            }
+            else if (Input.GetMouseButtonDown(0) && isMouseOver && p2.isTurn && p2.isQueenPlaced && !gameManager.isP1) {
+                if (!gameManager.gameGrid[top].isFilled) {
+                    p2.isMove = true;
+                    gameManager.SendTilePos(transform.position);
                     gameManager.SetMoveGrid(gameObject, true);
                 }
             }

@@ -1052,8 +1052,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 178, y: -1184}
-  m_SizeDelta: {x: 889, y: 538}
+  m_AnchoredPosition: {x: 173.01347, y: -1186.9}
+  m_SizeDelta: {x: 935.0309, y: 537.18}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &100016713
 MonoBehaviour:
@@ -1075,10 +1075,10 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "The Sailboat moves three spaces per turn - no more, no less.\r\nIt must
-    move in a direct path and can't backtrack on itself. It may only move around
-    ships that it is in direct contact with on each step of its move and it may not
-    move across to a ship that it's not in direct contact with.\r"
+  m_text: The Sailboat moves three spaces per turn - no more, no less. It must move
+    in a direct path and cannot backtrack on itself. It may only move around ships
+    that it is in direct contact with on each step of its move, and it may not move
+    across to a ship that it's not in direct contact with.
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 0274e9f7d70ef4ee0a9be2fb1ff73f38, type: 2}
   m_sharedMaterial: {fileID: 3749300176243364882, guid: 0274e9f7d70ef4ee0a9be2fb1ff73f38, type: 2}
@@ -2436,8 +2436,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 174, y: -1250}
-  m_SizeDelta: {x: 977.4786, y: 589.719}
+  m_AnchoredPosition: {x: 161.53334, y: -1164.0878}
+  m_SizeDelta: {x: 996.658, y: 614.265}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &500963452
 MonoBehaviour:
@@ -2459,13 +2459,13 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "The Longship moves only one space per turn. It is the only ship that can
-    move on top of the Hive.\r\nA ship with a Longship on top of it is unable to
-    move and for the purposes of the placing rules, the stack takes on the color
-    of the Longship.\r\nFrom its position on top of the Hive, the Longship can move
-    from tile to tile across the top of the Hive. It can also drop into spaces that
-    are surrounded and therefore not accessible to most other ships.\r\nLongships
-    can even be stacked on top of and thus block each other.\r"
+  m_text: The Longship can only move one space per turn. It is the only ship that
+    can move on top of the Battlefield. A ship with a Longship on top of it is unable
+    to move, and for the purposes of the placing rules, the stack takes on the color
+    of the Longship. From its position on top of the Battlefield, the Longship can
+    move from tile to tile across the top of the Battlefield. It can also drop into
+    spaces that are surrounded and therefore not accessible to most other ships.
+    Longships can even be stacked on top of and thus block each other.
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 0274e9f7d70ef4ee0a9be2fb1ff73f38, type: 2}
   m_sharedMaterial: {fileID: 3749300176243364882, guid: 0274e9f7d70ef4ee0a9be2fb1ff73f38, type: 2}
@@ -3494,7 +3494,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 440544305}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 39.045}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -3709,8 +3709,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 160.57608, y: -1184.0542}
-  m_SizeDelta: {x: 930.8008, y: 532.493}
+  m_AnchoredPosition: {x: 168.0561, y: -1126.1827}
+  m_SizeDelta: {x: 1005.4045, y: 530.599}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &671125938
 MonoBehaviour:
@@ -3732,12 +3732,11 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'The ships in play must be linked at all times. At no time can you leave
-    a ship stranded (not joined to the Hive) or separate the Hive in two.
-
-    Use
-    this rule to your advantage by moving your ship to strategic positions around
-    the Hive, leaving your opponent''s key ships unable to move.'
+  m_text: The ships in play must be linked at all times. You cannot strand a ship
+    (leave it unconnected to the rest of the Battlefield) or separate the Battlefield
+    in two at any time. Use this rule to your advantage by moving your ship to strategic
+    positions around the Battlefield, leaving your opponent's key ships unable to
+    move.
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 0274e9f7d70ef4ee0a9be2fb1ff73f38, type: 2}
   m_sharedMaterial: {fileID: 3749300176243364882, guid: 0274e9f7d70ef4ee0a9be2fb1ff73f38, type: 2}
@@ -4094,7 +4093,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &767539382
 GameObject:
@@ -4549,7 +4548,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &857171820
 GameObject:
@@ -4694,7 +4693,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &886940824
 GameObject:
@@ -4754,11 +4753,11 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "The Gun Boat does not move around the outside of the Hive like the other
-    ships. Instead, it jumps from its space over any number of ships(but at least
-    one) to the next unoccupied space along a straight row of joined ships.\r\nThis
-    gives it the advantage of being able to fill in a space which is surrounded by
-    other tiles.\r"
+  m_text: The Gun Boat does not move around the outside of the Battlefield like the
+    other ships do. Instead, it jumps from its space over any number of ships (but
+    at least one) to the next unoccupied space along a straight row of joined ships.
+    This gives it the advantage of being able to fill in a space which is surrounded
+    by other tiles.
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 0274e9f7d70ef4ee0a9be2fb1ff73f38, type: 2}
   m_sharedMaterial: {fileID: 3749300176243364882, guid: 0274e9f7d70ef4ee0a9be2fb1ff73f38, type: 2}
@@ -6288,10 +6287,10 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "The object of the game is to totally surround your opponent\u2019s Treasure 
-    Chest whilst at the same time trying to stop your opponent from doing the same
-    to you.\r\nThe pieces surrounding the Treasure Chest can be made up of a mixture
-    of both your pieces and your opponents\r\n"
+  m_text: The object of the game is to completely surround your opponent's Treasure
+    Chest while also preventing your opponent from doing the same to you. The pieces
+    surrounding the Treasure Chest can be made up of a mixture of both your pieces
+    and your opponent's.
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 0274e9f7d70ef4ee0a9be2fb1ff73f38, type: 2}
   m_sharedMaterial: {fileID: 3749300176243364882, guid: 0274e9f7d70ef4ee0a9be2fb1ff73f38, type: 2}
@@ -6538,8 +6537,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 480.2}
-  m_SizeDelta: {x: 287.7125, y: 111.9185}
+  m_AnchoredPosition: {x: -62.090088, y: 478.95825}
+  m_SizeDelta: {x: 411.8927, y: 114.4021}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1139322684
 MonoBehaviour:
@@ -6561,7 +6560,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: tutorial
+  m_text: How to Play
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 0274e9f7d70ef4ee0a9be2fb1ff73f38, type: 2}
   m_sharedMaterial: {fileID: 3749300176243364882, guid: 0274e9f7d70ef4ee0a9be2fb1ff73f38, type: 2}
@@ -7163,7 +7162,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1243381695
 RectTransform:
   m_ObjectHideFlags: 0
@@ -8185,9 +8184,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: The Sloop  can move from its position to any other position around the
-    Hive provided the restrictions are adhered to. This freedom of movement makes
-    the Sloop  one of the most valuable pieces.
+  m_text: The Sloop can move from its position to any other position around the Battlefield
+    provided the restrictions are adhered to. This freedom of movement makes the
+    Sloop one of the most valuable pieces.
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 0274e9f7d70ef4ee0a9be2fb1ff73f38, type: 2}
   m_sharedMaterial: {fileID: 3749300176243364882, guid: 0274e9f7d70ef4ee0a9be2fb1ff73f38, type: 2}
@@ -9569,7 +9568,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1651267817
 RectTransform:
   m_ObjectHideFlags: 0
@@ -11376,17 +11375,11 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'The ships can only move in a sliding movement. If a ship is surrounded
+  m_text: The ships can only move in a sliding movement. If a ship is surrounded
     to the point that it can no longer physically slide out of its position, it may
-    not be moved.
-
-    The only exceptions are the Gun Boat, which can jump into
-    or out of a space, and the Longship, which can also climb up or down.
-
-    Similarly,
-    no ship may move into a space that it can''t physically slide into.
-
-'
+    not be moved. Exceptions to this rule include the Gun Boat, which can jump into
+    or out of a space, and the Longship, which can also climb up or down. Similarly,
+    no ship may move into a space that it can't physically slide into.
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 0274e9f7d70ef4ee0a9be2fb1ff73f38, type: 2}
   m_sharedMaterial: {fileID: 3749300176243364882, guid: 0274e9f7d70ef4ee0a9be2fb1ff73f38, type: 2}
@@ -12084,11 +12077,10 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "Once the Chest  has been placed (not before), you can decide whether to
-    use each turn after that to place another tile or to move one of the ships that
-    have already been placed. \r\nNote that all ships must always touch at least
-    one other ship, If a ship is the only connection between two parts of the Hive,
-    it may not be moved\r"
+  m_text: After placing the Chest, each turn can be used to either place a new tile
+    or move one of the previously placed ships. Note that all ships must always touch
+    at least one other ship. If a ship is the only connection between two parts of
+    the Battlefield, it may not be moved.
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 0274e9f7d70ef4ee0a9be2fb1ff73f38, type: 2}
   m_sharedMaterial: {fileID: 3749300176243364882, guid: 0274e9f7d70ef4ee0a9be2fb1ff73f38, type: 2}

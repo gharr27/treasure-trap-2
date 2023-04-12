@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 using TMPro;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour {
 
@@ -49,7 +50,10 @@ public class GameManager : MonoBehaviour {
 
     public GameObject GridTile;
     public GameObject[] Players;
+    public Button[] P1Buttons;
+    public Button[] P2Buttons;
     public GameObject AI;
+    public GameObject NetworkManager;
 
     const int PIECE_COUNT = 22;
 
@@ -58,6 +62,8 @@ public class GameManager : MonoBehaviour {
     public int round = 1;
     public bool isPlaying = false;
     public bool isAIPlaying = false;
+
+    Vector3 selectedTilePos;
 
     private GameObject[] gamePieces;
     private Stack<GameObject> selectionGrids;
@@ -76,6 +82,9 @@ public class GameManager : MonoBehaviour {
 
     MenusManager menuManager;
     GameObject menuManagerObject;
+    NetworkManager network;
+
+    public bool isP1;
 
     public Dictionary<Vector3, GameGridCell> gameGrid = new Dictionary<Vector3, GameGridCell>();
 
@@ -94,26 +103,35 @@ public class GameManager : MonoBehaviour {
         //Network Game
         if (isNetworkGame) {
             Debug.Log("Network Game");
-            playerObject1 = PhotonNetwork.Instantiate(Players[0].name, Vector3.zero, Quaternion.identity);
-            playerObject2 = PhotonNetwork.Instantiate(Players[1].name, Vector3.zero, Quaternion.identity);
-            photonView = GetComponent<PhotonView>();
+            photonView = GetComponent(typeof(PhotonView)) as PhotonView;
+            network = NetworkManager.GetComponent(typeof(NetworkManager)) as NetworkManager;
 
-            //Is Host
-            if (PhotonNetwork.IsMasterClient) {
-                Debug.Log("P1");
-            }
-            else {
-                Debug.Log("P2");
-            }
+            p1 = Players[0].GetComponent(typeof(PlayerScript)) as PlayerScript;
+            p2 = Players[1].GetComponent(typeof(PlayerScript)) as PlayerScript;
 
-            p1 = playerObject1.GetComponent(typeof(PlayerScript)) as PlayerScript;
             p1.color = "white";
-
-            p2 = playerObject2.GetComponent(typeof(PlayerScript)) as PlayerScript;
             p2.color = "black";
-
             p1.isTurn = true;
             p2.isTurn = false;
+            p1.isP1 = true;
+            p2.isP1 = false;
+
+
+            if (PhotonNetwork.IsMasterClient) {
+                isP1 = true;
+            }
+            else {
+                isP1 = false;
+            }
+
+            for (int i = 0; i < 5; i++) {
+                if (isP1) {
+                    P2Buttons[i].enabled = false;
+                }
+                else {
+                    P1Buttons[i].enabled = false;
+                }
+            }
         }
         else if (isAIGame) { //Single Player Game
             Debug.Log("AI Game");
@@ -139,6 +157,14 @@ public class GameManager : MonoBehaviour {
         }
 
         UpdateGUITileCount();
+    }
+
+    public void SetSelectedTilePos(Vector3 newPos) {
+        selectedTilePos = newPos;
+    }
+
+    public void SendTilePos(Vector3 newPos) {
+        network.ReceiveTilePos(newPos);
     }
 
     void UpdateGUITileCount() {
@@ -173,49 +199,14 @@ public class GameManager : MonoBehaviour {
         }
     }
 
-    public void Move(GameObject tile, Vector3 pos, bool isMove) {
-        photonView.RPC("NetworkMakeMove", RpcTarget.All, tile, pos, isMove);
-    }
-
-    [PunRPC]
-    public void NetworkMakeMove(GameObject tile, Vector3 pos, bool isMove) {
-        if (isMove) {
-            gameGrid[tile.transform.position] = new GameGridCell();
-            tile.transform.position = pos;
-
-            GameGridCell gridCell = new GameGridCell(true, tile);
-
-            if (!gameGrid.ContainsKey(pos)) {
-                gameGrid.Add(pos, gridCell);
-            }
-            else {
-                gameGrid[pos] = gridCell;
-            }
-        }
-        else {
-            GameObject tilePiece = PhotonNetwork.Instantiate(tile.name, pos, Quaternion.identity);
-            photonView.RPC("AddToGamePieces", RpcTarget.All, tilePiece);
-            GameGridCell gridCell = new GameGridCell(true, tilePiece);
-
-            if (gameGrid.ContainsKey(pos)) {
-                gameGrid[pos] = gridCell;
-            }
-            else {
-                gameGrid.Add(pos, gridCell);
-            }
-            photonView.RPC("IncrementTilesPlaced", RpcTarget.All, 1);
-        }
-
-        UpdateGameGrid(pos);
-
-        ClearMoveGrid();
-        //CheckForWin();
-
-    }
-
     public void MakeMove(GameObject tile, Vector3 pos, bool isMove) {
-        if (p1.isTurn) {
+
+        if (isNetworkGame) {
+            Vector3 tilePos = selectedTilePos;
+            selectedTilePos = new Vector3();
+
             if (isMove) {
+                tile = gameGrid[tilePos].tile;
                 gameGrid[tile.transform.position] = new GameGridCell();
                 tile.transform.position = pos;
 
@@ -229,13 +220,18 @@ public class GameManager : MonoBehaviour {
                 }
             }
             else {
-                GameObject tilePiece = Instantiate(tile, pos, Quaternion.identity);
-                TileScript tileScript = tilePiece.GetComponent(typeof(TileScript)) as TileScript;
-
-                p1.DecrementTile(tileScript.tileName);
-
+                GameObject tilePiece = Instantiate(tile, pos, Quaternion.identity) as GameObject;
                 gamePieces[tilesPlaced] = tilePiece;
                 GameGridCell gridCell = new GameGridCell(true, tilePiece);
+
+                TileScript tileScript = tilePiece.GetComponent(typeof(TileScript)) as TileScript;
+
+                if (p1.isTurn) {
+                    p1.DecrementTile(tileScript.tileName);
+                }
+                else {
+                    p2.DecrementTile(tileScript.tileName);
+                }
 
                 if (gameGrid.ContainsKey(pos)) {
                     gameGrid[pos] = gridCell;
@@ -252,9 +248,50 @@ public class GameManager : MonoBehaviour {
 
             ClearMoveGrid();
             CheckForWin(true);
+        }
+        else {
+            if (p1.isTurn) {
+                if (isMove) {
+                    gameGrid[tile.transform.position] = new GameGridCell();
+                    tile.transform.position = pos;
 
-            if (isAIGame) {
-                ai.Move(gameGrid, round, false);
+                    GameGridCell gridCell = new GameGridCell(true, tile);
+
+                    if (!gameGrid.ContainsKey(pos)) {
+                        gameGrid.Add(pos, gridCell);
+                    }
+                    else {
+                        gameGrid[pos] = gridCell;
+                    }
+                }
+                else {
+
+                    GameObject tilePiece = Instantiate(tile, pos, Quaternion.identity) as GameObject;
+                    gamePieces[tilesPlaced] = tilePiece;
+                    GameGridCell gridCell = new GameGridCell(true, tilePiece);
+
+                    TileScript tileScript = tilePiece.GetComponent(typeof(TileScript)) as TileScript;
+                    p1.DecrementTile(tileScript.tileName);
+
+                    if (gameGrid.ContainsKey(pos)) {
+                        gameGrid[pos] = gridCell;
+                    }
+                    else {
+                        gameGrid.Add(pos, gridCell);
+                    }
+                    tilesPlaced++;
+                }
+
+                UpdateGameGrid(pos);
+                UpdateGUITileCount();
+                UpdateTurn();
+
+                ClearMoveGrid();
+                CheckForWin(true);
+
+                if (isAIGame) {
+                    ai.Move(gameGrid, round, false);
+                }
             }
         }
     }
@@ -276,12 +313,11 @@ public class GameManager : MonoBehaviour {
             }
             else {
                 GameObject tilePiece = Instantiate(tile, pos, Quaternion.identity) as GameObject;
-                TileScript tileScript = tilePiece.GetComponent(typeof(TileScript)) as TileScript;
-
-                ai.DecrementTile(tileScript.tileName);
-
                 gamePieces[tilesPlaced] = tilePiece;
                 GameGridCell gridCell = new GameGridCell(true, tilePiece);
+
+                TileScript tileScript = tilePiece.GetComponent(typeof(TileScript)) as TileScript;
+                ai.DecrementTile(tileScript.tileName);
 
                 if (gameGrid.ContainsKey(pos)) {
                     gameGrid[pos] = gridCell;
@@ -328,9 +364,6 @@ public class GameManager : MonoBehaviour {
                 turn = 0;
                 round++;
             }
-        }
-        else {
-
         }
     }
 
@@ -1005,7 +1038,7 @@ public class GameManager : MonoBehaviour {
                 return newPos;
             }
             else {
-                 return CheckForEmpty(newPos, false, xDir, zDir);
+                return CheckForEmpty(newPos, false, xDir, zDir);
             }
         }
 
@@ -1115,7 +1148,7 @@ public class GameManager : MonoBehaviour {
         for (int i = 0; gamePieces[i] != null; i++) {
             bool canPlace = true;
             TileScript tileScript = gamePieces[i].GetComponent(typeof(TileScript)) as TileScript;
-
+            Debug.Log(tileScript.GetTileColor());
             if (round != 1) {
                 if (isWhite) {
                     if (tileScript.GetTileColor() == "black") {
@@ -1130,6 +1163,7 @@ public class GameManager : MonoBehaviour {
             }
 
             if (canPlace) {
+                Debug.Log("yes");
 
                 float x = gamePieces[i].transform.position.x;
                 float z = gamePieces[i].transform.position.z;
@@ -1308,13 +1342,13 @@ public class GameManager : MonoBehaviour {
         return ret;
     }
 
-   
+
     //Creates the selection grid at valid move positions
     public void SetMoveGrid(GameObject tile, bool isMove) {
 
         bool isWhite;
 
-        if (turn == 0) {
+        if (p1.isTurn) {
             isWhite = true;
         }
         else {
@@ -1329,7 +1363,7 @@ public class GameManager : MonoBehaviour {
                 if (!IsBreaksHive(tile.transform.position)) {
                     Stack<Vector3> positions = ValidateMoves(tile);
                     //Checks for Gates
-                
+
 
                     while (positions.Count > 0) {
                         GameObject grid;
@@ -1340,7 +1374,9 @@ public class GameManager : MonoBehaviour {
             }
             else {
                 //Place Validation
+                Debug.Log(isWhite);
                 Stack<Vector3> positions = GetPlacePositions(isWhite);
+                Debug.Log(positions.Count);
 
                 while (positions.Count > 0) {
                     GameObject temp;
@@ -1357,5 +1393,87 @@ public class GameManager : MonoBehaviour {
             GameObject temp = selectionGrids.Pop();
             Destroy(temp);
         }
+    }
+
+    public void ReceiveMoveString(string tileName, string tileColor, string tilePosX, string tilePosY, string tilePosZ, string moveType) {
+        Debug.Log("GameCore received: " + tileName + " " + tileColor + " " + tilePosX + " " + tilePosY + " " + tilePosZ + " " + moveType);
+
+        GameObject tile = new GameObject();
+        Vector3 pos;
+        bool isMove;
+
+        //Translate to move and make move
+        if (tileColor == "white") {
+            switch (tileName) {
+                case "Queen":
+                    tile = p1.Tiles[0];
+                    break;
+                case "Ant":
+                    tile = p1.Tiles[1];
+                    break;
+                case "Grasshopper":
+                    tile = p1.Tiles[2];
+                    break;
+                case "Beetle":
+                    tile = p1.Tiles[3];
+                    break;
+                case "Spider":
+                    tile = p1.Tiles[4];
+                    break;
+            }
+        }
+        else {
+            switch (tileName) {
+                case "Queen":
+                    tile = p2.Tiles[0];
+                    break;
+                case "Ant":
+                    tile = p2.Tiles[1];
+                    break;
+                case "Grasshopper":
+                    tile = p2.Tiles[2];
+                    break;
+                case "Beetle":
+                    tile = p2.Tiles[3];
+                    break;
+                case "Spider":
+                    tile = p2.Tiles[4];
+                    break;
+            }
+        }
+      
+
+        pos.x = float.Parse(tilePosX);
+        pos.y = float.Parse(tilePosY);
+        pos.z = float.Parse(tilePosZ);
+
+        if (moveType == "move") {
+            isMove = true;
+        }
+        else {
+            isMove = false;
+        }
+
+        MakeMove(tile, pos, isMove);
+    }
+
+    public void SendMove(GameObject tile, Vector3 pos, bool isMove, string tileColor) {
+        TileScript tileScript = tile.GetComponent(typeof(TileScript)) as TileScript;
+        string tileName = tileScript.tileName;
+
+        string tilePosX = pos.x.ToString();
+        string tilePosY = pos.y.ToString();
+        string tilePosZ = pos.z.ToString();
+
+        string moveType;
+
+        if (isMove) {
+            moveType = "move";
+        }
+        else {
+            moveType = "place";
+        }
+
+        network.ReceiveMoveString(tileName, tileColor, tilePosX, tilePosY, tilePosZ, moveType);
     }
 }
