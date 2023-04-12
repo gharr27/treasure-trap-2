@@ -1972,6 +1972,11 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 3755767681758987614, guid: 910cb743c1bf3bd4f95a91c06bd300d8, type: 3}
   m_PrefabInstance: {fileID: 501120033}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &501120035 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3755767681758987609, guid: 910cb743c1bf3bd4f95a91c06bd300d8, type: 3}
+  m_PrefabInstance: {fileID: 501120033}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &540305695
 GameObject:
   m_ObjectHideFlags: 0
@@ -4293,7 +4298,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1169825724
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8317,6 +8322,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SettingsButton
       objectReference: {fileID: 0}
+    - target: {fileID: 7607089531040345371, guid: 0c5ae13e6e2b2bb4b9519198e6396225, type: 3}
+      propertyPath: square
+      value: 
+      objectReference: {fileID: 501120035}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0c5ae13e6e2b2bb4b9519198e6396225, type: 3}
 --- !u!224 &2113700554 stripped
