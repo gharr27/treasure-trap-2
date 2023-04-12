@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.18028334, g: 0.22571328, b: 0.3069217, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028305, g: 0.22571313, b: 0.3069213, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -3635,6 +3635,7 @@ MonoBehaviour:
   color: 
   isNetworkGame: 0
   isTurn: 0
+  isQueenPlaced: 0
   queenCount: 1
   antCount: 3
   grasshopperCount: 3
@@ -3779,17 +3780,49 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 467683554}
     m_Modifications:
+    - target: {fileID: 475660546275214712, guid: f3a72ad2300e48c44b75b8b21201fde0, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 475660546855666119, guid: f3a72ad2300e48c44b75b8b21201fde0, type: 3}
       propertyPath: m_text
       value: Are you sure you want to exit to the Main Menu?
       objectReference: {fileID: 0}
+    - target: {fileID: 3863537279778102807, guid: f3a72ad2300e48c44b75b8b21201fde0, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3863537279778102807, guid: f3a72ad2300e48c44b75b8b21201fde0, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3863537279778102807, guid: f3a72ad2300e48c44b75b8b21201fde0, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3863537279778102807, guid: f3a72ad2300e48c44b75b8b21201fde0, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
+      value: DisableOrEnableObject, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 7499834637684426949, guid: f3a72ad2300e48c44b75b8b21201fde0, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7499834637684426949, guid: f3a72ad2300e48c44b75b8b21201fde0, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 1842098034}
+      objectReference: {fileID: 1283863796}
     - target: {fileID: 7499834637684426949, guid: f3a72ad2300e48c44b75b8b21201fde0, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: GoToMainMenu
+      value: Leave
+      objectReference: {fileID: 0}
+    - target: {fileID: 7499834637684426949, guid: f3a72ad2300e48c44b75b8b21201fde0, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: ChatManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 7499834637684426949, guid: f3a72ad2300e48c44b75b8b21201fde0, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 7738052203001688308, guid: f3a72ad2300e48c44b75b8b21201fde0, type: 3}
       propertyPath: m_IsActive
@@ -3930,6 +3963,7 @@ MonoBehaviour:
   color: 
   isNetworkGame: 0
   isTurn: 0
+  isQueenPlaced: 0
   queenCount: 1
   antCount: 3
   grasshopperCount: 3

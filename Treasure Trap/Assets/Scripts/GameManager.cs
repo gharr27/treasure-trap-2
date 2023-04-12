@@ -1044,7 +1044,7 @@ public class GameManager : MonoBehaviour {
         }
         else {
             //Black Lose
-            menuManager.GoToWinnerScreen();
+            menuManager.GoToWinnerScreenAI();
         }
     }
 
