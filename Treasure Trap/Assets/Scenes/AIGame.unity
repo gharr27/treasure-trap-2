@@ -163,7 +163,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: c92f99cc8606c2644b0ae9bae68abb2a, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 0.2
+  m_Volume: 0.05
   m_Pitch: 1
   Loop: 1
   Mute: 0
@@ -675,8 +675,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   username: {fileID: 1016301053}
-  difficulty: {fileID: 0}
-  whoStarts: {fileID: 0}
   ghostChar: {fileID: 633909104}
   cowChar: {fileID: 1140475611}
   kidChar: {fileID: 1016301052}
@@ -1435,6 +1433,7 @@ MonoBehaviour:
   color: 
   isNetworkGame: 0
   isTurn: 0
+  isQueenPlaced: 0
   queenCount: 1
   antCount: 3
   grasshopperCount: 3
