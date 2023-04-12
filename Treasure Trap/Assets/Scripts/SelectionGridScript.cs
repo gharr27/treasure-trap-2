@@ -40,7 +40,7 @@ public class SelectionGridScript : MonoBehaviour {
     // Update is called once per frame
     void Update() {
         if (gameManager.isAIGame) {
-            if (Input.GetMouseButtonDown(0) && isMouseOver && gameManager.turn == 0) {
+            if (Input.GetMouseButtonDown(0) && isMouseOver && p1.isTurn) {
                 p1.SetPos(transform.position);
             }
         }

@@ -145,7 +145,6 @@ public class PlayerScript : MonoBehaviour {
 
     public void Move() {
         if (gameManager.isNetworkGame) {
-            Debug.Log(tile + " " + pos + " " + isMove + " " + color);
             gameManager.SendMove(tile, pos, isMove, color);
         }
         else {

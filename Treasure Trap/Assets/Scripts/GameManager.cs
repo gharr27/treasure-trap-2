@@ -252,8 +252,10 @@ public class GameManager : MonoBehaviour {
         else {
             if (p1.isTurn) {
                 if (isMove) {
+                    Debug.Log(tile.transform.position);
                     gameGrid[tile.transform.position] = new GameGridCell();
                     tile.transform.position = pos;
+                    Debug.Log(tile.transform.position);
 
                     GameGridCell gridCell = new GameGridCell(true, tile);
 
@@ -418,75 +420,6 @@ public class GameManager : MonoBehaviour {
 
         //RemoveUnnecessaryGridSpaces();
 
-    }
-
-    //Currently Unused, if we can get it working this function will deleted spaces that are not directly connected to the game tiles on the grid
-    void RemoveUnnecessaryGridSpaces() {
-
-        foreach (Vector3 key in gameGrid.Keys) {
-            float x = key.x;
-            float y = key.y;
-            float z = key.z;
-
-            bool isNecessary = false;
-
-            if (!gameGrid[key].isFilled) {
-
-                //Above
-                Vector3 newPos = new Vector3(x + 1, y, z);
-                if (gameGrid.ContainsKey(newPos) && !isNecessary) {
-                    if (gameGrid[newPos].isFilled) {
-                        isNecessary = true;
-                    }
-                }
-
-                //Below
-                newPos = new Vector3(x - 1, y, z);
-                if (gameGrid.ContainsKey(newPos) && !isNecessary) {
-                    if (gameGrid[newPos].isFilled) {
-                        isNecessary = true;
-                    }
-                }
-
-                //Top Left
-                newPos = new Vector3(x + .5f, y, z + 1);
-                if (gameGrid.ContainsKey(newPos) && !isNecessary) {
-                    if (gameGrid[newPos].isFilled) {
-                        isNecessary = true;
-                    }
-                }
-
-                //Top Right
-                newPos = new Vector3(x + .5f, y, z - 1);
-                if (gameGrid.ContainsKey(newPos) && !isNecessary) {
-                    if (gameGrid[newPos].isFilled) {
-                        isNecessary = true;
-                    }
-                }
-
-                //Bottom Left
-                newPos = new Vector3(x - .5f, y, z + 1);
-                if (gameGrid.ContainsKey(newPos) && !isNecessary) {
-                    if (gameGrid[newPos].isFilled) {
-                        isNecessary = true;
-                    }
-                }
-
-                //Bottom Right
-                newPos = new Vector3(x - .5f, y, z - 1);
-                if (gameGrid.ContainsKey(newPos) && !isNecessary) {
-                    if (gameGrid[newPos].isFilled) {
-                        isNecessary = true;
-                    }
-                }
-
-                if (!isNecessary) {
-                    gameGrid.Remove(key);
-                }
-
-                isNecessary = false;
-            }
-        }
     }
 
     // Checks the surrounding of the selected tile and if the position is filled then it adds a true to a list at that postion.
@@ -1147,8 +1080,8 @@ public class GameManager : MonoBehaviour {
 
         for (int i = 0; gamePieces[i] != null; i++) {
             bool canPlace = true;
+            Debug.Log("test1");
             TileScript tileScript = gamePieces[i].GetComponent(typeof(TileScript)) as TileScript;
-            Debug.Log(tileScript.GetTileColor());
             if (round != 1) {
                 if (isWhite) {
                     if (tileScript.GetTileColor() == "black") {
@@ -1157,14 +1090,14 @@ public class GameManager : MonoBehaviour {
                 }
                 else {
                     if (tileScript.GetTileColor() == "white") {
+                        Debug.Log("test2");
                         canPlace = false;
                     }
                 }
             }
 
             if (canPlace) {
-                Debug.Log("yes");
-
+                Debug.Log("test3");
                 float x = gamePieces[i].transform.position.x;
                 float z = gamePieces[i].transform.position.z;
 
@@ -1322,7 +1255,7 @@ public class GameManager : MonoBehaviour {
                 }
             }
         }
-
+        Debug.Log(positions.Count);
         while (positions.Count > 0) {
             bool isValid = true;
             Vector3 pos = positions.Pop();
@@ -1330,7 +1263,6 @@ public class GameManager : MonoBehaviour {
             foreach (KeyValuePair<Vector3, int> badPos in invalidPos) {
                 if (pos == badPos.Key) {
                     isValid = false;
-                    break;
                 }
             }
 
@@ -1338,6 +1270,8 @@ public class GameManager : MonoBehaviour {
                 ret.Push(pos);
             }
         }
+
+        Debug.Log(ret.Count);
 
         return ret;
     }

@@ -26,8 +26,6 @@ public class AI : MonoBehaviour {
 
     public GameObject[] tiles;
 
-    int totalTileCount = 11;
-
     public int queenCount = 1;
     public int antCount = 3;
     public int grasshopperCount = 3;
@@ -40,10 +38,6 @@ public class AI : MonoBehaviour {
     GameManager gameManager;
 
     public bool isQueenPlaced = false;
-
-    public int maxDepth = 5;
-    private const int INT_MAX = 1000000000;
-    private const int INT_MIN = -1000000000;
 
     private void Start() {
         gameManager = gameManagerObj.GetComponent(typeof(GameManager)) as GameManager;
@@ -90,7 +84,10 @@ public class AI : MonoBehaviour {
     Stack<Move> GenerateMoves(Dictionary<Vector3, GameManager.GameGridCell> gameGrid, int round, bool isWhite) {
         Stack<Move> moves = new Stack<Move>();
 
+        Debug.Log(isWhite);
         Stack<Vector3> placePosition = gameManager.GetPlacePositions(isWhite);
+
+        Debug.Log(placePosition.Count);
 
         if (round < 4 || isQueenPlaced) {
             while (placePosition.Count > 0) {
@@ -100,7 +97,7 @@ public class AI : MonoBehaviour {
                     bool canPlace = false;
                     switch (i) {
                         case 0:
-                            if (queenCount > 0) {
+                            if (queenCount > 0 && gameManager.round > 1) {
                                 canPlace = true;
                             }
                             break;

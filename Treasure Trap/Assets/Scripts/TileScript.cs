@@ -106,6 +106,7 @@ public class TileScript : MonoBehaviour {
         if (gameManager.isAIGame) {
             if (Input.GetMouseButtonDown(0) && isMouseOver && p1.isTurn && p1.isQueenPlaced) {
                 if (!gameManager.gameGrid[top].isFilled) {
+                    p1.isMove = true;
                     gameManager.SetMoveGrid(gameObject, true);
                 }
             }
