@@ -78,10 +78,8 @@ public class PlayerScript : MonoBehaviour {
     }
     public void selectedAnt() {
         if (gameManager.GetRound() < 4 || isQueenPlaced) {
-            Debug.Log("test");
-            Debug.Log(isTurn);
+           
             if (antCount > 0 && isTurn) {
-                Debug.Log("test2");
                 tile = Tiles[1];
                 isMove = false;
 
