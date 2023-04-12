@@ -50,6 +50,8 @@ MonoBehaviour:
   - IncrementTilesPlaced
   - 
   - SetGameTile
+  - RPC_SendMoveString
+  - RPC_SendTilePos
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 0

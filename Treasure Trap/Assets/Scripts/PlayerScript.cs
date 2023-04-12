@@ -9,6 +9,7 @@ public class PlayerScript : MonoBehaviour {
     public string color;
     public bool isNetworkGame = false;
     public bool isTurn;
+    public bool isP1;
 
     GameManager gameManager;
     GameObject gameController;
@@ -17,7 +18,7 @@ public class PlayerScript : MonoBehaviour {
 
     GameObject tile = null;
     Vector3 pos = Vector3.zero;
-    bool isMove = false;
+    public bool isMove = false;
     bool isFirstMove = true;
     public bool isQueenPlaced = false;
 
@@ -32,8 +33,6 @@ public class PlayerScript : MonoBehaviour {
     void Start() {
         gameController = GameObject.FindWithTag("GameController");
         gameManager = gameController.GetComponent(typeof(GameManager)) as GameManager;
-
-        PhotonView photonView = this.GetComponent<PhotonView>();
     }
 
     public void DecrementTile(string name) {
@@ -59,10 +58,9 @@ public class PlayerScript : MonoBehaviour {
 
     }
 
-    public void selectedQueen()
-    {
+    public void selectedQueen() {
         if (gameManager.round > 1) {
-            if (queenCount > 0 && gameManager.GetRound() != 1 && isTurn) {
+            if (queenCount > 0 && isTurn && isP1 == gameManager.isP1) {
                 tile = Tiles[0];
                 isMove = false;
 
@@ -77,9 +75,8 @@ public class PlayerScript : MonoBehaviour {
         }
     }
     public void selectedAnt() {
-        if (gameManager.GetRound() < 4 || isQueenPlaced) {
-           
-            if (antCount > 0 && isTurn) {
+        if (gameManager.round < 4 || isQueenPlaced) {
+            if (antCount > 0 && isTurn && isP1 == gameManager.isP1) {
                 tile = Tiles[1];
                 isMove = false;
 
@@ -94,10 +91,9 @@ public class PlayerScript : MonoBehaviour {
             }
         }
     }
-    public void selectedGrasshopper()
-    {
-        if (gameManager.GetRound() < 4 || isQueenPlaced) {
-            if (grasshopperCount > 0 && isTurn) {
+    public void selectedGrasshopper() {
+        if (gameManager.round < 4 || isQueenPlaced) {
+            if (grasshopperCount > 0 && isTurn && isP1 == gameManager.isP1) {
                 tile = Tiles[2];
                 isMove = false;
 
@@ -112,10 +108,9 @@ public class PlayerScript : MonoBehaviour {
             }
         }
     }
-    public void selectedBeetle()
-    {
-        if (gameManager.GetRound() < 4 || isQueenPlaced) {
-            if (beetleCount > 0 && isTurn) {
+    public void selectedBeetle() {
+        if (gameManager.round < 4 || isQueenPlaced) {
+            if (beetleCount > 0 && isTurn && isP1 == gameManager.isP1) {
                 tile = Tiles[3];
                 isMove = false;
 
@@ -130,10 +125,9 @@ public class PlayerScript : MonoBehaviour {
             }
         }
     }
-    public void selectedSpider()
-    {
-        if (gameManager.GetRound() < 4 || isQueenPlaced) {
-            if (spiderCount > 0 && isTurn) {
+    public void selectedSpider() {
+        if (gameManager.round < 4 || isQueenPlaced) {
+            if (spiderCount > 0 && isTurn && isP1 == gameManager.isP1) {
                 tile = Tiles[4];
                 isMove = false;
 
@@ -150,7 +144,13 @@ public class PlayerScript : MonoBehaviour {
     }
 
     public void Move() {
-        gameManager.MakeMove(tile, pos, isMove);
+        if (gameManager.isNetworkGame) {
+            Debug.Log(tile + " " + pos + " " + isMove + " " + color);
+            gameManager.SendMove(tile, pos, isMove, color);
+        }
+        else {
+            gameManager.MakeMove(tile, pos, isMove);
+        }
     }
 
     public void SetPos(Vector3 newPos) {
