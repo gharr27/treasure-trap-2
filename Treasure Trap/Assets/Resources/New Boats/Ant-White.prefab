@@ -125,6 +125,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8158658229621647314}
   - component: {fileID: 6087781444553174359}
+  - component: {fileID: 5224494702238811935}
   m_Layer: 0
   m_Name: Ant-White
   m_TagString: White
@@ -161,3 +162,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tileName: Ant
+--- !u!65 &5224494702238811935
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4479221053784291670}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1.124089, z: 1}
+  m_Center: {x: 0, y: 0.5434543, z: 0}

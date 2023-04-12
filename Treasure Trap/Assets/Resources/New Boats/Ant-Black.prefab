@@ -125,6 +125,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1166288403845234432}
   - component: {fileID: 6277839836300906565}
+  - component: {fileID: -5966046750636432157}
   m_Layer: 0
   m_Name: Ant-Black
   m_TagString: Black
@@ -161,3 +162,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tileName: Ant
+--- !u!65 &-5966046750636432157
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8434464204342193365}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1.1240892, z: 1}
+  m_Center: {x: 0, y: 0.5434543, z: 0}
