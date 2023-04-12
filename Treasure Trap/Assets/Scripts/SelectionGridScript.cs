@@ -38,6 +38,11 @@ public class SelectionGridScript : MonoBehaviour
                 p1.SetPos(transform.position);
             }
         }
+        else if (gameManager.isNetworkGame) {
+            if (Input.GetMouseButtonDown(0) && isMouseOver && p1.isTurn) {
+                p1.SetPos(transform.position);
+            }
+        }
         else {
             if (Input.GetMouseButtonDown(0) && isMouseOver && gameManager.turn == 0) {
                 p1.SetPos(transform.position);

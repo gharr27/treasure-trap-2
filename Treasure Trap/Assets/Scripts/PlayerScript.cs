@@ -56,10 +56,7 @@ public class PlayerScript : MonoBehaviour {
     }
     public void selectedAnt() {
         if (gameManager.GetRound() < 4 || isQueenPlaced) {
-            Debug.Log("test");
-            Debug.Log(isTurn);
             if (antCount > 0 && isTurn) {
-                Debug.Log("test2");
                 tile = Tiles[1];
                 isMove = false;
                 antCount--;
@@ -134,7 +131,12 @@ public class PlayerScript : MonoBehaviour {
     }
 
     public void Move() {
-        gameManager.MakeMove(tile, pos, isMove);
+        if (gameManager.isNetworkGame) {
+            gameManager.SendMove(tile, pos, isMove);
+        }
+        else {
+            gameManager.MakeMove(tile, pos, isMove);
+        }
     }
 
     public void SetPos(Vector3 newPos) {
