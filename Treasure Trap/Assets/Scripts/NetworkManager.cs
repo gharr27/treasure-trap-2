@@ -14,14 +14,15 @@ public class NetworkManager : MonoBehaviour
         photon = GetComponent(typeof(PhotonView)) as PhotonView;
     }
 
-    public void ReceiveMoveString(string tileName, string tilePos) {
-        photon.RPC("RPC_SendMoveString", RpcTarget.All, tileName, tilePos);
+    public void ReceiveMoveString(string tileName, string tileColor, string tilePosX, string tilePosY, string tilePosZ, string moveType) {
+        Debug.Log("Network received: " + tileName + " " + tileColor + " " + tilePosX + " " + tilePosY + " " + tilePosZ + " " + moveType);
+        photon.RPC("RPC_SendMoveString", RpcTarget.All, tileName, tileColor, tilePosX, tilePosY, tilePosZ, moveType);
     }
 
 
     [PunRPC]
-    void RPC_SendMoveString(string tileName, string tilePos) {
-        game.ReceiveMoveString(tileName, tilePos);
+    void RPC_SendMoveString(string tileName, string tileColor, string tilePosX, string tilePosY, string tilePosZ, string moveType) {
+        game.ReceiveMoveString(tileName, tileColor, tilePosX, tilePosY, tilePosZ, moveType);
     }
 
 }

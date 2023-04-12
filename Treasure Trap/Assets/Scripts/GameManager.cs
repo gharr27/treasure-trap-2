@@ -106,23 +106,11 @@ public class GameManager : MonoBehaviour {
             p1 = Players[0].GetComponent(typeof(PlayerScript)) as PlayerScript;
             p2 = Players[1].GetComponent(typeof(PlayerScript)) as PlayerScript;
 
-            //Is Host
-            if (PhotonNetwork.IsMasterClient) {
-                Debug.Log("P1");
-                p1.color = "white";
-                p2.color = "black";
-                p1.isTurn = true;
-                p2.isTurn = false;
-            }
-            else {
-                Debug.Log("P2");
-                p1.color = "black";
-                p2.color = "white";
-                p1.isTurn = false;
-                p2.isTurn = true;
-            }
-
-
+            Debug.Log("P1");
+            p1.color = "white";
+            p2.color = "black";
+            p1.isTurn = true;
+            p2.isTurn = false;
 
             Debug.Log(p1.isTurn);
             Debug.Log(p2.isTurn);
@@ -186,8 +174,42 @@ public class GameManager : MonoBehaviour {
     }
 
     public void MakeMove(GameObject tile, Vector3 pos, bool isMove) {
-        Debug.Log("Making Move");
-        if (!isNetworkGame) {
+        if (isNetworkGame) {
+            if (isMove) {
+                gameGrid[tile.transform.position] = new GameGridCell();
+                tile.transform.position = pos;
+
+                GameGridCell gridCell = new GameGridCell(true, tile);
+
+                if (!gameGrid.ContainsKey(pos)) {
+                    gameGrid.Add(pos, gridCell);
+                }
+                else {
+                    gameGrid[pos] = gridCell;
+                }
+            }
+            else {
+                GameObject tilePiece = Instantiate(tile, pos, Quaternion.identity) as GameObject;
+                gamePieces[tilesPlaced] = tilePiece;
+                GameGridCell gridCell = new GameGridCell(true, tilePiece);
+
+                if (gameGrid.ContainsKey(pos)) {
+                    gameGrid[pos] = gridCell;
+                }
+                else {
+                    gameGrid.Add(pos, gridCell);
+                }
+                tilesPlaced++;
+            }
+
+            UpdateGameGrid(pos);
+            UpdateGUITileCount();
+            UpdateTurn();
+
+            ClearMoveGrid();
+            CheckForWin(true);
+        }
+        else {
             if (p1.isTurn) {
                 if (isMove) {
                     gameGrid[tile.transform.position] = new GameGridCell();
@@ -228,11 +250,6 @@ public class GameManager : MonoBehaviour {
                     ai.Move(gameGrid, round, false);
                 }
             }
-        }
-        else {
-            Debug.Log("Did the thang");
-            //Convert move to string vars
-            network.ReceiveMoveString("test", "phrase");
         }
     }
 
@@ -1339,9 +1356,126 @@ public class GameManager : MonoBehaviour {
         }
     }
 
-    public void ReceiveMoveString(string tileName, string tilePos) {
-        Debug.Log("Received message " + tileName + " " + tilePos + " from Network");
+    public void ReceiveMoveString(string tileName,  string tileColor, string tilePosX, string tilePosY, string tilePosZ, string moveType) {
+        Debug.Log("GameCore received: " + tileName + " " + tileColor + " " + tilePosX + " " + tilePosY + " " + tilePosZ + " " + moveType);
 
-        UpdateTurn();
+        GameObject tile = new GameObject();
+        Vector3 pos;
+        bool isMove;
+        //Translate to move and make move
+        if (PhotonNetwork.IsMasterClient) {
+            if (tileColor == "white") {
+                switch(tileName) {
+                    case "Queen":
+                        tile = p1.Tiles[0];
+                        break;
+                    case "Ant":
+                        tile = p1.Tiles[1];
+                        break;
+                    case "Grasshopper":
+                        tile = p1.Tiles[2];
+                        break;
+                    case "Beetle":
+                        tile = p1.Tiles[3];
+                        break;
+                    case "Spider":
+                        tile = p1.Tiles[4];
+                        break;
+                }
+            }
+            else {
+                switch (tileName) {
+                    case "Queen":
+                        tile = p2.Tiles[0];
+                        break;
+                    case "Ant":
+                        tile = p2.Tiles[1];
+                        break;
+                    case "Grasshopper":
+                        tile = p2.Tiles[2];
+                        break;
+                    case "Beetle":
+                        tile = p2.Tiles[3];
+                        break;
+                    case "Spider":
+                        tile = p2.Tiles[4];
+                        break;
+                }
+            }
+        }
+        else {
+            if (tileColor == "black") {
+                switch (tileName) {
+                    case "Queen":
+                        tile = p1.Tiles[0];
+                        break;
+                    case "Ant":
+                        tile = p1.Tiles[1];
+                        break;
+                    case "Grasshopper":
+                        tile = p1.Tiles[2];
+                        break;
+                    case "Beetle":
+                        tile = p1.Tiles[3];
+                        break;
+                    case "Spider":
+                        tile = p1.Tiles[4];
+                        break;
+                }
+            }
+            else {
+                switch (tileName) {
+                    case "Queen":
+                        tile = p2.Tiles[0];
+                        break;
+                    case "Ant":
+                        tile = p2.Tiles[1];
+                        break;
+                    case "Grasshopper":
+                        tile = p2.Tiles[2];
+                        break;
+                    case "Beetle":
+                        tile = p2.Tiles[3];
+                        break;
+                    case "Spider":
+                        tile = p2.Tiles[4];
+                        break;
+                }
+            }
+        }
+
+        pos.x = float.Parse(tilePosX);
+        pos.y = float.Parse(tilePosY);
+        pos.z = float.Parse(tilePosZ);
+
+        if (moveType == "move") {
+            isMove = true;
+        }
+        else {
+            isMove = false;
+        }
+
+        MakeMove(tile, pos, isMove);
+    }
+
+    public void SendMove(GameObject tile, Vector3 pos, bool isMove) {
+        TileScript tileScript = tile.GetComponent(typeof(TileScript)) as TileScript;
+        string tileName = tileScript.tileName;
+        string tileColor = tileScript.GetTileColor();
+
+        string tilePosX = pos.x.ToString();
+        string tilePosY = pos.y.ToString();
+        string tilePosZ = pos.z.ToString();
+
+        string moveType;
+
+        if (isMove) {
+            moveType = "move";
+        }
+        else {
+            moveType = "place";
+        }
+
+        network.ReceiveMoveString(tileName, tileColor, tilePosX, tilePosY, tilePosZ, moveType);
     }
 }
