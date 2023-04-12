@@ -64,9 +64,14 @@ public class MenusManager : MonoBehaviour
         SceneManager.LoadScene("LoserScreen");
     }
 
-    public void GoToWinnerScreen()
+    public void GoToWinnerScreenAI()
     {
-        SceneManager.LoadScene("WinnerScreen");
+        SceneManager.LoadScene("WinnerScreenAI");
+    }
+
+    public void GoToWinnerScreenNetwork()
+    {
+        SceneManager.LoadScene("WinnerScreenNetwork");
     }
 
     public void GoToLoadingScreen()
