@@ -548,6 +548,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 247207297}
+  - component: {fileID: 247207296}
   - component: {fileID: 247207295}
   m_Layer: 0
   m_Name: LoadingMusic
@@ -652,6 +653,18 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &247207296
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 247207294}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed83643e37effce4aa046cd0590fc961, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &247207297
 Transform:
   m_ObjectHideFlags: 0
@@ -1957,11 +1970,6 @@ PrefabInstance:
 --- !u!224 &501120034 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3755767681758987614, guid: 910cb743c1bf3bd4f95a91c06bd300d8, type: 3}
-  m_PrefabInstance: {fileID: 501120033}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &501120035 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3755767681758987609, guid: 910cb743c1bf3bd4f95a91c06bd300d8, type: 3}
   m_PrefabInstance: {fileID: 501120033}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &540305695
@@ -4285,7 +4293,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1169825724
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8309,10 +8317,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: SettingsButton
       objectReference: {fileID: 0}
-    - target: {fileID: 7607089531040345371, guid: 0c5ae13e6e2b2bb4b9519198e6396225, type: 3}
-      propertyPath: square
-      value: 
-      objectReference: {fileID: 501120035}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0c5ae13e6e2b2bb4b9519198e6396225, type: 3}
 --- !u!224 &2113700554 stripped
