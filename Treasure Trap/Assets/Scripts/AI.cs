@@ -84,10 +84,7 @@ public class AI : MonoBehaviour {
     Stack<Move> GenerateMoves(Dictionary<Vector3, GameManager.GameGridCell> gameGrid, int round, bool isWhite) {
         Stack<Move> moves = new Stack<Move>();
 
-        Debug.Log(isWhite);
         Stack<Vector3> placePosition = gameManager.GetPlacePositions(isWhite);
-
-        Debug.Log(placePosition.Count);
 
         if (round < 4 || isQueenPlaced) {
             while (placePosition.Count > 0) {

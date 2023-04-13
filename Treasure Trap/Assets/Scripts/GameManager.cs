@@ -596,35 +596,17 @@ public class GameManager : MonoBehaviour {
     //start from the position where the user wants to move the piece
     //if Hive is broken then the places visited will be less than the total amount of pieces on the board
     bool IsBreaksHive(Vector3 pos) {
-        Stack<Vector3> occupiedSpaces = new Stack<Vector3>();
+        float x = pos.x;
+        float y = pos.y;
+        float z = pos.z;
+
         Stack<Vector3> visitedPieces = new Stack<Vector3>();
+
         Vector3 newPos = pos;
 
-        // if (/*piece is being moved*/) {
-        while (visitedPieces.Count < occupiedSpaces.Count) {
 
-            //fill occupiedSpaces with positions returned from GetOccupiedSpaces
-            occupiedSpaces = GetOccupiedSpaces(pos);
-            visitedPieces.Push(newPos);
-
-            if (visitedPieces.Count < occupiedSpaces.Count) {
-                return true;
-            }
-            else {
-                return false;
-            }
-
-        }
 
         return false;
-        // }
-
-
-        //if (GetBoarderCount(pos) == 1) {
-        //    return false;
-        //}
-
-        //return true;
     }
 
     Dictionary<Vector3, int> GetBoarderTiles(Vector3 pos) {
@@ -1080,7 +1062,7 @@ public class GameManager : MonoBehaviour {
 
         for (int i = 0; gamePieces[i] != null; i++) {
             bool canPlace = true;
-            Debug.Log("test1");
+
             TileScript tileScript = gamePieces[i].GetComponent(typeof(TileScript)) as TileScript;
             if (round != 1) {
                 if (isWhite) {
@@ -1090,14 +1072,12 @@ public class GameManager : MonoBehaviour {
                 }
                 else {
                     if (tileScript.GetTileColor() == "white") {
-                        Debug.Log("test2");
                         canPlace = false;
                     }
                 }
             }
 
             if (canPlace) {
-                Debug.Log("test3");
                 float x = gamePieces[i].transform.position.x;
                 float z = gamePieces[i].transform.position.z;
 
@@ -1255,10 +1235,11 @@ public class GameManager : MonoBehaviour {
                 }
             }
         }
-        Debug.Log(positions.Count);
+
         while (positions.Count > 0) {
             bool isValid = true;
             Vector3 pos = positions.Pop();
+            Debug.Log(pos);
 
             foreach (KeyValuePair<Vector3, int> badPos in invalidPos) {
                 if (pos == badPos.Key) {
