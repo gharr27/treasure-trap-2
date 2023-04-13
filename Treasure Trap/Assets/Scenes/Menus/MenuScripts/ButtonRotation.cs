@@ -4,10 +4,17 @@ using UnityEngine.EventSystems;
 
 public class ButtonRotation : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
+    public enum RotationDirection
+    {
+        Left,
+        Right
+    }
+
     [SerializeField] private float rotationAngle = 10f;
     [SerializeField] private float rotationDuration = 0.25f;
+    [SerializeField] private RotationDirection rotationDirection = RotationDirection.Left;
     private Quaternion initialRotation;
-    private bool isRotating;
+    private Coroutine rotationCoroutine;
 
     private void Awake()
     {
@@ -16,23 +23,25 @@ public class ButtonRotation : MonoBehaviour, IPointerEnterHandler, IPointerExitH
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        if (!isRotating)
+        if (rotationCoroutine != null)
         {
-            StartCoroutine(RotateButton(transform.rotation, Quaternion.Euler(transform.eulerAngles + new Vector3(0, 0, rotationAngle)), rotationDuration));
+            StopCoroutine(rotationCoroutine);
         }
+        float signedAngle = rotationDirection == RotationDirection.Left ? -rotationAngle : rotationAngle;
+        rotationCoroutine = StartCoroutine(RotateButton(transform.rotation, Quaternion.Euler(transform.eulerAngles + new Vector3(0, 0, signedAngle)), rotationDuration));
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        if (!isRotating)
+        if (rotationCoroutine != null)
         {
-            StartCoroutine(RotateButton(transform.rotation, initialRotation, rotationDuration));
+            StopCoroutine(rotationCoroutine);
         }
+        rotationCoroutine = StartCoroutine(RotateButton(transform.rotation, initialRotation, rotationDuration));
     }
 
     private IEnumerator RotateButton(Quaternion startRotation, Quaternion targetRotation, float duration)
     {
-        isRotating = true;
         float elapsedTime = 0f;
 
         while (elapsedTime < duration)
@@ -44,6 +53,5 @@ public class ButtonRotation : MonoBehaviour, IPointerEnterHandler, IPointerExitH
         }
 
         transform.rotation = targetRotation;
-        isRotating = false;
     }
 }
