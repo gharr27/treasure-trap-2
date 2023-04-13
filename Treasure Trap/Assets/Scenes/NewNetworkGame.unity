@@ -1795,6 +1795,7 @@ GameObject:
   - component: {fileID: 5141071992197542416}
   - component: {fileID: 5141071992197542417}
   - component: {fileID: 5141071992197542430}
+  - component: {fileID: 5141071992197542432}
   m_Layer: 5
   m_Name: p2antTile
   m_TagString: Untagged
@@ -1879,6 +1880,21 @@ RectTransform:
   m_AnchoredPosition: {x: -1.7141724, y: 100}
   m_SizeDelta: {x: 150, y: 150}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &5141071992197542432
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5141071992197542428}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a344bd62126f1b41873c5cff5e4071c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rotationAngle: 10
+  rotationDuration: 0.25
+  rotationDirection: 0
 --- !u!222 &5141071992217299225
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2323,6 +2339,7 @@ GameObject:
   - component: {fileID: 5141071992272778634}
   - component: {fileID: 5141071992272778635}
   - component: {fileID: 5141071992272778632}
+  - component: {fileID: 5141071992272778647}
   m_Layer: 5
   m_Name: p1grasshopperTile
   m_TagString: Untagged
@@ -2330,6 +2347,21 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &5141071992272778647
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5141071992272778646}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a344bd62126f1b41873c5cff5e4071c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rotationAngle: 10
+  rotationDuration: 0.25
+  rotationDirection: 1
 --- !u!224 &5141071992287497164
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3784,6 +3816,7 @@ GameObject:
   - component: {fileID: 5141071992770908844}
   - component: {fileID: 5141071992770908845}
   - component: {fileID: 5141071992770908842}
+  - component: {fileID: 5141071992770908846}
   m_Layer: 5
   m_Name: p1queenTile
   m_TagString: Untagged
@@ -3906,6 +3939,21 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &5141071992770908846
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5141071992770908840}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a344bd62126f1b41873c5cff5e4071c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rotationAngle: 10
+  rotationDuration: 0.25
+  rotationDirection: 1
 --- !u!1 &5141071992827103976
 GameObject:
   m_ObjectHideFlags: 0
@@ -4514,6 +4562,7 @@ GameObject:
   - component: {fileID: 5141071992918407571}
   - component: {fileID: 5141071992918407568}
   - component: {fileID: 5141071992918407569}
+  - component: {fileID: 5141071992918407584}
   m_Layer: 5
   m_Name: p1beetleTile
   m_TagString: Untagged
@@ -4521,6 +4570,21 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &5141071992918407584
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5141071992918407583}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a344bd62126f1b41873c5cff5e4071c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rotationAngle: 10
+  rotationDuration: 0.25
+  rotationDirection: 1
 --- !u!224 &5141071992938678424
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4697,6 +4761,7 @@ GameObject:
   - component: {fileID: 5141071992997886857}
   - component: {fileID: 5141071992997886870}
   - component: {fileID: 5141071992997886871}
+  - component: {fileID: 5141071992997886872}
   m_Layer: 5
   m_Name: p2grasshopperTile
   m_TagString: Untagged
@@ -4790,6 +4855,21 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &5141071992997886872
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5141071992997886869}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a344bd62126f1b41873c5cff5e4071c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rotationAngle: 10
+  rotationDuration: 0.25
+  rotationDirection: 0
 --- !u!222 &5141071993015950592
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -4994,6 +5074,7 @@ GameObject:
   - component: {fileID: 5141071993052715927}
   - component: {fileID: 5141071993052715924}
   - component: {fileID: 5141071993052715925}
+  - component: {fileID: 5141071993052715928}
   m_Layer: 5
   m_Name: p2spiderTile
   m_TagString: Untagged
@@ -5095,6 +5176,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5141071993052715923}
   m_CullTransparentMesh: 1
+--- !u!114 &5141071993052715928
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5141071993052715923}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a344bd62126f1b41873c5cff5e4071c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rotationAngle: 10
+  rotationDuration: 0.25
+  rotationDirection: 0
 --- !u!114 &5141071993067184912
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5349,6 +5445,7 @@ GameObject:
   - component: {fileID: 5141071993075539475}
   - component: {fileID: 5141071993075539472}
   - component: {fileID: 5141071993075539473}
+  - component: {fileID: 5141071993075539488}
   m_Layer: 5
   m_Name: p2queenTile
   m_TagString: Untagged
@@ -5356,6 +5453,21 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &5141071993075539488
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5141071993075539487}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a344bd62126f1b41873c5cff5e4071c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rotationAngle: 10
+  rotationDuration: 0.25
+  rotationDirection: 0
 --- !u!222 &5141071993092598128
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -6197,6 +6309,7 @@ GameObject:
   - component: {fileID: 5141071993298571589}
   - component: {fileID: 5141071993298571586}
   - component: {fileID: 5141071993298571587}
+  - component: {fileID: 5141071993298571590}
   m_Layer: 5
   m_Name: p2beetleTile
   m_TagString: Untagged
@@ -6298,6 +6411,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5141071993298571585}
   m_CullTransparentMesh: 1
+--- !u!114 &5141071993298571590
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5141071993298571585}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a344bd62126f1b41873c5cff5e4071c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rotationAngle: 10
+  rotationDuration: 0.25
+  rotationDirection: 0
 --- !u!1 &5141071993332900658
 GameObject:
   m_ObjectHideFlags: 0
@@ -8712,6 +8840,7 @@ GameObject:
   - component: {fileID: 5141071993998815815}
   - component: {fileID: 5141071993998815812}
   - component: {fileID: 5141071993998815813}
+  - component: {fileID: 5141071993998815816}
   m_Layer: 5
   m_Name: p1spiderTile
   m_TagString: Untagged
@@ -8813,6 +8942,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5141071993998815811}
   m_CullTransparentMesh: 1
+--- !u!114 &5141071993998815816
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5141071993998815811}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a344bd62126f1b41873c5cff5e4071c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rotationAngle: 10
+  rotationDuration: 0.25
+  rotationDirection: 1
 --- !u!224 &5141071994000443586
 RectTransform:
   m_ObjectHideFlags: 0
@@ -9125,6 +9269,7 @@ GameObject:
   - component: {fileID: 5141071994070598636}
   - component: {fileID: 5141071994070598637}
   - component: {fileID: 5141071994070598634}
+  - component: {fileID: 5141071994070598638}
   m_Layer: 5
   m_Name: p1antTile
   m_TagString: Untagged
@@ -9247,6 +9392,21 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &5141071994070598638
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5141071994070598632}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a344bd62126f1b41873c5cff5e4071c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rotationAngle: 10
+  rotationDuration: 0.25
+  rotationDirection: 1
 --- !u!222 &5141071994103445673
 CanvasRenderer:
   m_ObjectHideFlags: 0
