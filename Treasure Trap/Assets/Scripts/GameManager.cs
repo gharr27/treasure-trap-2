@@ -367,12 +367,16 @@ public class GameManager : MonoBehaviour {
                 p1.isTurn = false;
                 p2.isTurn = true;
                 turn = 1;
+                p2Image.SetActive(ai.isTurn);
+                p1Image.SetActive(p1.isTurn);
             }
             else {
                 p1.isTurn = true;
                 p2.isTurn = false;
                 turn = 0;
                 round++;
+                p2Image.SetActive(ai.isTurn);
+                p1Image.SetActive(p1.isTurn);
             }
         }
         else if (isAIGame) {
@@ -1675,7 +1679,7 @@ public class GameManager : MonoBehaviour {
 
                     validPositons = positions;
                     while (validPositons.Count > 0) {
-                        if (GetBoarderCount(validPositons.Peek(), tile) < 5) {
+                        if (GetBoarderCount(validPositons.Peek(), tile) < 5 || tile.transform.position.y > 0) {
                             GameObject grid;
                             grid = Instantiate(GridTile, validPositons.Pop(), Quaternion.identity) as GameObject;
                             selectionGrids.Push(grid);

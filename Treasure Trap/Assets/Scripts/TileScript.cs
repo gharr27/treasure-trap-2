@@ -8,7 +8,7 @@ public class TileScript : MonoBehaviour {
     bool isMouseOver = false;
     public bool isCovered = false;
     public string color;
-    string saveColor;
+    public string saveColor;
     Vector3 pos;
 
     BoxCollider boxCollider;
@@ -39,7 +39,7 @@ public class TileScript : MonoBehaviour {
     Vector3 top;
 
     public string GetTileColor() {
-        return color;
+        return saveColor;
     }
 
     // Start is called before the first frame update
