@@ -23,10 +23,6 @@ public class ChatManager : MonoBehaviour, IChatClientListener
     bool playerWonExit = false;
     public GameObject WinnerScreenPanel;
     public GameObject LoserScreenPanel;
-    public Button goToMenuWin;
-    public Button goToMenuLose;
-
-
 
     void Start()
     {
@@ -75,7 +71,7 @@ public class ChatManager : MonoBehaviour, IChatClientListener
             Leave();
 
         }
-        if (PhotonNetwork.CurrentRoom != null && PhotonNetwork.CurrentRoom.PlayerCount == 1)
+        if (PhotonNetwork.CurrentRoom != null && PhotonNetwork.CurrentRoom.PlayerCount == 1 && !WinnerScreenPanel.activeSelf && !LoserScreenPanel.activeSelf)
         {
             //load "come back" scene
             Debug.Log("Player left is leaving");
@@ -220,5 +216,10 @@ public class ChatManager : MonoBehaviour, IChatClientListener
     {
         Debug.Log("ON unsubscribed room");
 
+    }
+    public void onExitChat(){
+        counter = 0;
+        counterText.text = counter.ToString();
+        notificationImage.SetActive(false);
     }
 }
