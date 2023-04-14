@@ -12,8 +12,10 @@ public class CameraMovement : MonoBehaviour {
             transform.position = new Vector3(0, 8, 0);
         }
 
-        transform.Translate(Input.GetAxisRaw("Horizontal") * panSpeed * Time.deltaTime,
-            Input.GetAxisRaw("Vertical") * panSpeed * Time.deltaTime,
-            0);
+        if (Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.DownArrow)) {
+            transform.Translate(Input.GetAxisRaw("Horizontal") * panSpeed * Time.deltaTime,
+                Input.GetAxisRaw("Vertical") * panSpeed * Time.deltaTime,
+                0);
+        }
     }
 }
