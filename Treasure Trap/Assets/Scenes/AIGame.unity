@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.18028334, g: 0.22571328, b: 0.3069217, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -984,7 +984,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &305982786
 GameObject:
@@ -1154,8 +1154,8 @@ RectTransform:
   - {fileID: 1598632324}
   - {fileID: 1149676567}
   - {fileID: 116733237}
-  m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_Father: {fileID: 963194228}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -1905,7 +1905,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &963194225
 GameObject:
@@ -1990,6 +1990,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 345371302}
   - {fileID: 1799851699}
   m_Father: {fileID: 0}
   m_RootOrder: 3
@@ -3445,7 +3446,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 963194228}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 90, y: -90, z: 90}
 --- !u!1 &1817095273
 GameObject:
@@ -3667,7 +3668,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6276391821516362329, guid: d92d7d435e44f0d428690d3048d6e24d, type: 3}
       propertyPath: m_RootOrder
-      value: 10
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 6276391821516362329, guid: d92d7d435e44f0d428690d3048d6e24d, type: 3}
       propertyPath: m_LocalPosition.x
@@ -4881,7 +4882,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1671903731074340426
 MonoBehaviour:
@@ -5564,6 +5565,8 @@ MonoBehaviour:
   p2SpiderCount: {fileID: 7738052203520836784}
   WinnerScreenPanel: {fileID: 0}
   LoserScreenPanel: {fileID: 0}
+  p1Image: {fileID: 1183663534}
+  p2Image: {fileID: 1989893131}
   GridTile: {fileID: 8767865269051293877, guid: 9bb24095a22f1a1438c192d3061cf2f3, type: 3}
   Players:
   - {fileID: 1671903731074340427}
@@ -6313,7 +6316,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!82 &7483320419283438440
 AudioSource:
