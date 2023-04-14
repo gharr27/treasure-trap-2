@@ -551,7 +551,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7708534679598096766}
-  - component: {fileID: 3620107034462019384}
   m_Layer: 0
   m_Name: Queen-Black
   m_TagString: Black
@@ -575,19 +574,6 @@ Transform:
   m_Father: {fileID: 8449723533655313100}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3620107034462019384
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8710571232602328603}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5d56d5b8ecc9ac64cbe85e1041c34d58, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  tileName: Queen
 --- !u!1 &8775671382544865811
 GameObject:
   m_ObjectHideFlags: 0

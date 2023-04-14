@@ -33,6 +33,7 @@ public class AI : MonoBehaviour {
     public int spiderCount = 2;
 
     public bool isTurn;
+    public string color;
 
     public GameObject gameManagerObj;
     GameManager gameManager;
@@ -66,7 +67,11 @@ public class AI : MonoBehaviour {
 
     }
 
-    public void Move(Dictionary<Vector3, GameManager.GameGridCell> gameGrid, int round, bool isWhite) {
+    public IEnumerator Move(Dictionary<Vector3, GameManager.GameGridCell> gameGrid, int round, bool isWhite) {
+
+        Debug.Log("Ai Waiting");
+        yield return new WaitForSeconds(1);
+        Debug.Log("Ai playing");
 
         Stack<Move> moves = GenerateMoves(gameGrid, round, isWhite);
 
@@ -84,10 +89,7 @@ public class AI : MonoBehaviour {
     Stack<Move> GenerateMoves(Dictionary<Vector3, GameManager.GameGridCell> gameGrid, int round, bool isWhite) {
         Stack<Move> moves = new Stack<Move>();
 
-        Debug.Log(isWhite);
         Stack<Vector3> placePosition = gameManager.GetPlacePositions(isWhite);
-
-        Debug.Log(placePosition.Count);
 
         if (round < 4 || isQueenPlaced) {
             while (placePosition.Count > 0) {
@@ -133,12 +135,17 @@ public class AI : MonoBehaviour {
             if (isQueenPlaced) {
                 foreach (GameManager.GameGridCell gridTile in tempGameGrid.Values) {
                     if (gridTile.isFilled) {
-                        Stack<Vector3> movePositions = gameManager.ValidateMoves(gridTile.tile);
+                        TileScript tileScript = gridTile.tile.GetComponent(typeof(TileScript)) as TileScript;
+                        if (tileScript.GetTileColor() == color) {
+                            if (!tileScript.isCovered) {
+                                Stack<Vector3> movePositions = gameManager.ValidateMoves(gridTile.tile);
 
-                        while (movePositions.Count > 0) {
-                            Vector3 placePos = movePositions.Pop();
+                                while (movePositions.Count > 0) {
+                                    Vector3 placePos = movePositions.Pop();
 
-                            moves.Push(new Move(gridTile.tile, placePos, true));
+                                    moves.Push(new Move(gridTile.tile, placePos, true));
+                                }
+                            }
                         }
                     }
                 }

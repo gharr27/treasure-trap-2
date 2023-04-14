@@ -6,7 +6,10 @@ using UnityEngine;
 public class TileScript : MonoBehaviour {
 
     bool isMouseOver = false;
-    bool isWhite;
+    public bool isCovered = false;
+    public string color;
+    string saveColor;
+    Vector3 pos;
 
     BoxCollider boxCollider;
 
@@ -36,16 +39,13 @@ public class TileScript : MonoBehaviour {
     Vector3 top;
 
     public string GetTileColor() {
-        if (isWhite) {
-            return "white";
-        }
-        else {
-            return "black";
-        }
+        return color;
     }
 
     // Start is called before the first frame update
     void Start() {
+        Debug.Log("Tile Instantiated");
+
         boxCollider = this.GetComponent(typeof(BoxCollider)) as BoxCollider;
         gameController = GameObject.FindWithTag("GameController");
         gameManager = gameController.GetComponent(typeof(GameManager)) as GameManager;
@@ -68,10 +68,12 @@ public class TileScript : MonoBehaviour {
         }
 
         if (CompareTag("White")) {
-            isWhite = true;
+            color = "white";
+            saveColor = color;
         }
         else if (CompareTag("Black")) {
-            isWhite = false;
+            color = "black";
+            saveColor = color;
         }
 
         if (tileName == "Queen") {
@@ -94,33 +96,50 @@ public class TileScript : MonoBehaviour {
             id = tileName + spiderId;
             spiderId++;
         }
+        
 
-        x = transform.position.x;
-        y = transform.position.y + 1;
-        z = transform.position.z;
-
-        top = new Vector3(x, y, z);
+        Debug.Log("Tile Pos = " + transform.position);
     }
 
     private void Update() {
+
+        pos = transform.position;
+
+        x = pos.x;
+        y = pos.y + 1;
+        z = pos.z;
+
+        top = new Vector3(x, y, z);
+
+        if (gameManager.gameGrid[top].isFilled) {
+            TileScript tileScript = gameManager.gameGrid[top].tile.GetComponent(typeof(TileScript)) as TileScript;
+            color = tileScript.GetTileColor();
+            isCovered = true;
+        }
+        else {
+            color = saveColor;
+            isCovered = false;
+        }
+
         if (gameManager.isAIGame) {
-            if (Input.GetMouseButtonDown(0) && isMouseOver && p1.isTurn && p1.isQueenPlaced) {
-                if (!gameManager.gameGrid[top].isFilled) {
+            if (Input.GetMouseButtonDown(0) && isMouseOver && p1.isTurn && p1.isQueenPlaced && color == p1.color) {
+                if (!isCovered) {
                     p1.isMove = true;
+                    p1.SetTile(gameObject);
                     gameManager.SetMoveGrid(gameObject, true);
                 }
             }
         }
         else if (gameManager.isNetworkGame) {
             if (Input.GetMouseButtonDown(0) && isMouseOver && p1.isTurn && p1.isQueenPlaced && gameManager.isP1) {
-                if (!gameManager.gameGrid[top].isFilled) {
+                if (!isCovered) {
                     p1.isMove = true;
                     gameManager.SendTilePos(transform.position);
                     gameManager.SetMoveGrid(gameObject, true);
                 }
             }
             else if (Input.GetMouseButtonDown(0) && isMouseOver && p2.isTurn && p2.isQueenPlaced && !gameManager.isP1) {
-                if (!gameManager.gameGrid[top].isFilled) {
+                if (!isCovered) {
                     p2.isMove = true;
                     gameManager.SendTilePos(transform.position);
                     gameManager.SetMoveGrid(gameObject, true);
@@ -128,11 +147,11 @@ public class TileScript : MonoBehaviour {
             }
         }
         else {
-            if (!gameManager.gameGrid[top].isFilled) {
-                if (Input.GetMouseButtonDown(0) && isMouseOver && gameManager.turn == 0 && isWhite) {
+            if (!isCovered) {
+                if (Input.GetMouseButtonDown(0) && isMouseOver && gameManager.turn == 0 && color == "white") {
                     p1.SetTile(gameObject);
                 }
-                else if (Input.GetMouseButtonDown(0) && isMouseOver && gameManager.turn == 1 && !isWhite) {
+                else if (Input.GetMouseButtonDown(0) && isMouseOver && gameManager.turn == 1 && color == "black") {
                     p2.SetTile(gameObject);
                 }
             }
