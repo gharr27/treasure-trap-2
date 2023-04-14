@@ -6,10 +6,10 @@ using Photon.Chat;
 using Photon.Pun;
 using TMPro;
 using UnityEngine.UI;
-using UnityEngine.EventSystems;
 
 public class ChatManager : MonoBehaviour, IChatClientListener
 {
+    
     private ChatClient chatClient;
     public TMP_InputField msgInput;
     public TMP_Text msgArea;
@@ -25,6 +25,7 @@ public class ChatManager : MonoBehaviour, IChatClientListener
     public GameObject LoserScreenPanel;
     public Button goToMenuWin;
     public Button goToMenuLose;
+
 
 
     void Start()
@@ -47,9 +48,7 @@ public class ChatManager : MonoBehaviour, IChatClientListener
         {
             if (Input.GetKey(KeyCode.Return) || Input.GetKey(KeyCode.KeypadEnter))
             {
-                if(!string.IsNullOrWhiteSpace(msgInput.text)){
                 SendMsg();
-                }
             }
         });
 
@@ -72,23 +71,24 @@ public class ChatManager : MonoBehaviour, IChatClientListener
             chatClient.Service();
         }
 
-        // if (Input.GetKeyDown(KeyCode.Escape) ) {
-        //     Leave();
+        if (Input.GetKeyDown(KeyCode.Escape)) {
+            Leave();
 
-        // }
+        }
         if (PhotonNetwork.CurrentRoom != null && PhotonNetwork.CurrentRoom.PlayerCount == 1)
         {
             //load "come back" scene
             Debug.Log("Player left is leaving");
             // chatClient.PublishMessage(PhotonNetwork.CurrentRoom.Name, $"{PhotonNetwork.NickName} has left the room.");
             Leave();
-            // menuManager.GoToWinnerScreenNetwork();
+            menuManager.GoToWinnerScreenNetwork();
+
         }
     }
 
     public void OnGetMessages(string channelName, string[] senders, object[] messages)
     {
-            counter++;
+        counter++;
             counterText.text = counter.ToString();
             for (int i = 0; i < senders.Length; i++)
             {
@@ -109,10 +109,9 @@ public class ChatManager : MonoBehaviour, IChatClientListener
                     msgArea.text += "\r\n" + messages[i] + " ";
                 }
             }
-
     }
 
-    public void ConnectToServer()
+     public void ConnectToServer()
     {
 
     }
@@ -130,11 +129,7 @@ public class ChatManager : MonoBehaviour, IChatClientListener
 
     public void SendMsg()
     {
-        Debug.Log("Message input before sending: " + msgInput.text);
-        // if(string.IsNullOrWhiteSpace(msgInput.text)){
-            // Debug.Log("sending: " + msgInput.text);
         chatClient.PublishMessage(PhotonNetwork.CurrentRoom.Name, PhotonNetwork.NickName + ": " + msgInput.text);
-         
         msgInput.text = "";
     }
 
@@ -142,6 +137,13 @@ public class ChatManager : MonoBehaviour, IChatClientListener
     {
     
     }
+
+    // public void Leave()
+    // {
+    //      Debug.Log("Leave room");
+    //     chatClient.Unsubscribe(new string[] {PhotonNetwork.CurrentRoom.Name});
+    //     chatClient.SetOnlineStatus(ChatUserStatus.Offline);
+    // }
 
     public void Leave()
     {
@@ -160,87 +162,14 @@ public class ChatManager : MonoBehaviour, IChatClientListener
 
     }
     
-    // public void OnLeftRoomVoluntarily()
-    // {
-    //      Debug.Log("Leave room");
-    //     chatClient.Unsubscribe(new string[] { PhotonNetwork.CurrentRoom.Name });
-    //     chatClient.SetOnlineStatus(ChatUserStatus.Offline);
-    //     DisconnectFromServer(); // disconnect from Photon Chat
-    //     PhotonNetwork.LeaveRoom(); // disconnect from Photon PUN
-    //     PhotonNetwork.Disconnect();
-    //     Debug.Log("Player won");
-    //     menuManager.GoToMainMenu();
-
-    //  }
-
-    //  public void OnLeftRoom()
-    // {
-    //     Debug.Log("Leave room");
-    //     chatClient.Unsubscribe(new string[] { PhotonNetwork.CurrentRoom.Name });
-    //     chatClient.SetOnlineStatus(ChatUserStatus.Offline);
-    //     DisconnectFromServer(); // disconnect from Photon Chat
-    //     PhotonNetwork.LeaveRoom(); // disconnect from Photon PUN
-    //     PhotonNetwork.Disconnect();
-    //    menuManager.DisconnectScreen();
-    // }
-
-    // public void OnDisconnected()
-    // {
-    //     Debug.Log("ON Disconnect room");
-    //     // Leave();
-    //     Debug.Log("going to disconnect scene");
-
-    //     menuManager.DisconnectScreen();
-    //     //go to connection loss scene
-
-    // }
 
     public void OnDisconnected()
     {
         Debug.Log("ON Disconnect room");
-        if(!WinnerScreenPanel.activeSelf && !LoserScreenPanel.activeSelf){
+        Debug.Log("going to MAIN");
+        menuManager.GoToMainMenu();
 
-         menuManager.GoToMainMenu();
-        }
-        else{
-             Debug.Log("calling play again");
-            GameObject clickedButton = EventSystem.current.currentSelectedGameObject;
-            if (clickedButton == goToMenuWin)
-            {
-                // Do something for button 1
-                Debug.Log("Go to menu win clicked");
-                menuManager.GoToMainMenu();
 
-            }
-            else if (clickedButton == goToMenuLose)
-            {
-                // Do something for button 2
-                menuManager.GoToMainMenu();
-
-            }
-        }
-    }
-    public void PlayAgainNetwork()
-    {
-        playerWonExit = true;
-       
-        // Leave();
-        // menuManager.GoToLoadingScreen();
-
-         GameObject clickedButton = EventSystem.current.currentSelectedGameObject;
-        if (clickedButton == goToMenuWin)
-        {
-            // Do something for button 1
-             Debug.Log("Go to menu win clicked");
-            menuManager.GoToMainMenu();
-
-        }
-        else if (clickedButton == goToMenuLose)
-        {
-            // Do something for button 2
-            menuManager.GoToMainMenu();
-
-        }
     }
 
     public void OnConnected()
@@ -291,11 +220,5 @@ public class ChatManager : MonoBehaviour, IChatClientListener
     {
         Debug.Log("ON unsubscribed room");
 
-    }
-
-    public void onExitChat(){
-        counter = 0;
-        counterText.text = counter.ToString();
-        notificationImage.SetActive(false);
     }
 }

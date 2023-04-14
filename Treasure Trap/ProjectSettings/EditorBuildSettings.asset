@@ -24,6 +24,9 @@ EditorBuildSettings:
     path: Assets/Scenes/Tutorial/TutorialRules.unity
     guid: 6e8c9b248e1b909408931a4cefe7e003
   - enabled: 1
+    path: Assets/Scenes/Menus/Edwin/WinnerScreenNetwork.unity
+    guid: 8dbb1a286d19545ba9f580aa0cbbd90a
+  - enabled: 1
     path: Assets/Scenes/Menus/Edwin/MainMenu.unity
     guid: eae8954977432a04a8c5a31994b71e56
   - enabled: 1
