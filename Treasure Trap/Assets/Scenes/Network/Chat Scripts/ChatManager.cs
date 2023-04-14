@@ -67,10 +67,10 @@ public class ChatManager : MonoBehaviour, IChatClientListener
             chatClient.Service();
         }
 
-        if (Input.GetKeyDown(KeyCode.Escape) ) {
-            Leave();
+        // if (Input.GetKeyDown(KeyCode.Escape) ) {
+        //     Leave();
 
-        }
+        // }
         // if (PhotonNetwork.CurrentRoom != null && PhotonNetwork.CurrentRoom.PlayerCount == 1)
         // {
         //     //load "come back" scene
@@ -84,8 +84,8 @@ public class ChatManager : MonoBehaviour, IChatClientListener
          Debug.Log("Player left is leaving");
        if (PhotonNetwork.CurrentRoom != null && PhotonNetwork.CurrentRoom.PlayerCount == 1)
         {
-            // player left voluntarily, call OnLeftRoom()
-            OnLeftRoom();
+            // player left voluntarily
+            OnLeftRoomVoluntarily();
         }
         else
         {
@@ -100,13 +100,6 @@ public class ChatManager : MonoBehaviour, IChatClientListener
             counterText.text = counter.ToString();
             for (int i = 0; i < senders.Length; i++)
             {
-                // if (senders[i] != PhotonNetwork.NickName) // check if sender is not local player
-                // {
-                //     // display notification on UI text element
-                //     notificationText.text = senders[i] + " sent a message: " + messages[i];
-                //     // hide notification after 3 seconds
-                //     StartCoroutine(HideNotification(5));
-                // }
 
                 if (senders[i] != PhotonNetwork.NickName) // check if sender is not local player
                 {
@@ -126,12 +119,6 @@ public class ChatManager : MonoBehaviour, IChatClientListener
             }
 
     }
-
-    // private IEnumerator HideNotification(float delay)
-    // {
-    //     yield return new WaitForSeconds(delay);
-    //     notificationText.text = "";
-    // }
 
     public void ConnectToServer()
     {
@@ -164,13 +151,6 @@ public class ChatManager : MonoBehaviour, IChatClientListener
     
     }
 
-    // public void Leave()
-    // {
-    //      Debug.Log("Leave room");
-    //     chatClient.Unsubscribe(new string[] {PhotonNetwork.CurrentRoom.Name});
-    //     chatClient.SetOnlineStatus(ChatUserStatus.Offline);
-    // }
-
     public void Leave()
     {
         Debug.Log("Leave room");
@@ -188,19 +168,27 @@ public class ChatManager : MonoBehaviour, IChatClientListener
 
     }
     
-    public void OnLeftRoom()
+    public void OnLeftRoomVoluntarily()
     {
+       Leave();
         // Load the scene for voluntary leave
        menuManager.GoToMainMenu();
     }
 
     public void OnDisconnected()
     {
-
+        Leave();
         Debug.Log("ON Disconnect room");
         Debug.Log("going to MAIN");
-        //menuManager.GoToMainMenu();
+        menuManager.GoToMainMenu();
         //go to connection loss scene
+
+    }
+
+    public void PlayAgainNetwork()
+    {
+        Leave();
+        menuManager.GoToLoadingScreen();
 
     }
 

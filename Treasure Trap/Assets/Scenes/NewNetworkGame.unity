@@ -4603,7 +4603,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 280.43005, y: -260.13}
+  m_AnchoredPosition: {x: 280.43005, y: -260.12997}
   m_SizeDelta: {x: 560.86, y: 508.41}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5141071992938678425
@@ -5266,7 +5266,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 5141071993485859102}
   m_Direction: 2
   m_Value: 0
-  m_Size: 1
+  m_Size: 0.9999681
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -5725,9 +5725,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1842098034}
-        m_TargetAssemblyTypeName: MenusManager, Assembly-CSharp
-        m_MethodName: GoToMainMenu
+      - m_Target: {fileID: 1359937015}
+        m_TargetAssemblyTypeName: ChatManager, Assembly-CSharp
+        m_MethodName: OnLeftRoomVoluntarily
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
