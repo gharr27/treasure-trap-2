@@ -552,6 +552,12 @@ PrefabInstance:
       propertyPath: m_Name
       value: HowToPlayPref
       objectReference: {fileID: 0}
+    - target: {fileID: 8808499894499236019, guid: d92d7d435e44f0d428690d3048d6e24d, type: 3}
+      propertyPath: m_text
+      value: "A new ship can be introduced to the game at any time. However, with
+        the exception of the first ship placed by each player, ships may not be placed
+        next to a ship of the opponent\u2019s color.\n"
+      objectReference: {fileID: 0}
     - target: {fileID: 8808499896212551061, guid: d92d7d435e44f0d428690d3048d6e24d, type: 3}
       propertyPath: m_RootOrder
       value: 1
