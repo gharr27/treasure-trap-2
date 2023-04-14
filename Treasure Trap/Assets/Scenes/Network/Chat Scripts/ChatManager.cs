@@ -19,6 +19,9 @@ public class ChatManager : MonoBehaviour, IChatClientListener
     public TMP_Text counterText;
     public int counter = 0;
     public GameObject notificationImage;
+    bool playerWonExit = false;
+    public GameObject WinnerScreenPanel;
+    public GameObject LoserScreenPanel;
 
 
     void Start()
@@ -39,7 +42,6 @@ public class ChatManager : MonoBehaviour, IChatClientListener
         }
         msgInput.onEndEdit.AddListener((string text) =>
         {
-            Debug.Log("Input text: " + msgInput.text);
             if (Input.GetKey(KeyCode.Return) || Input.GetKey(KeyCode.KeypadEnter))
             {
                 if(!string.IsNullOrWhiteSpace(msgInput.text)){
@@ -71,26 +73,13 @@ public class ChatManager : MonoBehaviour, IChatClientListener
         //     Leave();
 
         // }
-        // if (PhotonNetwork.CurrentRoom != null && PhotonNetwork.CurrentRoom.PlayerCount == 1)
-        // {
-        //     //load "come back" scene
-        //     Debug.Log("Player left is leaving");
-        //     // chatClient.PublishMessage(PhotonNetwork.CurrentRoom.Name, $"{PhotonNetwork.NickName} has left the room.");
-        //     Leave();
-        //     menuManager.GoToWinnerScreenNetwork();
-
-        // }
-
-         Debug.Log("Player left is leaving");
-       if (PhotonNetwork.CurrentRoom != null && PhotonNetwork.CurrentRoom.PlayerCount == 1)
+        if (PhotonNetwork.CurrentRoom != null && PhotonNetwork.CurrentRoom.PlayerCount == 1)
         {
-            // player left voluntarily
-            OnLeftRoomVoluntarily();
-        }
-        else
-        {
-            // player got disconnected from chat server, call OnDisconnected()
-            OnDisconnected();
+            //load "come back" scene
+            Debug.Log("Player left is leaving");
+            // chatClient.PublishMessage(PhotonNetwork.CurrentRoom.Name, $"{PhotonNetwork.NickName} has left the room.");
+            Leave();
+            menuManager.GoToWinnerScreenNetwork();
         }
     }
 
@@ -170,26 +159,53 @@ public class ChatManager : MonoBehaviour, IChatClientListener
     
     public void OnLeftRoomVoluntarily()
     {
-       Leave();
+    //    Debug.Log("Left voluntarily");
+    //    Leave();
+    //     // Load the scene for voluntary leave
+    //    menuManager.GoToMainMenu();
+
+         Debug.Log("Left voluntarily");
+        Leave();
+            Debug.Log("Player won");
+            menuManager.GoToMainMenu();
+    //     else
+    //     {
+    //         Debug.Log("Going to main menu");
+    //         menuManager.GoToMainMenu();
+    //     }
+     }
+
+     public void OnLeftRoom()
+    {
+        playerWonExit = true;
+        Debug.Log("On Left");
         // Load the scene for voluntary leave
        menuManager.GoToMainMenu();
     }
 
+    // public void OnDisconnected()
+    // {
+    //     Debug.Log("ON Disconnect room");
+    //     // Leave();
+    //     Debug.Log("going to disconnect scene");
+
+    //     menuManager.DisconnectScreen();
+    //     //go to connection loss scene
+
+    // }
+
     public void OnDisconnected()
     {
-        Leave();
         Debug.Log("ON Disconnect room");
-        Debug.Log("going to MAIN");
-        menuManager.GoToMainMenu();
-        //go to connection loss scene
-
+        Debug.Log("Going to main menu");
+        menuManager.DisconnectScreen();
     }
-
     public void PlayAgainNetwork()
     {
+        playerWonExit = true;
+        Debug.Log("PlayAgain");
         Leave();
         menuManager.GoToLoadingScreen();
-
     }
 
     public void OnConnected()

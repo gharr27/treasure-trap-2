@@ -15,7 +15,7 @@ public class PlayerListItem : MonoBehaviourPunCallbacks
 	public void SetUp(Photon.Realtime.Player _player)
 	{
 		player = _player;
-		Debug.Log("received name" + _player.NickName);
+		// Debug.Log("received name" + _player.NickName);
 		text.text = _player.NickName;
 	}
 

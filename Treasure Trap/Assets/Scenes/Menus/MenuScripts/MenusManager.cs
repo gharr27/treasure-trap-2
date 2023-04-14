@@ -94,6 +94,11 @@ public class MenusManager : MonoBehaviour
         SceneManager.LoadScene("AIGame");
     }
 
+    public void DisconnectScreen()
+    {
+        SceneManager.LoadScene("DisconnectScreen");
+    }
+
     public void ExitGame()
     {
         Debug.Log("Your Application is closed");

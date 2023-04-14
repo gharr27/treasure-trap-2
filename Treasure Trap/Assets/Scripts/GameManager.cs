@@ -19,6 +19,9 @@ public class GameManager : MonoBehaviour {
     public TextMeshProUGUI p2BeetleCount;
     public TextMeshProUGUI p2SpiderCount;
 
+    public GameObject WinnerScreenPanel;
+    public GameObject LoserScreenPanel;
+
     public class GameGridCell {
         public bool isFilled;
         public GameObject tile;
@@ -1211,11 +1214,13 @@ public class GameManager : MonoBehaviour {
         else if(isNetworkGame){
             if (playerWin) {
                 //Player Win
-                menuManager.GoToWinnerScreenNetwork();
+                // chatManager.Leave();
+                WinnerScreenPanel.SetActive(true);
             }
             else {
                 //Player Lose
-                menuManager.GoToLoserScreenNetwork();
+                // chatManager.Leave();
+                LoserScreenPanel.SetActive(true);
                 
             }
         }
