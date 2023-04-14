@@ -19,6 +19,9 @@ public class GameManager : MonoBehaviour {
     public TextMeshProUGUI p2BeetleCount;
     public TextMeshProUGUI p2SpiderCount;
 
+    public GameObject WinnerScreenPanel;
+    public GameObject LoserScreenPanel;
+
     public class GameGridCell {
         public bool isFilled;
         public GameObject tile;
@@ -1197,14 +1200,29 @@ public class GameManager : MonoBehaviour {
     }
 
     void GameOver(bool playerWin) {
-        if (playerWin) {
-            //Player Win
-            menuManager.GoToWinnerScreenAI();
+        if (isAIGame){
+            if (playerWin) {
+                //Player Win
+                menuManager.GoToWinnerScreenAI();
+            }
+            else {
+                //Player Lose
+                menuManager.GoToLoserScreen();
+                
+            }
         }
-        else {
-            //Player Lose
-            menuManager.GoToLoserScreen();
-            
+        else if(isNetworkGame){
+            if (playerWin) {
+                //Player Win
+                // chatManager.Leave();
+                WinnerScreenPanel.SetActive(true);
+            }
+            else {
+                //Player Lose
+                // chatManager.Leave();
+                LoserScreenPanel.SetActive(true);
+                
+            }
         }
     }
 

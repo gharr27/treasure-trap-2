@@ -64,6 +64,11 @@ public class MenusManager : MonoBehaviour
         SceneManager.LoadScene("LoserScreen");
     }
 
+    public void GoToLoserScreenNetwork()
+    {
+        SceneManager.LoadScene("LoserScreenNetwork");
+    }
+
     public void GoToWinnerScreenAI()
     {
         SceneManager.LoadScene("WinnerScreenAI");
@@ -87,6 +92,11 @@ public class MenusManager : MonoBehaviour
     public void GoToAIGame()
     {
         SceneManager.LoadScene("AIGame");
+    }
+
+    public void DisconnectScreen()
+    {
+        SceneManager.LoadScene("DisconnectScreen");
     }
 
     public void ExitGame()

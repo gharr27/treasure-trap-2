@@ -6,6 +6,7 @@ using Photon.Chat;
 using Photon.Pun;
 using TMPro;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 public class ChatManager : MonoBehaviour, IChatClientListener
 {
@@ -19,6 +20,11 @@ public class ChatManager : MonoBehaviour, IChatClientListener
     public TMP_Text counterText;
     public int counter = 0;
     public GameObject notificationImage;
+    bool playerWonExit = false;
+    public GameObject WinnerScreenPanel;
+    public GameObject LoserScreenPanel;
+    public Button goToMenuWin;
+    public Button goToMenuLose;
 
 
     void Start()
@@ -39,7 +45,6 @@ public class ChatManager : MonoBehaviour, IChatClientListener
         }
         msgInput.onEndEdit.AddListener((string text) =>
         {
-            Debug.Log("Input text: " + msgInput.text);
             if (Input.GetKey(KeyCode.Return) || Input.GetKey(KeyCode.KeypadEnter))
             {
                 if(!string.IsNullOrWhiteSpace(msgInput.text)){
@@ -67,30 +72,17 @@ public class ChatManager : MonoBehaviour, IChatClientListener
             chatClient.Service();
         }
 
-        if (Input.GetKeyDown(KeyCode.Escape) ) {
-            Leave();
-
-        }
-        // if (PhotonNetwork.CurrentRoom != null && PhotonNetwork.CurrentRoom.PlayerCount == 1)
-        // {
-        //     //load "come back" scene
-        //     Debug.Log("Player left is leaving");
-        //     // chatClient.PublishMessage(PhotonNetwork.CurrentRoom.Name, $"{PhotonNetwork.NickName} has left the room.");
+        // if (Input.GetKeyDown(KeyCode.Escape) ) {
         //     Leave();
-        //     menuManager.GoToWinnerScreenNetwork();
 
         // }
-
-         Debug.Log("Player left is leaving");
-       if (PhotonNetwork.CurrentRoom != null && PhotonNetwork.CurrentRoom.PlayerCount == 1)
+        if (PhotonNetwork.CurrentRoom != null && PhotonNetwork.CurrentRoom.PlayerCount == 1)
         {
-            // player left voluntarily, call OnLeftRoom()
-            OnLeftRoom();
-        }
-        else
-        {
-            // player got disconnected from chat server, call OnDisconnected()
-            OnDisconnected();
+            //load "come back" scene
+            Debug.Log("Player left is leaving");
+            // chatClient.PublishMessage(PhotonNetwork.CurrentRoom.Name, $"{PhotonNetwork.NickName} has left the room.");
+            Leave();
+            // menuManager.GoToWinnerScreenNetwork();
         }
     }
 
@@ -100,13 +92,6 @@ public class ChatManager : MonoBehaviour, IChatClientListener
             counterText.text = counter.ToString();
             for (int i = 0; i < senders.Length; i++)
             {
-                // if (senders[i] != PhotonNetwork.NickName) // check if sender is not local player
-                // {
-                //     // display notification on UI text element
-                //     notificationText.text = senders[i] + " sent a message: " + messages[i];
-                //     // hide notification after 3 seconds
-                //     StartCoroutine(HideNotification(5));
-                // }
 
                 if (senders[i] != PhotonNetwork.NickName) // check if sender is not local player
                 {
@@ -126,12 +111,6 @@ public class ChatManager : MonoBehaviour, IChatClientListener
             }
 
     }
-
-    // private IEnumerator HideNotification(float delay)
-    // {
-    //     yield return new WaitForSeconds(delay);
-    //     notificationText.text = "";
-    // }
 
     public void ConnectToServer()
     {
@@ -164,13 +143,6 @@ public class ChatManager : MonoBehaviour, IChatClientListener
     
     }
 
-    // public void Leave()
-    // {
-    //      Debug.Log("Leave room");
-    //     chatClient.Unsubscribe(new string[] {PhotonNetwork.CurrentRoom.Name});
-    //     chatClient.SetOnlineStatus(ChatUserStatus.Offline);
-    // }
-
     public void Leave()
     {
         Debug.Log("Leave room");
@@ -188,20 +160,87 @@ public class ChatManager : MonoBehaviour, IChatClientListener
 
     }
     
-    public void OnLeftRoom()
-    {
-        // Load the scene for voluntary leave
-       menuManager.GoToMainMenu();
-    }
+    // public void OnLeftRoomVoluntarily()
+    // {
+    //      Debug.Log("Leave room");
+    //     chatClient.Unsubscribe(new string[] { PhotonNetwork.CurrentRoom.Name });
+    //     chatClient.SetOnlineStatus(ChatUserStatus.Offline);
+    //     DisconnectFromServer(); // disconnect from Photon Chat
+    //     PhotonNetwork.LeaveRoom(); // disconnect from Photon PUN
+    //     PhotonNetwork.Disconnect();
+    //     Debug.Log("Player won");
+    //     menuManager.GoToMainMenu();
+
+    //  }
+
+    //  public void OnLeftRoom()
+    // {
+    //     Debug.Log("Leave room");
+    //     chatClient.Unsubscribe(new string[] { PhotonNetwork.CurrentRoom.Name });
+    //     chatClient.SetOnlineStatus(ChatUserStatus.Offline);
+    //     DisconnectFromServer(); // disconnect from Photon Chat
+    //     PhotonNetwork.LeaveRoom(); // disconnect from Photon PUN
+    //     PhotonNetwork.Disconnect();
+    //    menuManager.DisconnectScreen();
+    // }
+
+    // public void OnDisconnected()
+    // {
+    //     Debug.Log("ON Disconnect room");
+    //     // Leave();
+    //     Debug.Log("going to disconnect scene");
+
+    //     menuManager.DisconnectScreen();
+    //     //go to connection loss scene
+
+    // }
 
     public void OnDisconnected()
     {
-
         Debug.Log("ON Disconnect room");
-        Debug.Log("going to MAIN");
-        //menuManager.GoToMainMenu();
-        //go to connection loss scene
+        if(!WinnerScreenPanel.activeSelf && !LoserScreenPanel.activeSelf){
 
+         menuManager.GoToMainMenu();
+        }
+        else{
+             Debug.Log("calling play again");
+            GameObject clickedButton = EventSystem.current.currentSelectedGameObject;
+            if (clickedButton == goToMenuWin)
+            {
+                // Do something for button 1
+                Debug.Log("Go to menu win clicked");
+                menuManager.GoToMainMenu();
+
+            }
+            else if (clickedButton == goToMenuLose)
+            {
+                // Do something for button 2
+                menuManager.GoToMainMenu();
+
+            }
+        }
+    }
+    public void PlayAgainNetwork()
+    {
+        playerWonExit = true;
+       
+        // Leave();
+        // menuManager.GoToLoadingScreen();
+
+         GameObject clickedButton = EventSystem.current.currentSelectedGameObject;
+        if (clickedButton == goToMenuWin)
+        {
+            // Do something for button 1
+             Debug.Log("Go to menu win clicked");
+            menuManager.GoToMainMenu();
+
+        }
+        else if (clickedButton == goToMenuLose)
+        {
+            // Do something for button 2
+            menuManager.GoToMainMenu();
+
+        }
     }
 
     public void OnConnected()
