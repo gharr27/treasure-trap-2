@@ -367,7 +367,7 @@ public class GameManager : MonoBehaviour {
                 p1.isTurn = false;
                 p2.isTurn = true;
                 turn = 1;
-                p2Image.SetActive(ai.isTurn);
+                p2Image.SetActive(p2.isTurn);
                 p1Image.SetActive(p1.isTurn);
             }
             else {
@@ -375,7 +375,7 @@ public class GameManager : MonoBehaviour {
                 p2.isTurn = false;
                 turn = 0;
                 round++;
-                p2Image.SetActive(ai.isTurn);
+                p2Image.SetActive(p2.isTurn);
                 p1Image.SetActive(p1.isTurn);
             }
         }
