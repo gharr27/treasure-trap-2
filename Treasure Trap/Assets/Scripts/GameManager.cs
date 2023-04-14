@@ -22,20 +22,27 @@ public class GameManager : MonoBehaviour {
     public GameObject WinnerScreenPanel;
     public GameObject LoserScreenPanel;
 
+    public GameObject p1Image;
+    public GameObject p2Image;
+
     public class GameGridCell {
         public bool isFilled;
         public GameObject tile;
         public bool isVisited;
+        public bool isGate;
 
         public GameGridCell() {
             isFilled = false;
             tile = null;
             isVisited = false;
+            isGate = false;
         }
 
         public GameGridCell(bool isFilled, GameObject tile) {
             this.isFilled = isFilled;
             this.tile = tile;
+            isVisited = false;
+            isGate = false;
         }
     }
     private class MovePosition {
@@ -105,6 +112,9 @@ public class GameManager : MonoBehaviour {
         menuManagerObject = GameObject.FindWithTag("Menu");
         menuManager = menuManagerObject.GetComponent(typeof(MenusManager)) as MenusManager;
 
+        p1Image.SetActive(true);
+        p2Image.SetActive(false);
+
         //Network Game
         if (isNetworkGame) {
             Debug.Log("Network Game");
@@ -149,6 +159,9 @@ public class GameManager : MonoBehaviour {
             p1.color = "white";
             ai.isTurn = false;
             ai.color = "black";
+
+            isP1 = true;
+            p1.isP1 = true;
         }
         else {  //One Machine PVP Game
             Debug.Log("PVP Game");
@@ -367,12 +380,16 @@ public class GameManager : MonoBehaviour {
                 p1.isTurn = false;
                 ai.isTurn = true;
                 turn = 1;
+                p2Image.SetActive(ai.isTurn);
+                p1Image.SetActive(p1.isTurn);
             }
             else {
                 p1.isTurn = true;
                 ai.isTurn = false;
                 turn = 0;
                 round++;
+                p2Image.SetActive(ai.isTurn);
+                p1Image.SetActive(p1.isTurn);
             }
         }
     }
@@ -799,9 +816,7 @@ public class GameManager : MonoBehaviour {
         return false;
     }
 
-    Stack<Vector3> CheckForGates(Vector3 pos) {
-        Stack<Vector3> gatedPos = new Stack<Vector3>();
-
+    void CheckForGates(Vector3 pos) {
         float x = pos.x;
         float y = pos.y;
         float z = pos.z;
@@ -812,76 +827,92 @@ public class GameManager : MonoBehaviour {
         Vector3 newPos1 = new Vector3(x + 1, y, z);
         Vector3 newPos2 = new Vector3(x - .5f, y, z - 1);
         Vector3 emptyPos = new Vector3(x + .5f, y, z - 1);
+        Debug.Log("test1");
         if (gameGrid.ContainsKey(newPos1) && gameGrid.ContainsKey(emptyPos) && gameGrid.ContainsKey(newPos2)) {
+            Debug.Log("test2");
+            Debug.Log(newPos1 + " " + newPos2);
+            Debug.Log(gameGrid[newPos1].isFilled + " : " + gameGrid[newPos2].isFilled);
             if (gameGrid[newPos1].isFilled && !gameGrid[emptyPos].isFilled && gameGrid[newPos2].isFilled) {
                 Debug.Log(emptyPos + " is Visited");
                 gameGrid[emptyPos].isVisited = true;
+                gameGrid[emptyPos].isGate = true;
             }
         }
         //Case:     .5, -1 : -1, 0
         newPos1 = new Vector3(x + .5f, y, z - 1);
         newPos2 = new Vector3(x - 1, y, z);
         emptyPos = new Vector3(x - .5f, y, z - 1);
+        Debug.Log("test1");
         if (gameGrid.ContainsKey(newPos1) && gameGrid.ContainsKey(emptyPos) && gameGrid.ContainsKey(newPos2)) {
+            Debug.Log("test2");
+            Debug.Log(newPos1 + " " + newPos2);
+            Debug.Log(gameGrid[newPos1].isFilled + " : " + gameGrid[newPos2].isFilled);
             if (gameGrid[newPos1].isFilled && !gameGrid[emptyPos].isFilled && gameGrid[newPos2].isFilled) {
                 Debug.Log(emptyPos + " is Visited");
                 gameGrid[emptyPos].isVisited = true;
+                gameGrid[emptyPos].isGate = true;
             }
         }
         //Case:     .-5, -1 : -.5, 1
         newPos1 = new Vector3(x - .5f, y, z - 1);
         newPos2 = new Vector3(x - .5f, y, z + 1);
         emptyPos = new Vector3(x - 1, y, z);
+        Debug.Log("test1");
         if (gameGrid.ContainsKey(newPos1) && gameGrid.ContainsKey(emptyPos) && gameGrid.ContainsKey(newPos2)) {
+            Debug.Log("test2");
+            Debug.Log(newPos1 + " " + newPos2);
+            Debug.Log(gameGrid[newPos1].isFilled + " : " + gameGrid[newPos2].isFilled);
             if (gameGrid[newPos1].isFilled && !gameGrid[emptyPos].isFilled && gameGrid[newPos2].isFilled) {
                 Debug.Log(emptyPos + " is Visited");
                 gameGrid[emptyPos].isVisited = true;
+                gameGrid[emptyPos].isGate = true;
             }
         }
         //Case:     -1, 0 : .5, 1
-        newPos1 = new Vector3(x -1, y, z);
-        newPos2 = new Vector3(x - .5f, y, z + 1);
+        newPos1 = new Vector3(x - 1, y, z);
+        newPos2 = new Vector3(x + .5f, y, z + 1);
         emptyPos = new Vector3(x - .5f, y, z + 1);
+        Debug.Log("test1");
         if (gameGrid.ContainsKey(newPos1) && gameGrid.ContainsKey(emptyPos) && gameGrid.ContainsKey(newPos2)) {
+            Debug.Log("test2");
+            Debug.Log(newPos1 + " " + newPos2);
+            Debug.Log(gameGrid[newPos1].isFilled + " : " + gameGrid[newPos2].isFilled);
             if (gameGrid[newPos1].isFilled && !gameGrid[emptyPos].isFilled && gameGrid[newPos2].isFilled) {
                 Debug.Log(emptyPos + " is Visited");
                 gameGrid[emptyPos].isVisited = true;
+                gameGrid[emptyPos].isGate = true;
             }
         }
         //Case:     -.5, 1  :   1, 0
         newPos1 = new Vector3(x - .5f, y, z + 1);
         newPos2 = new Vector3(x + 1, y, z);
         emptyPos = new Vector3(x + .5f, y, z + 1);
+        Debug.Log("test1");
         if (gameGrid.ContainsKey(newPos1) && gameGrid.ContainsKey(emptyPos) && gameGrid.ContainsKey(newPos2)) {
+            Debug.Log("test2");
+            Debug.Log(newPos1 + " " + newPos2);
+            Debug.Log(gameGrid[newPos1].isFilled + " : " + gameGrid[newPos2].isFilled);
             if (gameGrid[newPos1].isFilled && !gameGrid[emptyPos].isFilled && gameGrid[newPos2].isFilled) {
                 Debug.Log(emptyPos + " is Visited");
                 gameGrid[emptyPos].isVisited = true;
+                gameGrid[emptyPos].isGate = true;
             }
         }
         //Case:     .5,1 : .5,-1
         newPos1 = new Vector3(x + .5f, y, z + 1);
         newPos2 = new Vector3(x + .5f, y, z - 1);
         emptyPos = new Vector3(x + 1, y, z);
+        Debug.Log("test1");
         if (gameGrid.ContainsKey(newPos1) && gameGrid.ContainsKey(emptyPos) && gameGrid.ContainsKey(newPos2)) {
+            Debug.Log("test2");
+            Debug.Log(newPos1 + " " + newPos2);
+            Debug.Log(gameGrid[newPos1].isFilled + " : " + gameGrid[newPos2].isFilled);
             if (gameGrid[newPos1].isFilled && !gameGrid[emptyPos].isFilled && gameGrid[newPos2].isFilled) {
                 Debug.Log(emptyPos + " is Visited");
                 gameGrid[emptyPos].isVisited = true;
+                gameGrid[emptyPos].isGate = true;
             }
         }
-
-        int count = 0;
-        foreach (KeyValuePair<Vector3, GameGridCell> gridCell in gameGrid) {
-            if (gridCell.Value.isVisited) {
-                Debug.Log("Grid Pos: " + gridCell.Key);
-                gatedPos.Push(gridCell.Key);
-                gridCell.Value.isVisited = false;
-                count++;
-            }
-        }
-        Debug.Log(count);
-        gameGrid[pos].isVisited = false;
-
-        return gatedPos;
     }
 
     void TraverseEmptySpaces(Vector3 pos) {
@@ -893,14 +924,16 @@ public class GameManager : MonoBehaviour {
             gameGrid[pos].isVisited = true;
         }
 
-        //Check all directions for filled tile
-     
         //check Above
         Vector3 newPos = new Vector3(x + 1, y, z);
         if (gameGrid.ContainsKey(newPos)) {
             if (!gameGrid[newPos].isFilled) {
                 if (!gameGrid[newPos].isVisited) {
-                    TraverseEmptySpaces(newPos);
+                    CheckForGates(pos);
+
+                    if (!gameGrid[newPos].isGate) {
+                        TraverseEmptySpaces(newPos);
+                    }
                 }
             }
         }
@@ -910,7 +943,7 @@ public class GameManager : MonoBehaviour {
         if (gameGrid.ContainsKey(newPos)) {
             if (!gameGrid[newPos].isFilled) {
                 if (!gameGrid[newPos].isVisited) {
-                    TraverseEmptySpaces(newPos);
+                    CheckForGates(pos);
                 }
             }
         }
@@ -920,7 +953,11 @@ public class GameManager : MonoBehaviour {
         if (gameGrid.ContainsKey(newPos)) {
             if (!gameGrid[newPos].isFilled) {
                 if (!gameGrid[newPos].isVisited) {
-                    TraverseEmptySpaces(newPos);
+                    CheckForGates(pos);
+
+                    if (!gameGrid[newPos].isGate) {
+                        TraverseEmptySpaces(newPos);
+                    }
                 }
             }
         }
@@ -930,7 +967,11 @@ public class GameManager : MonoBehaviour {
         if (gameGrid.ContainsKey(newPos)) {
             if (!gameGrid[newPos].isFilled) {
                 if (!gameGrid[newPos].isVisited) {
-                    TraverseEmptySpaces(newPos);
+                    CheckForGates(pos);
+
+                    if (!gameGrid[newPos].isGate) {
+                        TraverseEmptySpaces(newPos);
+                    }
                 }
             }
         }
@@ -940,7 +981,11 @@ public class GameManager : MonoBehaviour {
         if (gameGrid.ContainsKey(newPos)) {
             if (!gameGrid[newPos].isFilled) {
                 if (!gameGrid[newPos].isVisited) {
-                    TraverseEmptySpaces(newPos);
+                    CheckForGates(pos);
+
+                    if (!gameGrid[newPos].isGate) {
+                        TraverseEmptySpaces(newPos);
+                    }
                 }
             }
         }
@@ -950,7 +995,11 @@ public class GameManager : MonoBehaviour {
         if (gameGrid.ContainsKey(newPos)) {
             if (!gameGrid[newPos].isFilled) {
                 if (!gameGrid[newPos].isVisited) {
-                    TraverseEmptySpaces(newPos);
+                    CheckForGates(pos);
+
+                    if (!gameGrid[newPos].isGate) {
+                        TraverseEmptySpaces(newPos);
+                    }
                 }
             }
         }
@@ -1184,16 +1233,25 @@ public class GameManager : MonoBehaviour {
                     if (tileScript.GetTileColor() == p1.color) {
                         //Player Lose
                         if (IsSurrounded(pos)) {
-                            GameOver(false);
+                            if (isP1) {
+                                GameOver(false);
+                            }
+                            else {
+                                GameOver(true);
+                            }
                         }
                 }
                     else {
                         //Player Win
                         if (IsSurrounded(pos)) {
-                            GameOver(true);
+                            if (isP1) {
+                                GameOver(true);
+                            }
+                            else {
+                                GameOver(false);
+                            }
                         }
                     }
-
                 }
             }
         }
@@ -1484,6 +1542,81 @@ public class GameManager : MonoBehaviour {
         return ret;
     }
 
+    int GetBoarderCount(Vector3 pos, GameObject tile) {
+        int count = 0;
+
+        float x = pos.x;
+        float y = pos.y;
+        float z = pos.z;
+
+        //Above
+        Vector3 newPos = new Vector3(x + 1, y, z);
+        if (gameGrid.ContainsKey(newPos)) {
+            if (gameGrid[newPos].isFilled && gameGrid[newPos].tile != tile) {
+                count++;
+            }
+        }
+        else {
+            Debug.Log("no key");
+        }
+
+        //Below
+        newPos = new Vector3(x - 1, y, z);
+        if (gameGrid.ContainsKey(newPos)) {
+            if (gameGrid[newPos].isFilled && gameGrid[newPos].tile != tile) {
+                count++;
+            }
+        }
+        else {
+            Debug.Log("no key");
+        }
+
+        //Top Left
+        newPos = new Vector3(x + .5f, y, z + 1);
+        if (gameGrid.ContainsKey(newPos)) {
+            if (gameGrid[newPos].isFilled && gameGrid[newPos].tile != tile) {
+                count++;
+            }
+        }
+        else {
+            Debug.Log("no key");
+        }
+
+        //Top Right
+        newPos = new Vector3(x + .5f, y, z - 1);
+        if (gameGrid.ContainsKey(newPos)) {
+            if (gameGrid[newPos].isFilled && gameGrid[newPos].tile != tile) {
+                count++;
+            }
+        }
+        else {
+            Debug.Log("no key");
+        }
+
+        //Bottom Left
+        newPos = new Vector3(x - .5f, y, z + 1);
+        if (gameGrid.ContainsKey(newPos)) {
+            if (gameGrid[newPos].isFilled && gameGrid[newPos].tile != tile) {
+                count++;
+            }
+        }
+        else {
+            Debug.Log("no key");
+        }
+
+        //Bottom Right
+        newPos = new Vector3(x - .5f, y, z - 1);
+        if (gameGrid.ContainsKey(newPos)) {
+            if (gameGrid[newPos].isFilled && gameGrid[newPos].tile != tile) {
+                count++;
+            }
+        }
+        else {
+            Debug.Log("no key");
+        }
+
+        return count;
+    }
 
     //Creates the selection grid at valid move positions
     public void SetMoveGrid(GameObject tile, bool isMove) {
@@ -1496,55 +1629,60 @@ public class GameManager : MonoBehaviour {
         else {
             isWhite = false;
         }
-
+        Debug.Log(tilesPlaced);
         if (tilesPlaced > 0) {
             ClearMoveGrid();
-
+            Debug.Log(isMove);
             if (isMove) {
                 if (!IsBreaksHive(tile.transform.position)) {
                     Stack<Vector3> positions = ValidateMoves(tile);
                     Stack<Vector3> tempPositions = ValidateMoves(tile);
-                    Dictionary<Vector3, int> gatedPos = new Dictionary<Vector3, int>();
                     Stack<Vector3> badPositions = new Stack<Vector3>();
                     Stack<Vector3> validPositons = new Stack<Vector3>();
 
-                    Debug.Log("Position Count: " + positions.Count);
+                    //CheckForGates(tempPositions);
 
-                    while (tempPositions.Count > 0) {
-                        Vector3 pos = tempPositions.Pop();
-                        badPositions = CheckForGates(pos);
+                    //foreach (KeyValuePair<Vector3, GameGridCell> gridCell in gameGrid) {
+                    //    if (gridCell.Value.isVisited) {
+                    //        Debug.Log("Grid Piece: " + gridCell.Key);
+                    //        badPositions.Push(gridCell.Key);
+                    //        gridCell.Value.isVisited = false;
+                    //    }
+                    //}
 
-                        foreach (Vector3 badPos in badPositions) {
-                            if (!gatedPos.ContainsKey(badPos)) {
-                                gatedPos.Add(badPos, 7);
-                                Debug.Log("Bad Pos: " + badPos);
-                            }
-                        }
-                    }
+                    //Debug.Log(badPositions.Count);
+                    //Debug.Log(positions.Count);
 
-                    Debug.Log("Position Count: " + positions.Count);
-                    Debug.Log("Gated Positions: " + gatedPos.Count);
+                    //while (positions.Count > 0) {
+                    //    Vector3 pos = positions.Pop();
+                    //    bool isValid = true;
 
-                    while (positions.Count > 0) {
-                        Vector3 pos = positions.Pop();
-                        bool isValid = true;
+                    //    foreach (Vector3 badPos in badPositions) {
+                    //        Debug.Log("Bad Pos: " + badPos);
+                    //        if (pos == badPos) {
+                    //            Debug.Log(pos + " : " + badPos);
+                    //            isValid = false;
+                    //            break;
+                    //        }
+                    //    }
 
-                        foreach (Vector3 badPos in gatedPos.Keys) {
-                            if (pos == badPos) {
-                                isValid = false;
-                                break;
-                            }
-                        }
+                    //    if (isValid) {
+                    //        validPositons.Push(pos);
+                    //    }
+                    //}
 
-                        if (isValid) {
-                            validPositons.Push(pos);
-                        }
-                    }
+                    //Debug.Log(validPositons.Count);
 
+                    validPositons = positions;
                     while (validPositons.Count > 0) {
-                        GameObject grid;
-                        grid = Instantiate(GridTile, validPositons.Pop(), Quaternion.identity) as GameObject;
-                        selectionGrids.Push(grid);
+                        if (GetBoarderCount(validPositons.Peek(), tile) < 5) {
+                            GameObject grid;
+                            grid = Instantiate(GridTile, validPositons.Pop(), Quaternion.identity) as GameObject;
+                            selectionGrids.Push(grid);
+                        }
+                        else {
+                            validPositons.Pop();
+                        }
                     }
                 }
             }
