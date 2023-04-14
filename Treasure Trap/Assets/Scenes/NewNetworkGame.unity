@@ -577,7 +577,7 @@ PrefabInstance:
       objectReference: {fileID: 1359937015}
     - target: {fileID: 347740837397118389, guid: ff71f22bbac744f1688cf4a0c44379c0, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: OnLeftRoom2
+      value: Leave
       objectReference: {fileID: 0}
     - target: {fileID: 347740837397118389, guid: ff71f22bbac744f1688cf4a0c44379c0, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
@@ -647,20 +647,17 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 7664648348148721278, guid: ff71f22bbac744f1688cf4a0c44379c0, type: 3}
   m_PrefabInstance: {fileID: 587649849}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &587649852
+--- !u!114 &587649853 stripped
 MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 347740837397118389, guid: ff71f22bbac744f1688cf4a0c44379c0, type: 3}
+  m_PrefabInstance: {fileID: 587649849}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 587649851}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 25b8955becf0c4868b258c5d89e47ec0, type: 3}
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  menuName: WinnerCanvas
-  open: 0
 --- !u!1 &637815116
 GameObject:
   m_ObjectHideFlags: 0
@@ -1296,7 +1293,7 @@ PrefabInstance:
       objectReference: {fileID: 1359937015}
     - target: {fileID: 483504392243484106, guid: 90faba3d59c654cb7af529ff9ee84bc9, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: OnLeftRoom2
+      value: Leave
       objectReference: {fileID: 0}
     - target: {fileID: 7510000645174887215, guid: 90faba3d59c654cb7af529ff9ee84bc9, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -1370,20 +1367,17 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 7510000646358610426, guid: 90faba3d59c654cb7af529ff9ee84bc9, type: 3}
   m_PrefabInstance: {fileID: 1143892557}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1143892560
+--- !u!114 &1143892561 stripped
 MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 483504392243484106, guid: 90faba3d59c654cb7af529ff9ee84bc9, type: 3}
+  m_PrefabInstance: {fileID: 1143892557}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1143892559}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 25b8955becf0c4868b258c5d89e47ec0, type: 3}
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  menuName: LoserCanvas
-  open: 0
 --- !u!1 &1217961531
 GameObject:
   m_ObjectHideFlags: 0
@@ -1414,9 +1408,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   menus:
-  - {fileID: 5141071992679527198}
-  - {fileID: 587649852}
-  - {fileID: 1143892560}
+  - {fileID: 5141071993827836876}
 --- !u!4 &1217961533
 Transform:
   m_ObjectHideFlags: 0
@@ -1470,6 +1462,8 @@ MonoBehaviour:
   notificationImage: {fileID: 5141071992440618185}
   WinnerScreenPanel: {fileID: 587649851}
   LoserScreenPanel: {fileID: 1143892559}
+  goToMenuWin: {fileID: 587649853}
+  goToMenuLose: {fileID: 1143892561}
 --- !u!4 &1359937016
 Transform:
   m_ObjectHideFlags: 0
@@ -5999,7 +5993,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1359937015}
         m_TargetAssemblyTypeName: ChatManager, Assembly-CSharp
-        m_MethodName: OnLeftRoomVoluntarily
+        m_MethodName: Leave
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
