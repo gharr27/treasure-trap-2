@@ -504,8 +504,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4559369751649547443}
-  - component: {fileID: 8680127187126475766}
-  - component: {fileID: 170300782612082512}
   m_Layer: 0
   m_Name: Ant-Black
   m_TagString: Black
@@ -529,32 +527,6 @@ Transform:
   m_Father: {fileID: 1683746391451502846}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8680127187126475766
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6513440086488590182}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5d56d5b8ecc9ac64cbe85e1041c34d58, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  tileName: Ant
---- !u!65 &170300782612082512
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6513440086488590182}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1.1240892, z: 1}
-  m_Center: {x: 0, y: 0.5434543, z: 0}
 --- !u!1 &7714734561038977617
 GameObject:
   m_ObjectHideFlags: 0
