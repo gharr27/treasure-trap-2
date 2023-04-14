@@ -1197,14 +1197,27 @@ public class GameManager : MonoBehaviour {
     }
 
     void GameOver(bool playerWin) {
-        if (playerWin) {
-            //Player Win
-            menuManager.GoToWinnerScreenAI();
+        if (isAIGame){
+            if (playerWin) {
+                //Player Win
+                menuManager.GoToWinnerScreenAI();
+            }
+            else {
+                //Player Lose
+                menuManager.GoToLoserScreen();
+                
+            }
         }
-        else {
-            //Player Lose
-            menuManager.GoToLoserScreen();
-            
+        else if(isNetworkGame){
+            if (playerWin) {
+                //Player Win
+                menuManager.GoToWinnerScreenNetwork();
+            }
+            else {
+                //Player Lose
+                menuManager.GoToLoserScreenNetwork();
+                
+            }
         }
     }
 
