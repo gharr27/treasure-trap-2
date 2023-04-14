@@ -71,14 +71,26 @@ public class ChatManager : MonoBehaviour, IChatClientListener
             Leave();
 
         }
-        if (PhotonNetwork.CurrentRoom != null && PhotonNetwork.CurrentRoom.PlayerCount == 1)
-        {
-            //load "come back" scene
-            Debug.Log("Player left is leaving");
-            // chatClient.PublishMessage(PhotonNetwork.CurrentRoom.Name, $"{PhotonNetwork.NickName} has left the room.");
-            Leave();
-            menuManager.GoToWinnerScreenNetwork();
+        // if (PhotonNetwork.CurrentRoom != null && PhotonNetwork.CurrentRoom.PlayerCount == 1)
+        // {
+        //     //load "come back" scene
+        //     Debug.Log("Player left is leaving");
+        //     // chatClient.PublishMessage(PhotonNetwork.CurrentRoom.Name, $"{PhotonNetwork.NickName} has left the room.");
+        //     Leave();
+        //     menuManager.GoToWinnerScreenNetwork();
 
+        // }
+
+         Debug.Log("Player left is leaving");
+       if (PhotonNetwork.CurrentRoom != null && PhotonNetwork.CurrentRoom.PlayerCount == 1)
+        {
+            // player left voluntarily, call OnLeftRoom()
+            OnLeftRoom();
+        }
+        else
+        {
+            // player got disconnected from chat server, call OnDisconnected()
+            OnDisconnected();
         }
     }
 
@@ -176,13 +188,19 @@ public class ChatManager : MonoBehaviour, IChatClientListener
 
     }
     
+    public void OnLeftRoom()
+    {
+        // Load the scene for voluntary leave
+       menuManager.GoToMainMenu();
+    }
 
     public void OnDisconnected()
     {
+
         Debug.Log("ON Disconnect room");
         Debug.Log("going to MAIN");
-        menuManager.GoToMainMenu();
-
+        //menuManager.GoToMainMenu();
+        //go to connection loss scene
 
     }
 
