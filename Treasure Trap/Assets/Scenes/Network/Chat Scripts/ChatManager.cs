@@ -77,7 +77,7 @@ public class ChatManager : MonoBehaviour, IChatClientListener
             Debug.Log("Player left is leaving");
             // chatClient.PublishMessage(PhotonNetwork.CurrentRoom.Name, $"{PhotonNetwork.NickName} has left the room.");
             Leave();
-            menuManager.GoToWinnerScreenNetwork();
+            menuManager.DisconnectScreen();
 
         }
     }
