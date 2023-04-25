@@ -576,30 +576,32 @@ public class GameManager : MonoBehaviour {
         float y = pos.y;
         float z = pos.z;
 
-        gameGrid[pos].isVisited = true;
+        if (y == 0) {
+            gameGrid[pos].isVisited = true;
 
-        Vector3 startPos = new Vector3();
+            Vector3 startPos = new Vector3();
 
-        Dictionary<Vector3, int> boarderTiles = GetBoarderTiles(pos);
+            Dictionary<Vector3, int> boarderTiles = GetBoarderTiles(pos);
 
-        foreach (Vector3 boarderPos in boarderTiles.Keys) {
-            startPos = boarderPos;
-            break;
-        }
-
-        TraverseHive(startPos);
-
-        int count = 0;
-
-        foreach (GameGridCell gridCell in gameGrid.Values) {
-            if (gridCell.isVisited) {
-                count++;
-                gridCell.isVisited = false;
+            foreach (Vector3 boarderPos in boarderTiles.Keys) {
+                startPos = boarderPos;
+                break;
             }
-        }
 
-        if (count != tilesPlaced) {
-            return true;
+            TraverseHive(startPos);
+
+            int count = 0;
+
+            foreach (GameGridCell gridCell in gameGrid.Values) {
+                if (gridCell.isVisited) {
+                    count++;
+                    gridCell.isVisited = false;
+                }
+            }
+
+            if (count != tilesPlaced) {
+                return true;
+            }
         }
 
         return false;
@@ -1232,28 +1234,48 @@ public class GameManager : MonoBehaviour {
 
                 TileScript tileScript = tile.tile.GetComponent(typeof(TileScript)) as TileScript;
 
-                //Check if Queen is surrounded
-                if (tileScript.GetTileName() == "Queen") {
-                    if (tileScript.GetTileColor() == p1.color) {
-                        //Player Lose
-                        if (IsSurrounded(pos)) {
-                            if (isP1) {
-                                GameOver(false);
-                            }
-                            else {
-                                GameOver(true);
+                if (isNetworkGame) {
+                    //Check if Queen is surrounded
+                    if (tileScript.GetTileName() == "Queen") {
+                        if (tileScript.GetTileColor() == p1.color) {
+                            //Player Lose
+                            if (IsSurrounded(pos)) {
+                                if (isP1) {
+                                    GameOver(false);
+                                }
+                                else {
+                                    GameOver(true);
+                                }
                             }
                         }
-                }
-                    else {
-                        //Player Win
-                        if (IsSurrounded(pos)) {
-                            if (isP1) {
-                                GameOver(true);
+                        else {
+                            //Player Win
+                            if (IsSurrounded(pos)) {
+                                if (isP1) {
+                                    GameOver(true);
+                                }
+                                else {
+                                    GameOver(false);
+                                }
                             }
-                            else {
+                        }
+                    }
+                }
+                else {
+                    if (tileScript.GetTileName() == "Queen") {
+                        if (tileScript.GetTileColor() == p1.color) {
+                            //Player Lose
+                            if (IsSurrounded(pos)) {
                                 GameOver(false);
                             }
+                          
+                        }
+                        else {
+                            //Player Win
+                            if (IsSurrounded(pos)) {
+                                GameOver(true);
+                            }
+                            
                         }
                     }
                 }

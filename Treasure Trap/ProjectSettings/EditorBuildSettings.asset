@@ -50,4 +50,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Menus/Edwin/LoserScreen.unity
     guid: 87d7829c3e83cc1458e96d0374a47b5e
+  - enabled: 1
+    path: Assets/Scenes/Menus/Edwin/WinnerScreenAI.unity
+    guid: fbdcf591e8378438683ccd3bb381c53e
   m_configObjects: {}
