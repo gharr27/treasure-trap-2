@@ -13,6 +13,7 @@ public class ConnectServer : MonoBehaviourPunCallbacks
     public static ConnectServer Instance;
     public bool playerEnteredRoom = false;
     public bool playerLeftRoom = false;
+    private bool buttonClicked = false;
     public const byte UpdateRoomEventCode = 1;
     [SerializeField] TMP_InputField roomNameInputField;
     [SerializeField] TMP_InputField userNameInput;
@@ -42,7 +43,6 @@ public class ConnectServer : MonoBehaviourPunCallbacks
 
     void Start()
     {
-        bool buttonClicked = false;
         Debug.Log("Connecting to Master");
         PhotonNetwork.ConnectUsingSettings();
     }
