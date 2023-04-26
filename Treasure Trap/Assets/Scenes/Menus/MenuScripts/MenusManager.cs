@@ -24,6 +24,12 @@ public class MenusManager : MonoBehaviour
         SceneManager.LoadScene("LogoIntro");
     }
 
+    
+    public void GoToCredits()
+    {
+        SceneManager.LoadScene("Credits");
+    }
+
     public void GoToGameTitleIntro()
     {
         SceneManager.LoadScene("GameTitleIntro");
