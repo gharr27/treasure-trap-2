@@ -42,6 +42,7 @@ public class ConnectServer : MonoBehaviourPunCallbacks
 
     void Start()
     {
+        bool buttonClicked = false;
         Debug.Log("Connecting to Master");
         PhotonNetwork.ConnectUsingSettings();
     }
@@ -158,7 +159,12 @@ public class ConnectServer : MonoBehaviourPunCallbacks
 
     public void StartGame()
     {
-        PhotonNetwork.LoadLevel(1);
+        if (!buttonClicked)
+        {
+            buttonClicked = true;
+            // Perform button action here
+            PhotonNetwork.LoadLevel(1);
+        }
     }
 
     public override void OnPlayerLeftRoom(Photon.Realtime.Player otherPlayer)
