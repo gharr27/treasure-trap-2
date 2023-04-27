@@ -1666,42 +1666,11 @@ public class GameManager : MonoBehaviour {
                     Stack<Vector3> badPositions = new Stack<Vector3>();
                     Stack<Vector3> validPositons = new Stack<Vector3>();
 
-                    //CheckForGates(tempPositions);
-
-                    //foreach (KeyValuePair<Vector3, GameGridCell> gridCell in gameGrid) {
-                    //    if (gridCell.Value.isVisited) {
-                    //        Debug.Log("Grid Piece: " + gridCell.Key);
-                    //        badPositions.Push(gridCell.Key);
-                    //        gridCell.Value.isVisited = false;
-                    //    }
-                    //}
-
-                    //Debug.Log(badPositions.Count);
-                    //Debug.Log(positions.Count);
-
-                    //while (positions.Count > 0) {
-                    //    Vector3 pos = positions.Pop();
-                    //    bool isValid = true;
-
-                    //    foreach (Vector3 badPos in badPositions) {
-                    //        Debug.Log("Bad Pos: " + badPos);
-                    //        if (pos == badPos) {
-                    //            Debug.Log(pos + " : " + badPos);
-                    //            isValid = false;
-                    //            break;
-                    //        }
-                    //    }
-
-                    //    if (isValid) {
-                    //        validPositons.Push(pos);
-                    //    }
-                    //}
-
-                    //Debug.Log(validPositons.Count);
+                    TileScript tileScript = tile.GetComponent(typeof(TileScript)) as TileScript;
 
                     validPositons = positions;
                     while (validPositons.Count > 0) {
-                        if (GetBoarderCount(validPositons.Peek(), tile) < 5 || tile.transform.position.y > 0) {
+                        if (GetBoarderCount(validPositons.Peek(), tile) < 5 || tileScript.tileName == "Beetle" || tileScript.tileName == "Grasshopper") {
                             GameObject grid;
                             grid = Instantiate(GridTile, validPositons.Pop(), Quaternion.identity) as GameObject;
                             selectionGrids.Push(grid);
